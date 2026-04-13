@@ -5,1022 +5,1033 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>НейроСпринт</title>
 <link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Onest:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
-:root {
-  --bg: #F7F5F0;
-  --surface: #FFFFFF;
-  --surface2: #F0EDE6;
-  --border: rgba(0,0,0,0.08);
-  --border2: rgba(0,0,0,0.14);
-  --text: #1A1814;
-  --text2: #6B6760;
-  --text3: #A09D98;
-  --f: #1D9E75;
-  --f-bg: #E6F7F1;
-  --f-border: #9FE1CB;
-  --d: #C4501F;
-  --d-bg: #FAECE7;
-  --d-border: #F0997B;
-  --k: #B8406A;
-  --k-bg: #FBEAF0;
-  --k-border: #ED93B1;
-  --r: #2D6FBF;
-  --r-bg: #E6F0FB;
-  --accent: #5B4FCF;
-  --accent-bg: #EEEDFE;
-  --radius: 14px;
-  --radius-sm: 8px;
+:root{
+  --bg:#F7F5F0;--surface:#FFFFFF;--surface2:#F0EDE6;
+  --border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.14);
+  --text:#1A1814;--text2:#6B6760;--text3:#A09D98;
+  --f:#1D9E75;--f-bg:#E6F7F1;--f-bd:#9FE1CB;
+  --d:#C4501F;--d-bg:#FAECE7;--d-bd:#F0997B;
+  --k:#B8406A;--k-bg:#FBEAF0;--k-bd:#ED93B1;
+  --r:#2D6FBF;--r-bg:#E6F0FB;
+  --accent:#5B4FCF;--accent-bg:#EEEDFE;
+  --rad:14px;--rad-sm:8px;
 }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: 'Onest', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-/* LAYOUT */
-.app { display: flex; min-height: 100vh; }
-.sidebar {
-  width: 220px;
-  background: var(--surface);
-  border-right: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  padding: 24px 0;
-  position: fixed;
-  top: 0; left: 0; bottom: 0;
-  z-index: 100;
-}
-.main { margin-left: 220px; padding: 32px 40px; flex: 1; max-width: 960px; }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Onest',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;line-height:1.6}
+.app{display:flex;min-height:100vh}
 
 /* SIDEBAR */
-.logo {
-  padding: 0 20px 24px;
-  border-bottom: 1px solid var(--border);
-  margin-bottom: 12px;
-}
-.logo-title {
-  font-family: 'Gochi Hand', cursive;
-  font-size: 22px;
-  color: var(--accent);
-  letter-spacing: 0.5px;
-}
-.logo-sub { font-size: 11px; color: var(--text3); margin-top: 1px; }
+.sidebar{width:230px;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:24px 0;position:fixed;top:0;left:0;bottom:0;z-index:100;overflow-y:auto}
+.logo{padding:0 20px 20px;border-bottom:1px solid var(--border);margin-bottom:8px}
+.logo-title{font-family:'Gochi Hand',cursive;font-size:22px;color:var(--accent);letter-spacing:.5px}
+.logo-sub{font-size:11px;color:var(--text3);margin-top:1px}
+.nav-sec{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--text3);padding:14px 20px 5px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 20px;cursor:pointer;border:none;background:none;width:100%;text-align:left;font-family:'Onest',sans-serif;font-size:13px;color:var(--text2);transition:all .15s;position:relative}
+.nav-item:hover{background:var(--bg);color:var(--text)}
+.nav-item.active{background:var(--accent-bg);color:var(--accent);font-weight:500}
+.nav-item.active::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);border-radius:0 2px 2px 0}
+.nav-icon{font-size:15px;width:18px;text-align:center}
+.sprint-info{margin:auto 14px 0;background:var(--accent-bg);border-radius:10px;padding:10px 12px;border:1px solid rgba(91,79,207,.15)}
+.sprint-info .si-label{font-size:10px;color:var(--accent);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.sprint-info .si-val{font-size:13px;font-weight:500;color:var(--text);margin-top:2px}
+.prog-mini{height:4px;background:rgba(91,79,207,.15);border-radius:2px;margin-top:8px;overflow:hidden}
+.prog-mini-fill{height:100%;background:var(--accent);border-radius:2px;transition:width .3s}
 
-.nav-item {
-  display: flex; align-items: center; gap: 10px;
-  padding: 9px 20px;
-  cursor: pointer;
-  border-radius: 0;
-  border: none; background: none;
-  width: 100%;
-  text-align: left;
-  font-family: 'Onest', sans-serif;
-  font-size: 13.5px;
-  color: var(--text2);
-  transition: all 0.15s;
-  position: relative;
-}
-.nav-item:hover { background: var(--bg); color: var(--text); }
-.nav-item.active {
-  background: var(--accent-bg);
-  color: var(--accent);
-  font-weight: 500;
-}
-.nav-item.active::before {
-  content: '';
-  position: absolute;
-  left: 0; top: 0; bottom: 0;
-  width: 3px;
-  background: var(--accent);
-  border-radius: 0 2px 2px 0;
-}
-.nav-icon { font-size: 16px; width: 20px; text-align: center; }
-.nav-section {
-  font-size: 10px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: var(--text3);
-  padding: 16px 20px 6px;
-}
-
-.sprint-badge {
-  margin: 0 20px;
-  background: var(--accent-bg);
-  border-radius: 10px;
-  padding: 10px 12px;
-  margin-top: auto;
-  border: 1px solid rgba(91,79,207,0.15);
-}
-.sprint-badge .label { font-size: 10px; color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-.sprint-badge .value { font-size: 13px; font-weight: 500; color: var(--text); margin-top: 2px; }
-.progress-mini { height: 4px; background: rgba(91,79,207,0.15); border-radius: 2px; margin-top: 8px; overflow: hidden; }
-.progress-mini-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.3s; }
-
-/* SCREENS */
-.screen { display: none; }
-.screen.active { display: block; }
-
-/* PAGE HEADER */
-.page-header { margin-bottom: 28px; }
-.page-title { font-size: 26px; font-weight: 600; color: var(--text); }
-.page-sub { font-size: 13px; color: var(--text3); margin-top: 3px; }
+/* MAIN */
+.main{margin-left:230px;padding:32px 40px;flex:1;max-width:1000px}
+.screen{display:none}.screen.active{display:block}
+.page-header{margin-bottom:26px}
+.page-title{font-size:26px;font-weight:600}
+.page-sub{font-size:13px;color:var(--text3);margin-top:3px}
 
 /* CARDS */
-.card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 20px;
-  margin-bottom: 16px;
-}
-.card-title {
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  color: var(--text3);
-  margin-bottom: 14px;
-}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rad);padding:20px;margin-bottom:16px}
+.card-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:14px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 
-/* GRID */
-.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+/* CHIPS */
+.chip{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px}
+.chip-f{background:var(--f-bg);color:var(--f);border:1px solid var(--f-bd)}
+.chip-d{background:var(--d-bg);color:var(--d);border:1px solid var(--d-bd)}
+.chip-k{background:var(--k-bg);color:var(--k);border:1px solid var(--k-bd)}
+.chip-r{background:var(--r-bg);color:var(--r);border:1px solid rgba(45,111,191,.3)}
 
-/* PROJECT CHIPS */
-.chip {
-  display: inline-flex; align-items: center; gap: 5px;
-  font-size: 11px; font-weight: 600;
-  padding: 3px 9px; border-radius: 20px;
-  letter-spacing: 0.3px;
-}
-.chip-f { background: var(--f-bg); color: var(--f); border: 1px solid var(--f-border); }
-.chip-d { background: var(--d-bg); color: var(--d); border: 1px solid var(--d-border); }
-.chip-k { background: var(--k-bg); color: var(--k); border: 1px solid var(--k-border); }
-.chip-r { background: var(--r-bg); color: var(--r); border: 1px solid rgba(45,111,191,0.3); }
+/* STATS */
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rad);padding:14px 18px}
+.stat-label{font-size:11px;color:var(--text3);font-weight:500}
+.stat-value{font-size:24px;font-weight:600;color:var(--text);margin-top:2px;line-height:1}
+.stat-unit{font-size:13px;color:var(--text2);font-weight:400}
+.stat-sub{font-size:11px;color:var(--text3);margin-top:4px}
 
-/* STAT CARDS */
-.stat-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 16px 20px;
-}
-.stat-label { font-size: 11px; color: var(--text3); font-weight: 500; }
-.stat-value { font-size: 26px; font-weight: 600; color: var(--text); margin-top: 2px; line-height: 1; }
-.stat-unit { font-size: 13px; color: var(--text2); font-weight: 400; }
-.stat-sub { font-size: 12px; color: var(--text3); margin-top: 4px; }
+/* BUTTONS */
+.btn{border:none;border-radius:var(--rad-sm);padding:8px 16px;font-family:'Onest',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:opacity .15s}
+.btn:hover{opacity:.85}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-secondary{background:var(--surface2);color:var(--text2);border:1px solid var(--border2)}
+.btn-danger{background:#FEE;color:#A32D2D;border:1px solid #F7C1C1}
+.btn-success{background:var(--f-bg);color:var(--f);border:1px solid var(--f-bd)}
+.btn-full{width:100%;margin-top:10px;padding:11px}
+.btn-sm{padding:5px 10px;font-size:12px}
+
+/* INPUTS */
+.ta{width:100%;border:1px solid var(--border2);border-radius:var(--rad-sm);padding:10px 12px;font-family:'Onest',sans-serif;font-size:13px;color:var(--text);background:var(--surface);resize:none;outline:none;transition:border-color .15s;line-height:1.6}
+.ta:focus{border-color:var(--accent)}
+.ta::placeholder{color:var(--text3)}
+.inp{width:100%;border:1px solid var(--border2);border-radius:var(--rad-sm);padding:8px 12px;font-family:'Onest',sans-serif;font-size:13px;color:var(--text);background:var(--surface);outline:none;transition:border-color .15s}
+.inp:focus{border-color:var(--accent)}
+.inp::placeholder{color:var(--text3)}
+
+/* MOOD */
+.mood-scale{display:flex;gap:6px;margin-top:8px}
+.mood-btn{flex:1;padding:7px 0;border-radius:8px;border:1px solid var(--border2);background:var(--surface);cursor:pointer;font-size:11px;color:var(--text2);transition:all .15s;text-align:center;font-family:'Onest',sans-serif;line-height:1.4}
+.mood-btn:hover,.mood-btn.active{border-color:var(--accent);background:var(--accent-bg);color:var(--accent);font-weight:500}
+.mood-val{display:block;font-size:16px;margin-bottom:2px}
 
 /* TASKS */
-.task-item {
-  display: flex; align-items: flex-start; gap: 12px;
-  padding: 11px 0;
-  border-bottom: 1px solid var(--border);
-  cursor: pointer;
-  transition: opacity 0.2s;
-}
-.task-item:last-child { border-bottom: none; padding-bottom: 0; }
-.task-item.done { opacity: 0.45; }
-.task-item.done .task-name { text-decoration: line-through; }
-.checkbox {
-  width: 18px; height: 18px;
-  border-radius: 5px;
-  border: 1.5px solid var(--border2);
-  flex-shrink: 0;
-  margin-top: 1px;
-  cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  transition: all 0.15s;
-  background: transparent;
-}
-.task-item.done .checkbox { background: var(--f); border-color: var(--f); }
-.task-name { font-size: 14px; color: var(--text); flex: 1; }
-.task-meta { display: flex; align-items: center; gap: 6px; margin-top: 3px; }
-.task-time { font-size: 11px; color: var(--text3); background: var(--surface2); padding: 2px 7px; border-radius: 6px; }
-
-/* ADD TASK */
-.add-row {
-  display: flex; gap-8px;
-  padding: 10px 0 0;
-}
-.add-input {
-  flex: 1; border: none; background: transparent;
-  font-family: 'Onest', sans-serif;
-  font-size: 13px; color: var(--text);
-  outline: none;
-  padding: 6px 0;
-  border-bottom: 1px solid var(--border);
-}
-.add-input::placeholder { color: var(--text3); }
-.add-input:focus { border-bottom-color: var(--accent); }
-.add-btn {
-  background: var(--accent); color: white;
-  border: none; border-radius: var(--radius-sm);
-  padding: 7px 14px;
-  font-family: 'Onest', sans-serif;
-  font-size: 13px; font-weight: 500;
-  cursor: pointer;
-  margin-left: 8px;
-  transition: opacity 0.15s;
-}
-.add-btn:hover { opacity: 0.88; }
-.btn-ghost {
-  background: transparent;
-  border: 1px solid var(--border2);
-  color: var(--text2);
-  border-radius: var(--radius-sm);
-  padding: 7px 14px;
-  font-family: 'Onest', sans-serif;
-  font-size: 13px;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-.btn-ghost:hover { background: var(--surface2); }
-.btn-primary {
-  background: var(--accent); color: white;
-  border: none; border-radius: var(--radius-sm);
-  padding: 10px 20px;
-  font-family: 'Onest', sans-serif;
-  font-size: 14px; font-weight: 500;
-  cursor: pointer; width: 100%;
-  transition: opacity 0.15s;
-  margin-top: 8px;
-}
-.btn-primary:hover { opacity: 0.88; }
+.task-item{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid var(--border)}
+.task-item:last-child{border-bottom:none;padding-bottom:0}
+.task-item.done .task-name{text-decoration:line-through;opacity:.5}
+.cb{width:18px;height:18px;border-radius:5px;border:1.5px solid var(--border2);flex-shrink:0;margin-top:2px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;background:transparent}
+.task-item.done .cb{background:var(--f);border-color:var(--f)}
+.task-name{font-size:13px;color:var(--text);flex:1}
+.task-time{font-size:11px;color:var(--text3);background:var(--surface2);padding:2px 7px;border-radius:6px;margin-top:3px;display:inline-block}
+.task-del{background:none;border:none;cursor:pointer;color:var(--text3);font-size:16px;padding:0 4px;line-height:1;transition:color .15s;flex-shrink:0}
+.task-del:hover{color:#A32D2D}
+.add-row{display:flex;gap:8px;padding-top:12px;border-top:1px dashed var(--border2);margin-top:8px}
+.add-row .inp{flex:1}
 
 /* WEEK GRID */
-.week-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 6px; }
-.day-cell {
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  padding: 10px 6px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.15s;
-  background: var(--surface);
-}
-.day-cell:hover { border-color: var(--accent); }
-.day-cell .dn { font-size: 10px; color: var(--text3); font-weight: 500; text-transform: uppercase; }
-.day-cell .dd { font-size: 15px; font-weight: 500; color: var(--text); margin-top: 2px; }
-.day-cell .dots { display: flex; justify-content: center; gap: 3px; margin-top: 6px; }
-.dot { width: 5px; height: 5px; border-radius: 50%; }
-.day-cell.is-today { border-color: var(--accent); background: var(--accent-bg); }
-.day-cell.is-today .dd { color: var(--accent); font-weight: 600; }
-.day-cell.is-done { background: #E6F7F1; border-color: var(--f-border); }
-.day-cell.is-done .dd { color: var(--f); }
+.week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.day-cell{border-radius:10px;border:1px solid var(--border);padding:10px 6px;text-align:center;cursor:pointer;transition:all .15s;background:var(--surface)}
+.day-cell:hover{border-color:var(--accent)}
+.day-cell .dn{font-size:10px;color:var(--text3);font-weight:500;text-transform:uppercase}
+.day-cell .dd{font-size:15px;font-weight:500;color:var(--text);margin-top:2px}
+.day-cell .dots{display:flex;justify-content:center;gap:3px;margin-top:6px}
+.dot{width:5px;height:5px;border-radius:50%}
+.day-cell.is-today{border-color:var(--accent);background:var(--accent-bg)}
+.day-cell.is-today .dd{color:var(--accent);font-weight:600}
+.day-cell.is-done{background:#E6F7F1;border-color:var(--f-bd)}
+.day-cell.is-done .dd{color:var(--f)}
 
-/* PROGRESS RING */
-.ring-wrap { position: relative; display: inline-flex; align-items: center; justify-content: center; }
-.ring-text { position: absolute; text-align: center; }
-.ring-text .pct { font-size: 20px; font-weight: 600; color: var(--text); }
-.ring-text .lbl { font-size: 10px; color: var(--text3); }
+/* HISTORY / DIARY */
+.history-item{border:1px solid var(--border);border-radius:var(--rad);padding:14px 16px;margin-bottom:10px;background:var(--surface)}
+.history-date{font-size:11px;color:var(--text3);font-weight:500;margin-bottom:5px}
+.history-text{font-size:13px;color:var(--text);line-height:1.55}
+.history-del{float:right;background:none;border:none;cursor:pointer;color:var(--text3);font-size:14px}
+.history-del:hover{color:#A32D2D}
 
-/* STRUCTURE OPTIONS */
-.structure-opt {
-  border: 1px solid var(--border2);
-  border-radius: var(--radius);
-  padding: 14px 16px;
-  margin-bottom: 8px;
-  cursor: pointer;
-  transition: all 0.15s;
-  display: flex; align-items: center; justify-content: space-between;
-}
-.structure-opt:hover { border-color: var(--accent); }
-.structure-opt.selected { border-color: var(--accent); background: var(--accent-bg); }
-.structure-opt .s-name { font-size: 13px; font-weight: 500; color: var(--text); }
-.structure-opt .s-desc { font-size: 12px; color: var(--text2); margin-top: 1px; }
-.structure-opt .s-total { font-size: 13px; font-weight: 600; color: var(--accent); }
-.structure-opt .time-bar { display: flex; gap: 2px; margin-top: 8px; height: 6px; border-radius: 3px; overflow: hidden; }
-.tb-f { background: var(--f); }
-.tb-d { background: var(--d); }
-.tb-k { background: var(--k); }
+/* CHART */
+.chart-wrap{position:relative;height:180px;margin-top:12px}
 
-/* STANDUP */
-.standup-q {
-  background: var(--surface2);
-  border-radius: var(--radius);
-  padding: 14px 16px;
-  margin-bottom: 10px;
-}
-.standup-q .q { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
-.mood-scale { display: flex; gap: 5px; margin-top: 6px; }
-.mood-btn {
-  flex: 1; padding: 6px 0; border-radius: 8px;
-  border: 1px solid var(--border2);
-  background: var(--surface);
-  cursor: pointer; font-size: 12px; color: var(--text2);
-  transition: all 0.15s; text-align: center;
-  font-family: 'Onest', sans-serif;
-}
-.mood-btn:hover, .mood-btn.active { border-color: var(--accent); background: var(--accent-bg); color: var(--accent); font-weight: 500; }
-.text-area {
-  width: 100%; border: 1px solid var(--border2);
-  border-radius: var(--radius-sm); padding: 10px 12px;
-  font-family: 'Onest', sans-serif; font-size: 13px;
-  color: var(--text); background: var(--surface);
-  resize: none; outline: none;
-  transition: border-color 0.15s;
-  line-height: 1.6;
-}
-.text-area:focus { border-color: var(--accent); }
-.text-area::placeholder { color: var(--text3); }
-
-/* REFLECTION */
-.reflect-section {
-  border-left: 3px solid var(--border2);
-  padding-left: 14px;
-  margin-bottom: 16px;
-}
-.reflect-section.done-f { border-color: var(--f); }
-.reflect-section.done-d { border-color: var(--d); }
-.reflect-section.done-k { border-color: var(--k); }
-.reflect-section.done-r { border-color: var(--r); }
-.reflect-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text3); margin-bottom: 6px; }
+/* REFLECT */
+.reflect-sec{border-left:3px solid var(--border2);padding-left:14px;margin-bottom:14px;border-radius:0}
+.reflect-sec.rf{border-color:var(--f)}
+.reflect-sec.rd{border-color:var(--d)}
+.reflect-sec.rk{border-color:var(--k)}
+.reflect-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--text3);margin-bottom:6px}
 
 /* TRANSFORM */
-.transform-step {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 18px 20px;
-  margin-bottom: 12px;
-}
-.transform-step .step-num {
-  font-size: 11px; font-weight: 600; color: var(--accent);
-  text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;
-}
-.transform-step .step-q { font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 10px; }
-.transform-step .step-time { font-size: 11px; color: var(--text3); margin-left: 8px; }
+.tr-step{background:var(--surface);border:1px solid var(--border);border-radius:var(--rad);padding:18px 20px;margin-bottom:12px}
+.tr-step .sn{font-size:11px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.tr-step .sq{font-size:15px;font-weight:500;color:var(--text);margin-bottom:10px}
+.tr-step .st{font-size:11px;color:var(--text3);margin-left:8px}
 
-/* INTEGRATION BADGE */
-.integration-hero {
-  background: linear-gradient(135deg, var(--accent-bg) 0%, #f0effe 100%);
-  border: 1px solid rgba(91,79,207,0.2);
-  border-radius: var(--radius);
-  padding: 24px;
-  margin-bottom: 24px;
-  text-align: center;
-}
-.integration-hero .hero-icon { font-size: 40px; margin-bottom: 10px; }
-.integration-hero h3 { font-size: 18px; font-weight: 600; color: var(--accent); }
-.integration-hero p { font-size: 13px; color: var(--text2); margin-top: 4px; }
+/* PROG BARS */
+.prog-bar{height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;margin-top:6px}
+.prog-fill{height:100%;border-radius:3px;transition:width .4s}
 
-/* TIMELINE */
-.timeline { position: relative; padding-left: 24px; }
-.timeline::before { content: ''; position: absolute; left: 7px; top: 0; bottom: 0; width: 1px; background: var(--border2); }
-.timeline-item { position: relative; margin-bottom: 16px; }
-.timeline-dot { position: absolute; left: -24px; top: 3px; width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--surface); background: var(--accent); box-shadow: 0 0 0 2px rgba(91,79,207,0.2); }
-.timeline-dot.f { background: var(--f); box-shadow: 0 0 0 2px rgba(29,158,117,0.2); }
-.timeline-dot.d { background: var(--d); box-shadow: 0 0 0 2px rgba(196,80,31,0.2); }
-.timeline-dot.k { background: var(--k); box-shadow: 0 0 0 2px rgba(184,64,106,0.2); }
-.timeline-label { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.5px; }
-.timeline-text { font-size: 13px; color: var(--text); margin-top: 2px; line-height: 1.5; }
+/* WEEK TABLE */
+.week-table{width:100%;border-collapse:collapse}
+.week-table th{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--text3);padding:8px 12px;border-bottom:1px solid var(--border);text-align:left}
+.week-table td{padding:10px 12px;border-bottom:1px solid var(--border);font-size:13px;color:var(--text2);vertical-align:top}
+.week-table tr:last-child td{border-bottom:none}
+.week-table td:first-child{font-weight:500;color:var(--text);width:50px}
+.cell-task{font-size:12px;padding:3px 8px;border-radius:6px;display:inline-block;margin:2px 0}
+.ct-f{background:var(--f-bg);color:var(--f)}
+.ct-d{background:var(--d-bg);color:var(--d)}
+.ct-k{background:var(--k-bg);color:var(--k)}
+.today-row td{background:var(--accent-bg)}
 
-/* TABLE */
-.week-table { width: 100%; border-collapse: collapse; }
-.week-table th { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text3); padding: 8px 12px; border-bottom: 1px solid var(--border); text-align: left; }
-.week-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); font-size: 13px; color: var(--text2); vertical-align: top; }
-.week-table tr:last-child td { border-bottom: none; }
-.week-table td:first-child { font-weight: 500; color: var(--text); width: 40px; }
-.cell-tasks { display: flex; flex-direction: column; gap: 4px; }
-.cell-task { font-size: 12px; padding: 3px 8px; border-radius: 6px; display: inline-block; }
-.ct-f { background: var(--f-bg); color: var(--f); }
-.ct-d { background: var(--d-bg); color: var(--d); }
-.ct-k { background: var(--k-bg); color: var(--k); }
+/* STRUCTURE OPTS */
+.struct-opt{border:1px solid var(--border2);border-radius:var(--rad);padding:12px 16px;margin-bottom:8px;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:space-between}
+.struct-opt:hover{border-color:var(--accent)}
+.struct-opt.selected{border-color:var(--accent);background:var(--accent-bg)}
+.struct-opt .sn{font-size:13px;font-weight:500;color:var(--text)}
+.struct-opt .sd{font-size:12px;color:var(--text2);margin-top:1px}
+.struct-opt .sv{font-size:13px;font-weight:600;color:var(--accent)}
+.tb{display:flex;height:5px;gap:2px;margin-top:8px;border-radius:3px;overflow:hidden}
 
-/* FOCUS ROW */
-.focus-task {
-  display: flex; align-items: center; gap: 10px;
-  padding: 9px 0; border-bottom: 1px solid var(--border);
-}
-.focus-task:last-child { border-bottom: none; }
-.focus-num {
-  width: 22px; height: 22px; border-radius: 50%;
-  background: var(--accent-bg); color: var(--accent);
-  font-size: 11px; font-weight: 600;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-}
-.focus-text { font-size: 13px; color: var(--text); flex: 1; }
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--text);color:#fff;padding:10px 18px;border-radius:10px;font-size:13px;font-weight:500;opacity:0;pointer-events:none;transition:opacity .25s;z-index:9999}
+.toast.show{opacity:1}
+
+/* INTEGRATION HERO */
+.int-hero{background:var(--accent-bg);border:1px solid rgba(91,79,207,.2);border-radius:var(--rad);padding:22px;margin-bottom:22px;text-align:center}
+.int-hero .ih-icon{font-size:36px;margin-bottom:8px}
+.int-hero h3{font-size:18px;font-weight:600;color:var(--accent)}
+.int-hero p{font-size:13px;color:var(--text2);margin-top:4px}
+
+/* EMPTY STATE */
+.empty{text-align:center;padding:24px;color:var(--text3);font-size:13px}
 
 /* DIVIDER */
-.divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+hr{border:none;border-top:1px solid var(--border);margin:18px 0}
 
-/* SCROLLBAR */
-::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
-
-/* RESPONSIVE NOTE */
-@media (max-width: 720px) {
-  .sidebar { transform: translateX(-100%); }
-  .main { margin-left: 0; padding: 20px; }
-  .grid-2, .grid-3 { grid-template-columns: 1fr; }
-}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
 </style>
 </head>
 <body>
-
 <div class="app">
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <div class="logo">
-      <div class="logo-title">НейроСпринт</div>
-      <div class="logo-sub">метод Катерины Ленгольд</div>
-    </div>
 
-    <div class="nav-section">Сегодня</div>
-    <button class="nav-item active" onclick="go('today',this)">
-      <span class="nav-icon">☀️</span> Ежедневная сверка
-    </button>
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="logo">
+    <div class="logo-title">НейроСпринт</div>
+    <div class="logo-sub" id="sb-sprint-label">Загрузка...</div>
+  </div>
+  <div class="nav-sec">Сегодня</div>
+  <button class="nav-item active" onclick="go('today',this)"><span class="nav-icon">☀️</span>Ежедневная сверка</button>
+  <div class="nav-sec">Спринт</div>
+  <button class="nav-item" onclick="go('sprint',this)"><span class="nav-icon">🗂️</span>Обзор спринта</button>
+  <button class="nav-item" onclick="go('plan',this)"><span class="nav-icon">📋</span>Планирование</button>
+  <button class="nav-item" onclick="go('weekly',this)"><span class="nav-icon">📅</span>Недельный план</button>
+  <div class="nav-sec">Рефлексия</div>
+  <button class="nav-item" onclick="go('reflection',this)"><span class="nav-icon">🔍</span>Итоги недели</button>
+  <button class="nav-item" onclick="go('transform',this)"><span class="nav-icon">✨</span>Интеграция</button>
+  <div class="nav-sec">История</div>
+  <button class="nav-item" onclick="go('diary',this)"><span class="nav-icon">📖</span>Дневник моментов</button>
+  <button class="nav-item" onclick="go('history',this)"><span class="nav-icon">🏆</span>История спринтов</button>
+  <div class="sprint-info">
+    <div class="si-label">Текущий спринт</div>
+    <div class="si-val" id="sb-sprint-name">—</div>
+    <div class="prog-mini"><div class="prog-mini-fill" id="sb-prog"></div></div>
+    <div style="font-size:11px;color:var(--text3);margin-top:4px" id="sb-prog-label">—</div>
+  </div>
+</aside>
 
-    <div class="nav-section">Спринт</div>
-    <button class="nav-item" onclick="go('sprint',this)">
-      <span class="nav-icon">🗂️</span> Обзор спринта
-    </button>
-    <button class="nav-item" onclick="go('plan',this)">
-      <span class="nav-icon">📋</span> Планирование
-    </button>
-    <button class="nav-item" onclick="go('weekly',this)">
-      <span class="nav-icon">📅</span> Недельный план
-    </button>
+<!-- MAIN -->
+<main class="main">
 
-    <div class="nav-section">Рефлексия</div>
-    <button class="nav-item" onclick="go('reflection',this)">
-      <span class="nav-icon">🔍</span> Итоги недели
-    </button>
-    <button class="nav-item" onclick="go('transform',this)">
-      <span class="nav-icon">✨</span> Интеграция
-    </button>
-
-    <div class="sprint-badge" id="sidebar-sprint">
-      <div class="label">Текущий спринт</div>
-      <div class="value" id="sb-sprint-name">Спринт #1 · 7 дней</div>
-      <div class="progress-mini"><div class="progress-mini-fill" id="sb-progress" style="width:40%"></div></div>
-      <div style="font-size:11px;color:var(--text3);margin-top:4px" id="sb-days">4 из 7 дней · 4/10 ч</div>
-    </div>
-  </aside>
-
-  <!-- MAIN -->
-  <main class="main">
-
-    <!-- TODAY -->
-    <div class="screen active" id="s-today">
-      <div class="page-header">
-        <div class="page-title">Ежедневная сверка</div>
-        <div class="page-sub" id="today-date">Загрузка...</div>
-      </div>
-
-      <div class="grid-2">
-        <div>
-          <div class="card">
-            <div class="card-title">Состояние — как я себя сейчас чувствую?</div>
-            <div class="mood-scale">
-              <button class="mood-btn" onclick="selectMood(this,'🟣 Спокойно')">🟣<br><span style="font-size:10px">Спокойно</span></button>
-              <button class="mood-btn" onclick="selectMood(this,'🟢 В потоке')">🟢<br><span style="font-size:10px">В потоке</span></button>
-              <button class="mood-btn" onclick="selectMood(this,'🔵 Ясно')">🔵<br><span style="font-size:10px">Ясно</span></button>
-              <button class="mood-btn" onclick="selectMood(this,'🟡 Тепло')">🟡<br><span style="font-size:10px">Тепло</span></button>
-              <button class="mood-btn" onclick="selectMood(this,'🔴 Огонь')">🔴<br><span style="font-size:10px">Огонь</span></button>
-            </div>
-            <textarea class="text-area" rows="3" placeholder="Опишите ощущения в теле, эмоции…" style="margin-top:10px" id="today-state" onchange="save('today-state',this.value)"></textarea>
-          </div>
-
-          <div class="card">
-            <div class="card-title">☀️ Замечательный момент суток</div>
-            <textarea class="text-area" rows="4" placeholder="Отмотайте последние 24 часа… какой момент хочется сохранить?" id="today-moment" onchange="save('today-moment',this.value)"></textarea>
-          </div>
-        </div>
-
-        <div>
-          <div class="card">
-            <div class="card-title">🎯 Три задачи на сегодня</div>
-            <div id="focus-list">
-              <div class="focus-task">
-                <div class="focus-num">1</div>
-                <input class="text-area" style="border:none;padding:4px 0;background:transparent;border-bottom:1px solid var(--border)" placeholder="Задача из проекта Фундамент…" onchange="saveFocus(0,this.value)" />
-                <span class="chip chip-f" style="flex-shrink:0">Ф</span>
-              </div>
-              <div class="focus-task">
-                <div class="focus-num">2</div>
-                <input class="text-area" style="border:none;padding:4px 0;background:transparent;border-bottom:1px solid var(--border)" placeholder="Задача из проекта Драйв…" onchange="saveFocus(1,this.value)" />
-                <span class="chip chip-d" style="flex-shrink:0">Д</span>
-              </div>
-              <div class="focus-task">
-                <div class="focus-num">3</div>
-                <input class="text-area" style="border:none;padding:4px 0;background:transparent;border-bottom:1px solid var(--border)" placeholder="Задача из проекта Кайф…" onchange="saveFocus(2,this.value)" />
-                <span class="chip chip-k" style="flex-shrink:0">К</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="card-title">⏱ Прогресс сегодня</div>
-            <div class="grid-3" style="gap:8px">
-              <div class="stat-card" style="border-left:3px solid var(--f)">
-                <div class="stat-label">Фундамент</div>
-                <div class="stat-value" id="today-f">0<span class="stat-unit"> м</span></div>
-              </div>
-              <div class="stat-card" style="border-left:3px solid var(--d)">
-                <div class="stat-label">Драйв</div>
-                <div class="stat-value" id="today-d">0<span class="stat-unit"> м</span></div>
-              </div>
-              <div class="stat-card" style="border-left:3px solid var(--k)">
-                <div class="stat-label">Кайф</div>
-                <div class="stat-value" id="today-k">0<span class="stat-unit"> м</span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- SPRINT OVERVIEW -->
-    <div class="screen" id="s-sprint">
-      <div class="page-header">
-        <div class="page-title">Обзор спринта</div>
-        <div class="page-sub">Прогресс по всем проектам</div>
-      </div>
-
-      <div class="grid-3" style="margin-bottom:20px">
-        <div class="stat-card">
-          <div class="stat-label">Потрачено часов</div>
-          <div class="stat-value">4.5<span class="stat-unit"> / 10 ч</span></div>
-          <div class="stat-sub">45% бюджета</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">День спринта</div>
-          <div class="stat-value">4<span class="stat-unit"> / 7</span></div>
-          <div class="stat-sub">57% пути</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Выполнено задач</div>
-          <div class="stat-value" id="done-count">0<span class="stat-unit"> шт</span></div>
-          <div class="stat-sub">из всех задач</div>
-        </div>
-      </div>
-
+<!-- ═══════════════════════════════════════ TODAY ═══ -->
+<div class="screen active" id="s-today">
+  <div class="page-header">
+    <div class="page-title">Ежедневная сверка</div>
+    <div class="page-sub" id="today-date-label">—</div>
+  </div>
+  <div class="grid2">
+    <div>
       <div class="card">
-        <div class="card-title">Прогресс по дням</div>
-        <div class="week-grid" id="week-grid"></div>
-      </div>
-
-      <div class="grid-2">
-        <div class="card" style="border-left:4px solid var(--f)">
-          <div class="card-title">🌱 Фундамент</div>
-          <div id="tasks-f">
-            <div class="task-item" onclick="toggleTask(this)">
-              <div class="checkbox"><svg width="10" height="10" viewBox="0 0 10 10" style="display:none"><polyline points="1.5,5 4,7.5 8.5,2.5" fill="none" stroke="white" stroke-width="1.5"/></svg></div>
-              <div><div class="task-name">Прогулка у офиса</div><div class="task-meta"><span class="task-time">25 мин · каждый день</span></div></div>
-            </div>
-            <div class="task-item" onclick="toggleTask(this)">
-              <div class="checkbox"><svg width="10" height="10" viewBox="0 0 10 10" style="display:none"><polyline points="1.5,5 4,7.5 8.5,2.5" fill="none" stroke="white" stroke-width="1.5"/></svg></div>
-              <div><div class="task-name">Медитация утром</div><div class="task-meta"><span class="task-time">10 мин · будни</span></div></div>
-            </div>
-          </div>
-          <div class="add-row" style="display:flex;gap:8px;padding-top:10px">
-            <input class="add-input" placeholder="+ добавить задачу Фундамента…" id="add-f" />
-            <button class="add-btn" onclick="addTask('f')">+</button>
-          </div>
+        <div class="card-title">Состояние — как я себя сейчас чувствую?</div>
+        <div class="mood-scale" id="mood-btns">
+          <button class="mood-btn" onclick="selectMood(1,this)"><span class="mood-val">🟣</span>Спокойно</button>
+          <button class="mood-btn" onclick="selectMood(2,this)"><span class="mood-val">🟢</span>В потоке</button>
+          <button class="mood-btn" onclick="selectMood(3,this)"><span class="mood-val">🔵</span>Ясно</button>
+          <button class="mood-btn" onclick="selectMood(4,this)"><span class="mood-val">🟡</span>Тепло</button>
+          <button class="mood-btn" onclick="selectMood(5,this)"><span class="mood-val">🔴</span>Огонь</button>
         </div>
-
-        <div class="card" style="border-left:4px solid var(--d)">
-          <div class="card-title">🚀 Драйв</div>
-          <div id="tasks-d">
-            <div class="task-item" onclick="toggleTask(this)">
-              <div class="checkbox"><svg width="10" height="10" viewBox="0 0 10 10" style="display:none"><polyline points="1.5,5 4,7.5 8.5,2.5" fill="none" stroke="white" stroke-width="1.5"/></svg></div>
-              <div><div class="task-name">Написать скрипт для видео</div><div class="task-meta"><span class="task-time">50 мин · пн, вт</span></div></div>
-            </div>
-            <div class="task-item" onclick="toggleTask(this)">
-              <div class="checkbox"><svg width="10" height="10" viewBox="0 0 10 10" style="display:none"><polyline points="1.5,5 4,7.5 8.5,2.5" fill="none" stroke="white" stroke-width="1.5"/></svg></div>
-              <div><div class="task-name">Снять три видео</div><div class="task-meta"><span class="task-time">50 мин · чт</span></div></div>
-            </div>
-            <div class="task-item" onclick="toggleTask(this)">
-              <div class="checkbox"><svg width="10" height="10" viewBox="0 0 10 10" style="display:none"><polyline points="1.5,5 4,7.5 8.5,2.5" fill="none" stroke="white" stroke-width="1.5"/></svg></div>
-              <div><div class="task-name">Смонтировать и опубликовать</div><div class="task-meta"><span class="task-time">50 мин · пт</span></div></div>
-            </div>
-          </div>
-          <div class="add-row" style="display:flex;gap:8px;padding-top:10px">
-            <input class="add-input" placeholder="+ добавить задачу Драйва…" id="add-d" />
-            <button class="add-btn" onclick="addTask('d')">+</button>
-          </div>
-        </div>
-
-        <div class="card" style="border-left:4px solid var(--k)">
-          <div class="card-title">💫 Кайф</div>
-          <div id="tasks-k">
-            <div class="task-item" onclick="toggleTask(this)">
-              <div class="checkbox"><svg width="10" height="10" viewBox="0 0 10 10" style="display:none"><polyline points="1.5,5 4,7.5 8.5,2.5" fill="none" stroke="white" stroke-width="1.5"/></svg></div>
-              <div><div class="task-name">Сварить кофе без спешки</div><div class="task-meta"><span class="task-time">15 мин · каждый день</span></div></div>
-            </div>
-            <div class="task-item" onclick="toggleTask(this)">
-              <div class="checkbox"><svg width="10" height="10" viewBox="0 0 10 10" style="display:none"><polyline points="1.5,5 4,7.5 8.5,2.5" fill="none" stroke="white" stroke-width="1.5"/></svg></div>
-              <div><div class="task-name">Книжный магазин</div><div class="task-meta"><span class="task-time">90 мин · суббота</span></div></div>
-            </div>
-          </div>
-          <div class="add-row" style="display:flex;gap:8px;padding-top:10px">
-            <input class="add-input" placeholder="+ добавить задачу Кайфа…" id="add-k" />
-            <button class="add-btn" onclick="addTask('k')">+</button>
-          </div>
-        </div>
-
-        <div class="card" style="border-left:4px solid var(--r)">
-          <div class="card-title">📊 Бюджет времени</div>
-          <div style="display:flex;flex-direction:column;gap:10px">
-            <div>
-              <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-                <span style="font-size:12px;color:var(--f);font-weight:500">Фундамент</span>
-                <span style="font-size:12px;color:var(--text2)">2 ч 25 м / 4 ч</span>
-              </div>
-              <div style="height:6px;background:var(--f-bg);border-radius:3px;overflow:hidden"><div style="height:100%;background:var(--f);border-radius:3px;width:60%"></div></div>
-            </div>
-            <div>
-              <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-                <span style="font-size:12px;color:var(--d);font-weight:500">Драйв</span>
-                <span style="font-size:12px;color:var(--text2)">1 ч 40 м / 4 ч</span>
-              </div>
-              <div style="height:6px;background:var(--d-bg);border-radius:3px;overflow:hidden"><div style="height:100%;background:var(--d);border-radius:3px;width:42%"></div></div>
-            </div>
-            <div>
-              <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-                <span style="font-size:12px;color:var(--k);font-weight:500">Кайф</span>
-                <span style="font-size:12px;color:var(--text2)">25 м / 2 ч</span>
-              </div>
-              <div style="height:6px;background:var(--k-bg);border-radius:3px;overflow:hidden"><div style="height:100%;background:var(--k);border-radius:3px;width:21%"></div></div>
-            </div>
-          </div>
-          <hr class="divider">
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <span style="font-size:12px;color:var(--text2)">Итого потрачено</span>
-            <span style="font-size:15px;font-weight:600;color:var(--accent)">4,5 / 10 ч</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- PLANNING -->
-    <div class="screen" id="s-plan">
-      <div class="page-header">
-        <div class="page-title">Планирование спринта</div>
-        <div class="page-sub">Настройте структуру и задачи нового спринта</div>
-      </div>
-
-      <div class="card">
-        <div class="card-title">Длительность спринта</div>
-        <div style="display:flex;gap:10px">
-          <div class="structure-opt selected" onclick="selectDuration(this,'7 дней')" style="flex:1">
-            <div>
-              <div class="s-name">7 дней</div>
-              <div class="s-desc">Рекомендуется для новичков и при высоком стрессе</div>
-            </div>
-          </div>
-          <div class="structure-opt" onclick="selectDuration(this,'21 день')" style="flex:1">
-            <div>
-              <div class="s-name">21 день</div>
-              <div class="s-desc">Для тех, кто уже знаком с методом</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title">Структура времени</div>
-        <div class="structure-opt selected" onclick="selectStructure(this)">
-          <div style="flex:1">
-            <div class="s-name">Опция 1 — рекомендуемая</div>
-            <div class="s-desc">90 минут каждый день = 10 ч 30 мин</div>
-            <div style="display:flex;height:5px;gap:2px;margin-top:8px;border-radius:3px;overflow:hidden">
-              <div class="tb-f" style="flex:2"></div><div class="tb-d" style="flex:4"></div><div class="tb-k" style="flex:1"></div>
-            </div>
-            <div style="display:flex;gap:12px;margin-top:4px">
-              <span style="font-size:10px;color:var(--f)">Ф: 25м/день</span>
-              <span style="font-size:10px;color:var(--d)">Д: 50м/день</span>
-              <span style="font-size:10px;color:var(--k)">К: 15м + 90м сб</span>
-            </div>
-          </div>
-          <div class="s-total">10,5 ч</div>
-        </div>
-        <div class="structure-opt" onclick="selectStructure(this)">
-          <div style="flex:1">
-            <div class="s-name">Опция 2</div>
-            <div class="s-desc">45 минут будни + 3 часа выходные = 9 ч 45 мин</div>
-            <div style="display:flex;height:5px;gap:2px;margin-top:8px;border-radius:3px;overflow:hidden">
-              <div class="tb-f" style="flex:1"></div><div class="tb-d" style="flex:3"></div><div class="tb-k" style="flex:6"></div>
-            </div>
-          </div>
-          <div class="s-total">9,75 ч</div>
-        </div>
-        <div class="structure-opt" onclick="selectStructure(this)">
-          <div style="flex:1">
-            <div class="s-name">Опция 3</div>
-            <div class="s-desc">60 минут будни + 2,5 часа выходные = 10 ч</div>
-            <div style="display:flex;height:5px;gap:2px;margin-top:8px;border-radius:3px;overflow:hidden">
-              <div class="tb-f" style="flex:1"></div><div class="tb-d" style="flex:4.5"></div><div class="tb-k" style="flex:4.5"></div>
-            </div>
-          </div>
-          <div class="s-total">10 ч</div>
-        </div>
-        <div class="structure-opt" onclick="selectStructure(this)">
-          <div style="flex:1">
-            <div class="s-name">Опция 4</div>
-            <div class="s-desc">2,5 часа четыре раза в неделю = 10 ч</div>
-          </div>
-          <div class="s-total">10 ч</div>
-        </div>
-        <div class="structure-opt" onclick="selectStructure(this)">
-          <div style="flex:1">
-            <div class="s-name">Опция 5</div>
-            <div class="s-desc">3 часа три раза в неделю = 9 ч</div>
-          </div>
-          <div class="s-total">9 ч</div>
-        </div>
-      </div>
-
-      <div class="card" style="border-left:4px solid var(--f)">
-        <div class="card-title">🌱 Проект «Фундамент» — забота о здоровье</div>
-        <textarea class="text-area" rows="3" placeholder="Опишите проект: что будете делать каждый день для физического и психологического здоровья?&#10;Например: прогулки на свежем воздухе 25 мин каждый день + йога в воскресенье 60 мин" id="plan-f" onchange="save('plan-f',this.value)"></textarea>
-      </div>
-      <div class="card" style="border-left:4px solid var(--d)">
-        <div class="card-title">🚀 Проект «Драйв» — вызов и рост</div>
-        <textarea class="text-area" rows="3" placeholder="Опишите проект: что хотите освоить или достичь? Это должно быть немного за пределами зоны комфорта.&#10;Например: снять и опубликовать 3 видео для соцсетей" id="plan-d" onchange="save('plan-d',this.value)"></textarea>
-      </div>
-      <div class="card" style="border-left:4px solid var(--k)">
-        <div class="card-title">💫 Проект «Кайф» — замедлиться и насладиться</div>
-        <textarea class="text-area" rows="3" placeholder="Опишите проект: что приносит чистую радость и позволяет насладиться тем, что уже есть?&#10;Например: кофейный ритуал каждое утро + поход в книжный в субботу" id="plan-k" onchange="save('plan-k',this.value)"></textarea>
-      </div>
-      <button class="btn-primary" onclick="startSprint()">🚀 Запустить спринт</button>
-    </div>
-
-    <!-- WEEKLY VIEW -->
-    <div class="screen" id="s-weekly">
-      <div class="page-header">
-        <div class="page-title">Недельный план</div>
-        <div class="page-sub">Распределение задач по дням</div>
+        <textarea class="ta" rows="3" placeholder="Опишите ощущения в теле и эмоции…" id="inp-state" style="margin-top:10px"></textarea>
+        <button class="btn btn-success btn-full" onclick="saveState()">✓ Сохранить состояние</button>
       </div>
       <div class="card">
-        <table class="week-table">
-          <thead>
-            <tr>
-              <th>День</th>
-              <th><span class="chip chip-f">Фундамент</span></th>
-              <th><span class="chip chip-d">Драйв</span></th>
-              <th><span class="chip chip-k">Кайф</span></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Пн</td>
-              <td><div class="cell-task ct-f">Прогулка 25 м</div></td>
-              <td><div class="cell-task ct-d">Скрипт видео 50 м</div></td>
-              <td><div class="cell-task ct-k">Кофе 15 м</div></td>
-            </tr>
-            <tr>
-              <td>Вт</td>
-              <td><div class="cell-task ct-f">Прогулка 25 м</div></td>
-              <td><div class="cell-task ct-d">Скрипт видео 50 м</div></td>
-              <td><div class="cell-task ct-k">Кофе 15 м</div></td>
-            </tr>
-            <tr>
-              <td>Ср</td>
-              <td><div class="cell-task ct-f">Прогулка 25 м</div></td>
-              <td><div class="cell-task ct-d">Скрипт видео 50 м</div></td>
-              <td><div class="cell-task ct-k">Кофе 15 м</div></td>
-            </tr>
-            <tr>
-              <td>Чт</td>
-              <td><div class="cell-task ct-f">Прогулка 25 м</div></td>
-              <td><div class="cell-task ct-d">Снять видео 50 м</div></td>
-              <td><div class="cell-task ct-k">Кофе 15 м</div></td>
-            </tr>
-            <tr>
-              <td>Пт</td>
-              <td><div class="cell-task ct-f">Прогулка 25 м</div></td>
-              <td><div class="cell-task ct-d">Монтаж/публикация 50 м</div></td>
-              <td><div class="cell-task ct-k">Кофе 15 м</div></td>
-            </tr>
-            <tr>
-              <td>Сб</td>
-              <td>—</td>
-              <td>—</td>
-              <td><div class="cell-task ct-k">Книжный магазин 90 м</div></td>
-            </tr>
-            <tr>
-              <td>Вс</td>
-              <td><div class="cell-task ct-f">Велосипед в парке 60 м</div></td>
-              <td>—</td>
-              <td><div class="cell-task ct-k" style="opacity:0.5">Рефлексия 30 м</div></td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="card-title">График состояния</div>
+        <div class="chart-wrap"><canvas id="mood-chart"></canvas></div>
       </div>
     </div>
-
-    <!-- REFLECTION -->
-    <div class="screen" id="s-reflection">
-      <div class="page-header">
-        <div class="page-title">Итоги недели</div>
-        <div class="page-sub">Рефлексия — 15 минут</div>
-      </div>
-
+    <div>
       <div class="card">
-        <div class="card-title">1. Что было сделано — признайте свои победы</div>
-        <div class="reflect-section done-f">
-          <div class="reflect-label">🌱 Фундамент</div>
-          <textarea class="text-area" rows="2" placeholder="Что удалось сделать по Фундаменту?" id="ref-f-done" onchange="save('ref-f-done',this.value)"></textarea>
-        </div>
-        <div class="reflect-section done-d" style="margin-top:10px">
-          <div class="reflect-label">🚀 Драйв</div>
-          <textarea class="text-area" rows="2" placeholder="Что удалось сделать по Драйву?" id="ref-d-done" onchange="save('ref-d-done',this.value)"></textarea>
-        </div>
-        <div class="reflect-section done-k" style="margin-top:10px">
-          <div class="reflect-label">💫 Кайф</div>
-          <textarea class="text-area" rows="2" placeholder="Что удалось сделать по Кайфу?" id="ref-k-done" onchange="save('ref-k-done',this.value)"></textarea>
-        </div>
+        <div class="card-title">☀️ Замечательный момент суток</div>
+        <textarea class="ta" rows="4" placeholder="Отмотайте последние 24 часа… какой момент хочется сохранить?" id="inp-moment"></textarea>
+        <button class="btn btn-success btn-full" onclick="saveMoment()">✓ Сохранить в дневник</button>
       </div>
-
       <div class="card">
-        <div class="card-title">2. Что не было сделано — честно и без осуждения</div>
-        <div class="reflect-section done-f">
-          <div class="reflect-label">🌱 Фундамент</div>
-          <textarea class="text-area" rows="2" placeholder="С какими сложностями столкнулись?" id="ref-f-notdone" onchange="save('ref-f-notdone',this.value)"></textarea>
-        </div>
-        <div class="reflect-section done-d" style="margin-top:10px">
-          <div class="reflect-label">🚀 Драйв</div>
-          <textarea class="text-area" rows="2" placeholder="Что не удалось и почему?" id="ref-d-notdone" onchange="save('ref-d-notdone',this.value)"></textarea>
-        </div>
-        <div class="reflect-section done-k" style="margin-top:10px">
-          <div class="reflect-label">💫 Кайф</div>
-          <textarea class="text-area" rows="2" placeholder="Что пропустили или заменили?" id="ref-k-notdone" onchange="save('ref-k-notdone',this.value)"></textarea>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title">3. Как скорректировать подход — самое важное</div>
-        <textarea class="text-area" rows="5" placeholder="Какие уроки из этой недели помогут следующей быть успешнее?&#10;Например:&#10;— Поставить напоминание за 15 мин до старта блока&#10;— Упростить монтаж, делать с телефона&#10;— Заблокировать соцсети на время проекта Кайф" id="ref-adjust" onchange="save('ref-adjust',this.value)"></textarea>
-        <button class="btn-primary" style="margin-top:12px" onclick="go('plan', document.querySelector('[onclick*=plan]'))">→ Запланировать следующую неделю</button>
+        <div class="card-title">🎯 Три задачи на сегодня</div>
+        <div id="today-tasks-list"></div>
+        <p style="font-size:12px;color:var(--text3);margin-top:10px">Задачи берутся из активного спринта</p>
       </div>
     </div>
-
-    <!-- TRANSFORM -->
-    <div class="screen" id="s-transform">
-      <div class="integration-hero">
-        <div class="hero-icon">✨</div>
-        <h3>Интеграционная неделя</h3>
-        <p>Трансформирующая рефлексия после трёх спринтов · ~30 минут</p>
-      </div>
-
-      <div class="transform-step">
-        <div class="step-num">Шаг 1 <span class="step-time">· 7 минут</span></div>
-        <div class="step-q">Какое главное изменение произошло со мной за этот месяц?</div>
-        <textarea class="text-area" rows="4" placeholder="Это может быть не связано с проектами спринта напрямую. Например: стала спокойнее реагировать на неожиданные ситуации на работе…" id="tr-change" onchange="save('tr-change',this.value)"></textarea>
-      </div>
-
-      <div class="transform-step">
-        <div class="step-num">Шаг 2 <span class="step-time">· 7 минут</span></div>
-        <div class="step-q">Какие мои действия привели к этому изменению?</div>
-        <textarea class="text-area" rows="4" placeholder="Смотрите на изменение с позиции вашей роли. Что сделали именно вы? Например: регулярно инвестировала время в Фундамент — прогулки…" id="tr-actions" onchange="save('tr-actions',this.value)"></textarea>
-      </div>
-
-      <div class="transform-step">
-        <div class="step-num">Шаг 3 <span class="step-time">· 7 минут</span></div>
-        <div class="step-q">Как в связи с этим трансформировался мой взгляд на себя?</div>
-        <textarea class="text-area" rows="4" placeholder="Что вы о себе узнали? Какие грани опыт подсветил? Например: я не «раздражительный человек» — я вполне спокойный и уверенный…" id="tr-belief" onchange="save('tr-belief',this.value)"></textarea>
-      </div>
-
-      <div class="transform-step">
-        <div class="step-num">Шаг 4 <span class="step-time">· 7 минут</span></div>
-        <div class="step-q">Какие новые возможности благодаря этому мне открылись?</div>
-        <textarea class="text-area" rows="4" placeholder="Что для «обновлённой» версии вас теперь доступно? Какие «нельзя» стали «можно»?…" id="tr-opportunity" onchange="save('tr-opportunity',this.value)"></textarea>
-      </div>
-
-      <button class="btn-primary" onclick="go('plan', document.querySelector('[onclick*=plan]'))">🚀 Начать новый цикл спринтов</button>
-    </div>
-
-  </main>
+  </div>
 </div>
 
+<!-- ═══════════════════════════════════════ SPRINT ═══ -->
+<div class="screen" id="s-sprint">
+  <div class="page-header">
+    <div class="page-title" id="sprint-title">Обзор спринта</div>
+    <div class="page-sub" id="sprint-sub">Прогресс по всем проектам</div>
+  </div>
+  <div class="grid3" style="margin-bottom:18px">
+    <div class="stat-card"><div class="stat-label">Потрачено</div><div class="stat-value" id="st-hours">—</div><div class="stat-sub" id="st-hours-sub">—</div></div>
+    <div class="stat-card"><div class="stat-label">День спринта</div><div class="stat-value" id="st-day">—</div><div class="stat-sub" id="st-day-sub">—</div></div>
+    <div class="stat-card"><div class="stat-label">Выполнено задач</div><div class="stat-value" id="st-done">0</div><div class="stat-sub">из всех задач</div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Прогресс по дням</div>
+    <div class="week-grid" id="week-grid"></div>
+  </div>
+  <div class="grid2">
+    <div class="card" style="border-left:4px solid var(--f)">
+      <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">
+        <span>🌱 Фундамент</span>
+        <span id="f-project-name" style="font-size:12px;font-weight:400;color:var(--text2);max-width:200px;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></span>
+      </div>
+      <div id="tasks-f-list"></div>
+      <div class="add-row">
+        <input class="inp" placeholder="Новая задача Фундамента…" id="add-f-inp">
+        <input class="inp" placeholder="25 мин" id="add-f-time" style="width:80px">
+        <button class="btn btn-primary btn-sm" onclick="addTask('f')">+</button>
+      </div>
+    </div>
+    <div class="card" style="border-left:4px solid var(--d)">
+      <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">
+        <span>🚀 Драйв</span>
+        <span id="d-project-name" style="font-size:12px;font-weight:400;color:var(--text2);max-width:200px;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></span>
+      </div>
+      <div id="tasks-d-list"></div>
+      <div class="add-row">
+        <input class="inp" placeholder="Новая задача Драйва…" id="add-d-inp">
+        <input class="inp" placeholder="50 мин" id="add-d-time" style="width:80px">
+        <button class="btn btn-primary btn-sm" onclick="addTask('d')">+</button>
+      </div>
+    </div>
+    <div class="card" style="border-left:4px solid var(--k)">
+      <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">
+        <span>💫 Кайф</span>
+        <span id="k-project-name" style="font-size:12px;font-weight:400;color:var(--text2);max-width:200px;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></span>
+      </div>
+      <div id="tasks-k-list"></div>
+      <div class="add-row">
+        <input class="inp" placeholder="Новая задача Кайфа…" id="add-k-inp">
+        <input class="inp" placeholder="15 мин" id="add-k-time" style="width:80px">
+        <button class="btn btn-primary btn-sm" onclick="addTask('k')">+</button>
+      </div>
+    </div>
+    <div class="card" style="border-left:4px solid var(--r)">
+      <div class="card-title">📊 Бюджет времени</div>
+      <div id="budget-bars"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ PLAN ═══ -->
+<div class="screen" id="s-plan">
+  <div class="page-header">
+    <div class="page-title">Планирование спринта</div>
+    <div class="page-sub">Настройте структуру и задачи нового спринта</div>
+  </div>
+  <div class="card">
+    <div class="card-title">Длительность спринта</div>
+    <div style="display:flex;gap:10px">
+      <div class="struct-opt selected" id="dur-7" onclick="selectDur(7)" style="flex:1">
+        <div><div class="sn">7 дней</div><div class="sd">Рекомендуется для новичков</div></div>
+      </div>
+      <div class="struct-opt" id="dur-21" onclick="selectDur(21)" style="flex:1">
+        <div><div class="sn">21 день</div><div class="sd">Для опытных спринтёров</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Структура времени</div>
+    <div class="struct-opt selected" id="struct-1" onclick="selectStruct(1)">
+      <div style="flex:1"><div class="sn">Опция 1 — рекомендуемая</div><div class="sd">90 мин каждый день</div><div class="tb"><div style="flex:2;background:var(--f)"></div><div style="flex:4;background:var(--d)"></div><div style="flex:1;background:var(--k)"></div></div><div style="font-size:10px;color:var(--text3);margin-top:4px">Ф: 25м · Д: 50м · К: 15м</div></div>
+      <div class="sv">10.5 ч</div>
+    </div>
+    <div class="struct-opt" id="struct-2" onclick="selectStruct(2)">
+      <div style="flex:1"><div class="sn">Опция 2</div><div class="sd">45 мин будни + 3 ч выходные</div><div class="tb"><div style="flex:1;background:var(--f)"></div><div style="flex:3;background:var(--d)"></div><div style="flex:6;background:var(--k)"></div></div></div>
+      <div class="sv">9.75 ч</div>
+    </div>
+    <div class="struct-opt" id="struct-3" onclick="selectStruct(3)">
+      <div style="flex:1"><div class="sn">Опция 3</div><div class="sd">60 мин будни + 2.5 ч выходные</div></div>
+      <div class="sv">10 ч</div>
+    </div>
+    <div class="struct-opt" id="struct-4" onclick="selectStruct(4)">
+      <div style="flex:1"><div class="sn">Опция 4</div><div class="sd">2.5 ч четыре раза в неделю</div></div>
+      <div class="sv">10 ч</div>
+    </div>
+    <div class="struct-opt" id="struct-5" onclick="selectStruct(5)">
+      <div style="flex:1"><div class="sn">Опция 5</div><div class="sd">3 ч три раза в неделю</div></div>
+      <div class="sv">9 ч</div>
+    </div>
+  </div>
+  <div class="card" style="border-left:4px solid var(--f)">
+    <div class="card-title">🌱 Проект «Фундамент» — забота о здоровье</div>
+    <input class="inp" placeholder="Название / краткое описание проекта" id="plan-f-name" style="margin-bottom:8px">
+    <textarea class="ta" rows="3" placeholder="Задачи и расписание: прогулки 25 мин каждый день, йога в воскресенье 60 мин…" id="plan-f-desc"></textarea>
+  </div>
+  <div class="card" style="border-left:4px solid var(--d)">
+    <div class="card-title">🚀 Проект «Драйв» — вызов и рост</div>
+    <input class="inp" placeholder="Название / краткое описание проекта" id="plan-d-name" style="margin-bottom:8px">
+    <textarea class="ta" rows="3" placeholder="Задачи и расписание: снять 3 видео — пн/вт скрипты, чт съёмка, пт монтаж…" id="plan-d-desc"></textarea>
+  </div>
+  <div class="card" style="border-left:4px solid var(--k)">
+    <div class="card-title">💫 Проект «Кайф» — замедлиться и насладиться</div>
+    <input class="inp" placeholder="Название / краткое описание проекта" id="plan-k-name" style="margin-bottom:8px">
+    <textarea class="ta" rows="3" placeholder="Задачи и расписание: кофе каждое утро 15 мин, книжный в субботу 90 мин…" id="plan-k-desc"></textarea>
+  </div>
+  <button class="btn btn-primary btn-full" onclick="launchSprint()">🚀 Запустить спринт</button>
+</div>
+
+<!-- ═══════════════════════════════════════ WEEKLY ═══ -->
+<div class="screen" id="s-weekly">
+  <div class="page-header">
+    <div class="page-title" id="weekly-title">Недельный план</div>
+    <div class="page-sub" id="weekly-sub">—</div>
+  </div>
+  <div class="card" id="weekly-card">
+    <div id="weekly-content"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ REFLECTION ═══ -->
+<div class="screen" id="s-reflection">
+  <div class="page-header">
+    <div class="page-title">Итоги недели</div>
+    <div class="page-sub" id="ref-week-label">—</div>
+  </div>
+  <div class="card">
+    <div class="card-title">1. Что было сделано — признайте свои победы</div>
+    <div class="reflect-sec rf"><div class="reflect-label">🌱 Фундамент</div><textarea class="ta" rows="2" id="ref-f-done" placeholder="Что удалось…"></textarea></div>
+    <div class="reflect-sec rd" style="margin-top:10px"><div class="reflect-label">🚀 Драйв</div><textarea class="ta" rows="2" id="ref-d-done" placeholder="Что удалось…"></textarea></div>
+    <div class="reflect-sec rk" style="margin-top:10px"><div class="reflect-label">💫 Кайф</div><textarea class="ta" rows="2" id="ref-k-done" placeholder="Что удалось…"></textarea></div>
+  </div>
+  <div class="card">
+    <div class="card-title">2. Что не было сделано — честно и без осуждения</div>
+    <div class="reflect-sec rf"><div class="reflect-label">🌱 Фундамент</div><textarea class="ta" rows="2" id="ref-f-not" placeholder="Сложности…"></textarea></div>
+    <div class="reflect-sec rd" style="margin-top:10px"><div class="reflect-label">🚀 Драйв</div><textarea class="ta" rows="2" id="ref-d-not" placeholder="Сложности…"></textarea></div>
+    <div class="reflect-sec rk" style="margin-top:10px"><div class="reflect-label">💫 Кайф</div><textarea class="ta" rows="2" id="ref-k-not" placeholder="Сложности…"></textarea></div>
+  </div>
+  <div class="card">
+    <div class="card-title">3. Как скорректировать подход — самое важное</div>
+    <textarea class="ta" rows="4" id="ref-adjust" placeholder="Что поменяю в следующей неделе…"></textarea>
+  </div>
+  <button class="btn btn-success btn-full" onclick="saveReflection()">✓ Сохранить итоги недели</button>
+  <button class="btn btn-primary btn-full" style="margin-top:8px" onclick="goNextWeek()">→ Запланировать следующую неделю</button>
+</div>
+
+<!-- ═══════════════════════════════════════ TRANSFORM ═══ -->
+<div class="screen" id="s-transform">
+  <div class="int-hero">
+    <div class="ih-icon">✨</div>
+    <h3>Интеграционная неделя</h3>
+    <p>Трансформирующая рефлексия · ~30 минут</p>
+  </div>
+  <div class="tr-step">
+    <div class="sn">Шаг 1 <span class="st">· 7 минут</span></div>
+    <div class="sq">Какое главное изменение произошло со мной за этот месяц?</div>
+    <textarea class="ta" rows="4" id="tr-change" placeholder="Это может быть не связано с проектами напрямую…"></textarea>
+  </div>
+  <div class="tr-step">
+    <div class="sn">Шаг 2 <span class="st">· 7 минут</span></div>
+    <div class="sq">Какие мои действия привели к этому изменению?</div>
+    <textarea class="ta" rows="4" id="tr-actions" placeholder="Смотрите на изменение с позиции вашей роли…"></textarea>
+  </div>
+  <div class="tr-step">
+    <div class="sn">Шаг 3 <span class="st">· 7 минут</span></div>
+    <div class="sq">Как в связи с этим трансформировался мой взгляд на себя?</div>
+    <textarea class="ta" rows="4" id="tr-belief" placeholder="Что вы о себе узнали?…"></textarea>
+  </div>
+  <div class="tr-step">
+    <div class="sn">Шаг 4 <span class="st">· 7 минут</span></div>
+    <div class="sq">Какие новые возможности благодаря этому мне открылись?</div>
+    <textarea class="ta" rows="4" id="tr-opportunity" placeholder="Что для «обновлённой» версии вас теперь доступно?…"></textarea>
+  </div>
+  <button class="btn btn-success btn-full" onclick="saveTransform()">✓ Сохранить в историю спринта</button>
+  <button class="btn btn-primary btn-full" style="margin-top:8px" onclick="startNewCycle()">🚀 Начать новый цикл спринтов</button>
+</div>
+
+<!-- ═══════════════════════════════════════ DIARY ═══ -->
+<div class="screen" id="s-diary">
+  <div class="page-header">
+    <div class="page-title">Дневник моментов</div>
+    <div class="page-sub">Замечательные мгновения каждого дня</div>
+  </div>
+  <div id="diary-list"></div>
+</div>
+
+<!-- ═══════════════════════════════════════ HISTORY ═══ -->
+<div class="screen" id="s-history">
+  <div class="page-header">
+    <div class="page-title">История спринтов</div>
+    <div class="page-sub">Итоги всех завершённых спринтов</div>
+  </div>
+  <div id="history-list"></div>
+</div>
+
+</main>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
 <script>
-// ── STATE ──────────────────────────────────────────────────
-const DATA_KEY = 'neurosprint_v1';
-let state = JSON.parse(localStorage.getItem(DATA_KEY) || '{}');
+// ═══════════════════ DATA LAYER ═══════════════════
+const SK = 'ns_v2';
+let DB = JSON.parse(localStorage.getItem(SK) || 'null') || getDefaultDB();
 
-function save(key, val) {
-  state[key] = val;
-  localStorage.setItem(DATA_KEY, JSON.stringify(state));
+function getDefaultDB() {
+  return {
+    sprints: [],          // array of sprint objects
+    activeSprint: null,   // index into sprints[]
+    diary: [],            // [{id, date, text}]
+    moodLog: [],          // [{date, score, label, note}]
+  };
 }
-function load(key, def='') { return state[key] || def; }
 
-// ── NAVIGATION ─────────────────────────────────────────────
+function persist() { localStorage.setItem(SK, JSON.stringify(DB)); }
+
+function activeSprint() {
+  if (DB.activeSprint === null || !DB.sprints[DB.activeSprint]) return null;
+  return DB.sprints[DB.activeSprint];
+}
+
+function newSprintObj(dur, struct, fName, fDesc, dName, dDesc, kName, kDesc) {
+  const start = new Date();
+  return {
+    id: Date.now(),
+    num: DB.sprints.length + 1,
+    duration: dur,
+    structure: struct,
+    startDate: start.toISOString(),
+    projects: {
+      f: { name: fName, desc: fDesc, tasks: [] },
+      d: { name: dName, desc: dDesc, tasks: [] },
+      k: { name: kName, desc: kDesc, tasks: [] },
+    },
+    weeks: [],        // weekly reflections [{weekNum, done, notDone, adjust, savedAt}]
+    transform: null,  // integration reflection
+    currentWeek: 1,
+  };
+}
+
+// ═══════════════════ NAVIGATION ═══════════════════
 function go(id, btn) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.getElementById('s-' + id).classList.add('active');
   if (btn) btn.classList.add('active');
+  if (id === 'today')      renderToday();
+  if (id === 'sprint')     renderSprint();
+  if (id === 'weekly')     renderWeekly();
+  if (id === 'diary')      renderDiary();
+  if (id === 'history')    renderHistory();
+  if (id === 'reflection') renderReflection();
 }
 
-// ── DATE ───────────────────────────────────────────────────
-const days = ['воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'];
-const months = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
-function updateDate() {
+// ═══════════════════ SIDEBAR ═══════════════════
+function updateSidebar() {
+  const sp = activeSprint();
+  const label = sp ? `Спринт #${sp.num} · ${sp.duration} дней` : 'Нет активного спринта';
+  document.getElementById('sb-sprint-label').textContent = label;
+  document.getElementById('sb-sprint-name').textContent = sp ? `Неделя ${sp.currentWeek}` : '—';
+  if (sp) {
+    const day = dayOfSprint(sp);
+    const pct = Math.min(100, Math.round(day / sp.duration * 100));
+    document.getElementById('sb-prog').style.width = pct + '%';
+    document.getElementById('sb-prog-label').textContent = `День ${day} из ${sp.duration}`;
+  } else {
+    document.getElementById('sb-prog').style.width = '0%';
+    document.getElementById('sb-prog-label').textContent = '—';
+  }
+}
+
+function dayOfSprint(sp) {
+  const start = new Date(sp.startDate);
+  const now = new Date();
+  const diff = Math.floor((now - start) / 86400000) + 1;
+  return Math.min(diff, sp.duration);
+}
+
+// ═══════════════════ TODAY ═══════════════════
+let selectedMoodScore = 0;
+let selectedMoodLabel = '';
+
+function renderToday() {
   const d = new Date();
-  const el = document.getElementById('today-date');
-  if (el) el.textContent = `${days[d.getDay()]}, ${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()} · Спринт #1, день ${load('sprint-day',1)}`;
+  const days = ['воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'];
+  const months = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+  document.getElementById('today-date-label').textContent =
+    `${days[d.getDay()]}, ${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+  renderTodayTasks();
+  renderMoodChart();
 }
 
-// ── WEEK GRID ──────────────────────────────────────────────
-const dayNames = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
-function buildWeekGrid() {
+function renderTodayTasks() {
+  const sp = activeSprint();
+  const el = document.getElementById('today-tasks-list');
+  if (!sp) { el.innerHTML = '<div class="empty">Нет активного спринта.<br>Перейдите в «Планирование» чтобы начать.</div>'; return; }
+  const all = [
+    ...sp.projects.f.tasks.map(t => ({...t, type:'f'})),
+    ...sp.projects.d.tasks.map(t => ({...t, type:'d'})),
+    ...sp.projects.k.tasks.map(t => ({...t, type:'k'})),
+  ].filter(t => !t.done).slice(0,6);
+  if (!all.length) { el.innerHTML = '<div class="empty">Все задачи выполнены! 🎉</div>'; return; }
+  el.innerHTML = all.map(t => `
+    <div class="task-item" onclick="toggleTodayTask('${t.type}','${t.id}',this)">
+      <div class="cb"><svg width="10" height="10" viewBox="0 0 10 10" style="display:none"><polyline points="1.5,5 4,7.5 8.5,2.5" fill="none" stroke="white" stroke-width="1.5"/></svg></div>
+      <div>
+        <span class="chip chip-${t.type}" style="margin-right:6px;font-size:10px">${t.type==='f'?'Ф':t.type==='d'?'Д':'К'}</span>
+        <span class="task-name">${t.name}</span>
+        ${t.time ? `<div><span class="task-time">${t.time}</span></div>` : ''}
+      </div>
+    </div>`).join('');
+}
+
+function toggleTodayTask(type, id, el) {
+  const sp = activeSprint(); if (!sp) return;
+  const task = sp.projects[type].tasks.find(t => t.id == id);
+  if (task) { task.done = !task.done; persist(); renderTodayTasks(); renderSprint(); updateSidebar(); }
+}
+
+function selectMood(score, btn) {
+  document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedMoodScore = score;
+  selectedMoodLabel = btn.textContent.trim().replace(/[🟣🟢🔵🟡🔴]/g,'').trim();
+}
+
+function saveState() {
+  if (!selectedMoodScore) { toast('Выберите состояние на шкале'); return; }
+  const note = document.getElementById('inp-state').value.trim();
+  DB.moodLog.push({
+    date: new Date().toISOString(),
+    score: selectedMoodScore,
+    label: selectedMoodLabel,
+    note
+  });
+  persist();
+  document.getElementById('inp-state').value = '';
+  document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
+  selectedMoodScore = 0;
+  renderMoodChart();
+  toast('Состояние сохранено ✓');
+}
+
+function saveMoment() {
+  const text = document.getElementById('inp-moment').value.trim();
+  if (!text) { toast('Напишите момент перед сохранением'); return; }
+  DB.diary.push({ id: Date.now(), date: new Date().toISOString(), text });
+  persist();
+  document.getElementById('inp-moment').value = '';
+  toast('Сохранено в дневник моментов ✓');
+}
+
+function renderMoodChart() {
+  const last14 = DB.moodLog.slice(-14);
+  const labels = last14.map(m => {
+    const d = new Date(m.date);
+    return `${d.getDate()}.${String(d.getMonth()+1).padStart(2,'0')}`;
+  });
+  const data = last14.map(m => m.score);
+  const ctx = document.getElementById('mood-chart').getContext('2d');
+  if (window._moodChart) window._moodChart.destroy();
+  window._moodChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{
+        data,
+        borderColor: '#5B4FCF',
+        backgroundColor: 'rgba(91,79,207,0.08)',
+        borderWidth: 2,
+        pointBackgroundColor: '#5B4FCF',
+        pointRadius: 4,
+        tension: 0.35,
+        fill: true,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: {
+        callbacks: { label: ctx => {
+          const m = last14[ctx.dataIndex];
+          return `${m.label}${m.note ? ' — ' + m.note : ''}`;
+        }}
+      }},
+      scales: {
+        y: { min:0, max:5, ticks: { stepSize:1, callback: v => ['','🟣','🟢','🔵','🟡','🔴'][v]||'' }, grid: { color:'rgba(0,0,0,0.05)' } },
+        x: { grid: { display:false }, ticks: { font: { size:11 } } }
+      }
+    }
+  });
+}
+
+// ═══════════════════ SPRINT ═══════════════════
+function renderSprint() {
+  const sp = activeSprint();
+  if (!sp) {
+    document.getElementById('sprint-title').textContent = 'Нет активного спринта';
+    document.getElementById('sprint-sub').textContent = 'Перейдите в Планирование чтобы начать';
+    ['tasks-f-list','tasks-d-list','tasks-k-list','budget-bars'].forEach(id => {
+      document.getElementById(id).innerHTML = '<div class="empty">Спринт не запущен</div>';
+    });
+    return;
+  }
+  document.getElementById('sprint-title').textContent = `Спринт #${sp.num} · Неделя ${sp.currentWeek}`;
+  document.getElementById('sprint-sub').textContent = `Прогресс по всем проектам · День ${dayOfSprint(sp)} из ${sp.duration}`;
+
+  const day = dayOfSprint(sp);
+  document.getElementById('st-day').innerHTML = `${day}<span class="stat-unit"> / ${sp.duration}</span>`;
+  document.getElementById('st-day-sub').textContent = Math.round(day/sp.duration*100) + '% пути';
+
+  const allTasks = [...sp.projects.f.tasks, ...sp.projects.d.tasks, ...sp.projects.k.tasks];
+  const doneCount = allTasks.filter(t=>t.done).length;
+  document.getElementById('st-done').innerHTML = `${doneCount}<span class="stat-unit"> / ${allTasks.length}</span>`;
+
+  const structHours = [10.5,9.75,10,10,9];
+  const totalH = structHours[(sp.structure||1)-1];
+  const spentH = (day / sp.duration * totalH * 0.9).toFixed(1);
+  document.getElementById('st-hours').innerHTML = `${spentH}<span class="stat-unit"> / ${totalH}ч</span>`;
+  document.getElementById('st-hours-sub').textContent = Math.round(spentH/totalH*100) + '% бюджета';
+
+  buildWeekGrid(sp);
+  ['f','d','k'].forEach(type => renderTaskList(type, sp));
+  document.getElementById('f-project-name').textContent = sp.projects.f.name || '';
+  document.getElementById('d-project-name').textContent = sp.projects.d.name || '';
+  document.getElementById('k-project-name').textContent = sp.projects.k.name || '';
+  renderBudget(sp);
+}
+
+function renderTaskList(type, sp) {
+  const tasks = sp.projects[type].tasks;
+  const el = document.getElementById(`tasks-${type}-list`);
+  if (!tasks.length) { el.innerHTML = '<div class="empty" style="padding:12px 0">Нет задач — добавьте первую</div>'; return; }
+  el.innerHTML = tasks.map(t => `
+    <div class="task-item ${t.done?'done':''}">
+      <div class="cb" onclick="toggleTask('${type}','${t.id}')" style="${t.done?'background:var(--f);border-color:var(--f)':''}">
+        <svg width="10" height="10" viewBox="0 0 10 10" style="display:${t.done?'block':'none'}"><polyline points="1.5,5 4,7.5 8.5,2.5" fill="none" stroke="white" stroke-width="1.5"/></svg>
+      </div>
+      <div style="flex:1">
+        <div class="task-name">${t.name}</div>
+        ${t.time ? `<span class="task-time">${t.time}</span>` : ''}
+      </div>
+      <button class="task-del" onclick="deleteTask('${type}','${t.id}')" title="Удалить">×</button>
+    </div>`).join('');
+}
+
+function toggleTask(type, id) {
+  const sp = activeSprint(); if (!sp) return;
+  const t = sp.projects[type].tasks.find(t => t.id == id);
+  if (t) { t.done = !t.done; persist(); renderSprint(); renderTodayTasks(); updateSidebar(); }
+}
+
+function deleteTask(type, id) {
+  const sp = activeSprint(); if (!sp) return;
+  sp.projects[type].tasks = sp.projects[type].tasks.filter(t => t.id != id);
+  persist(); renderSprint(); renderTodayTasks();
+}
+
+function addTask(type) {
+  const sp = activeSprint(); if (!sp) { toast('Сначала запустите спринт'); return; }
+  const inp = document.getElementById(`add-${type}-inp`);
+  const timeInp = document.getElementById(`add-${type}-time`);
+  const name = inp.value.trim();
+  if (!name) return;
+  sp.projects[type].tasks.push({ id: Date.now(), name, time: timeInp.value.trim(), done: false });
+  persist(); renderSprint(); renderTodayTasks();
+  inp.value = ''; timeInp.value = '';
+  toast('Задача добавлена ✓');
+}
+
+function renderBudget(sp) {
+  const el = document.getElementById('budget-bars');
+  const types = [
+    { key:'f', label:'🌱 Фундамент', color:'var(--f)', bg:'var(--f-bg)' },
+    { key:'d', label:'🚀 Драйв',     color:'var(--d)', bg:'var(--d-bg)' },
+    { key:'k', label:'💫 Кайф',      color:'var(--k)', bg:'var(--k-bg)' },
+  ];
+  const total = [4,4,2];
+  const day = dayOfSprint(sp);
+  el.innerHTML = types.map((t,i) => {
+    const spent = +(day/sp.duration*total[i]*0.9).toFixed(1);
+    const pct = Math.min(100, Math.round(spent/total[i]*100));
+    return `<div style="margin-bottom:12px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+        <span style="font-size:12px;font-weight:500;color:${t.color}">${t.label}</span>
+        <span style="font-size:12px;color:var(--text2)">${spent} / ${total[i]} ч</span>
+      </div>
+      <div class="prog-bar" style="background:${t.bg}"><div class="prog-fill" style="width:${pct}%;background:${t.color}"></div></div>
+    </div>`;
+  }).join('') + `<hr><div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px"><span style="font-size:12px;color:var(--text2)">Итого</span><span style="font-size:15px;font-weight:600;color:var(--accent)">${(+(day/sp.duration*9*0.9).toFixed(1))} / 10 ч</span></div>`;
+}
+
+function buildWeekGrid(sp) {
   const grid = document.getElementById('week-grid');
-  if (!grid) return;
   grid.innerHTML = '';
+  const start = new Date(sp.startDate);
   const today = new Date();
-  const dow = today.getDay() === 0 ? 6 : today.getDay() - 1;
-  for (let i = 0; i < 7; i++) {
-    const d = new Date(today);
-    d.setDate(today.getDate() - dow + i);
+  const dayNames = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
+  const days = sp.duration === 7 ? 7 : 7;
+  for (let i = 0; i < days; i++) {
+    const d = new Date(start); d.setDate(start.getDate() + i);
+    const isToday = d.toDateString() === today.toDateString();
+    const isPast = d < today && !isToday;
     const cell = document.createElement('div');
-    cell.className = 'day-cell';
-    if (i === dow) cell.classList.add('is-today');
-    else if (i < dow) cell.classList.add('is-done');
-    cell.innerHTML = `<div class="dn">${dayNames[i]}</div><div class="dd">${d.getDate()}</div><div class="dots"><div class="dot" style="background:var(--f);opacity:${i<dow?1:0.25}"></div><div class="dot" style="background:var(--d);opacity:${i<dow?1:0.25}"></div><div class="dot" style="background:var(--k);opacity:${i<dow?1:0.25}"></div></div>`;
+    cell.className = 'day-cell' + (isToday?' is-today':'') + (isPast?' is-done':'');
+    const dow = (d.getDay() + 6) % 7;
+    const hasTasks = {f: sp.projects.f.tasks.length > 0, d: sp.projects.d.tasks.length > 0, k: sp.projects.k.tasks.length > 0};
+    cell.innerHTML = `<div class="dn">${dayNames[dow]}</div><div class="dd">${d.getDate()}</div><div class="dots"><div class="dot" style="background:var(--f);opacity:${hasTasks.f?(isPast||isToday?1:.3):.15}"></div><div class="dot" style="background:var(--d);opacity:${hasTasks.d?(isPast||isToday?1:.3):.15}"></div><div class="dot" style="background:var(--k);opacity:${hasTasks.k?(isPast||isToday?1:.3):.15}"></div></div>`;
     grid.appendChild(cell);
   }
 }
 
-// ── TASKS ──────────────────────────────────────────────────
-function toggleTask(item) {
-  item.classList.toggle('done');
-  const cb = item.querySelector('.checkbox');
-  const svg = cb.querySelector('svg');
-  if (item.classList.contains('done')) {
-    cb.style.background = 'var(--f)';
-    cb.style.borderColor = 'var(--f)';
-    if(svg) svg.style.display = 'block';
-  } else {
-    cb.style.background = '';
-    cb.style.borderColor = '';
-    if(svg) svg.style.display = 'none';
-  }
-  updateDoneCount();
+// ═══════════════════ PLANNING ═══════════════════
+let planDur = 7, planStruct = 1;
+
+function selectDur(d) {
+  planDur = d;
+  document.getElementById('dur-7').classList.toggle('selected', d===7);
+  document.getElementById('dur-21').classList.toggle('selected', d===21);
+}
+function selectStruct(n) {
+  planStruct = n;
+  for(let i=1;i<=5;i++) document.getElementById('struct-'+i).classList.toggle('selected', i===n);
 }
 
-function updateDoneCount() {
-  const done = document.querySelectorAll('.task-item.done').length;
-  const el = document.getElementById('done-count');
-  if(el) el.innerHTML = `${done}<span class="stat-unit"> шт</span>`;
-}
-
-function addTask(type) {
-  const input = document.getElementById('add-' + type);
-  const val = input.value.trim();
-  if (!val) return;
-  const container = document.getElementById('tasks-' + type);
-  const item = document.createElement('div');
-  item.className = 'task-item';
-  item.onclick = function() { toggleTask(this); };
-  item.innerHTML = `<div class="checkbox"><svg width="10" height="10" viewBox="0 0 10 10" style="display:none"><polyline points="1.5,5 4,7.5 8.5,2.5" fill="none" stroke="white" stroke-width="1.5"/></svg></div><div><div class="task-name">${val}</div></div>`;
-  container.appendChild(item);
-  input.value = '';
-}
-
-// ── MOOD ───────────────────────────────────────────────────
-function selectMood(btn, label) {
-  document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  save('today-mood', label);
-}
-
-// ── STRUCTURE ──────────────────────────────────────────────
-function selectStructure(el) {
-  document.querySelectorAll('.structure-opt').forEach(o => o.classList.remove('selected'));
-  el.classList.add('selected');
-}
-function selectDuration(el) {
-  el.closest('.card').querySelectorAll('.structure-opt').forEach(o => o.classList.remove('selected'));
-  el.classList.add('selected');
-}
-
-// ── SPRINT START ───────────────────────────────────────────
-function startSprint() {
-  alert('Спринт запущен! 🚀\nЗаписи сохранены. Перейдите на «Ежедневную сверку».');
-  go('today', document.querySelector('.nav-item'));
-}
-
-// ── RESTORE DATA ───────────────────────────────────────────
-function restoreData() {
-  ['today-state','today-moment','plan-f','plan-d','plan-k','ref-f-done','ref-d-done','ref-k-done','ref-f-notdone','ref-d-notdone','ref-k-notdone','ref-adjust','tr-change','tr-actions','tr-belief','tr-opportunity'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el && state[id]) el.value = state[id];
+function launchSprint() {
+  const fName = document.getElementById('plan-f-name').value.trim();
+  const fDesc = document.getElementById('plan-f-desc').value.trim();
+  const dName = document.getElementById('plan-d-name').value.trim();
+  const dDesc = document.getElementById('plan-d-desc').value.trim();
+  const kName = document.getElementById('plan-k-name').value.trim();
+  const kDesc = document.getElementById('plan-k-desc').value.trim();
+  if (!fName || !dName || !kName) { toast('Заполните названия всех трёх проектов'); return; }
+  const sp = newSprintObj(planDur, planStruct, fName, fDesc, dName, dDesc, kName, kDesc);
+  // pre-populate tasks from description lines
+  [['f',fDesc],['d',dDesc],['k',kDesc]].forEach(([type, desc]) => {
+    if (desc) {
+      desc.split('\n').filter(l=>l.trim()).slice(0,6).forEach(line => {
+        const timeMatch = line.match(/(\d+\s*мин)/i);
+        sp.projects[type].tasks.push({ id: Date.now()+Math.random(), name: line.replace(/(\d+\s*мин)/i,'').replace(/^[-–·•]\s*/,'').trim(), time: timeMatch?timeMatch[0]:'', done:false });
+      });
+    }
   });
+  DB.sprints.push(sp);
+  DB.activeSprint = DB.sprints.length - 1;
+  persist();
+  updateSidebar();
+  toast(`Спринт #${sp.num} запущен! 🚀`);
+  go('sprint', document.querySelector('.nav-item[onclick*=sprint]'));
 }
 
-// ── INIT ───────────────────────────────────────────────────
-updateDate();
-buildWeekGrid();
-restoreData();
+// ═══════════════════ WEEKLY ═══════════════════
+let weeklyEditWeek = 1;
+
+function renderWeekly(weekNum) {
+  const sp = activeSprint();
+  weeklyEditWeek = weekNum || (sp ? sp.currentWeek : 1);
+  if (!sp) {
+    document.getElementById('weekly-title').textContent = 'Недельный план';
+    document.getElementById('weekly-sub').textContent = 'Нет активного спринта';
+    document.getElementById('weekly-content').innerHTML = '<div class="empty">Запустите спринт в разделе «Планирование»</div>';
+    return;
+  }
+  document.getElementById('weekly-title').textContent = `Спринт #${sp.num} · Неделя ${weeklyEditWeek}`;
+  document.getElementById('weekly-sub').textContent = `${sp.duration}-дневный спринт · Структура ${sp.structure}`;
+
+  const dayNames = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
+  const start = new Date(sp.startDate);
+  start.setDate(start.getDate() + (weeklyEditWeek-1)*7);
+
+  const fTasks = sp.projects.f.tasks;
+  const dTasks = sp.projects.d.tasks;
+  const kTasks = sp.projects.k.tasks;
+
+  let rows = '';
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(start); d.setDate(start.getDate()+i);
+    const isToday = d.toDateString() === new Date().toDateString();
+    const dow = (d.getDay()+6)%7;
+    const isWeekend = dow >= 5;
+    const fT = isWeekend ? [] : fTasks.filter((_,idx) => idx%5===i%5).slice(0,1);
+    const dT = isWeekend ? [] : dTasks.filter((_,idx) => idx%5===i%5).slice(0,2);
+    const kT = isWeekend ? kTasks.filter(t=>t.time&&t.time.includes('90')) : kTasks.filter(t=>!t.time||!t.time.includes('90')).slice(0,1);
+    rows += `<tr ${isToday?'class="today-row"':''}>
+      <td>${dayNames[dow]}<br><span style="font-size:11px;color:var(--text3)">${d.getDate()}.${String(d.getMonth()+1).padStart(2,'0')}</span></td>
+      <td>${fT.map(t=>`<span class="cell-task ct-f">${t.name}${t.time?' · '+t.time:''}</span>`).join('')||'<span style="color:var(--text3);font-size:12px">—</span>'}</td>
+      <td>${dT.map(t=>`<span class="cell-task ct-d">${t.name}${t.time?' · '+t.time:''}</span>`).join('')||'<span style="color:var(--text3);font-size:12px">—</span>'}</td>
+      <td>${kT.map(t=>`<span class="cell-task ct-k">${t.name}${t.time?' · '+t.time:''}</span>`).join('')||'<span style="color:var(--text3);font-size:12px">—</span>'}</td>
+    </tr>`;
+  }
+
+  document.getElementById('weekly-content').innerHTML = `
+    <table class="week-table">
+      <thead><tr><th>День</th><th><span class="chip chip-f">Фундамент</span></th><th><span class="chip chip-d">Драйв</span></th><th><span class="chip chip-k">Кайф</span></th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+    <p style="font-size:12px;color:var(--text3);margin-top:12px">Задачи берутся из «Обзора спринта» — редактируйте их там.</p>`;
+}
+
+// ═══════════════════ REFLECTION ═══════════════════
+function renderReflection() {
+  const sp = activeSprint();
+  const weekNum = sp ? sp.currentWeek : 1;
+  document.getElementById('ref-week-label').textContent = sp ? `Спринт #${sp.num} · Итоги недели ${weekNum}` : 'Нет активного спринта';
+  // restore saved
+  if (sp) {
+    const saved = sp.weeks.find(w => w.weekNum === weekNum);
+    if (saved) {
+      document.getElementById('ref-f-done').value = saved.fDone||'';
+      document.getElementById('ref-d-done').value = saved.dDone||'';
+      document.getElementById('ref-k-done').value = saved.kDone||'';
+      document.getElementById('ref-f-not').value  = saved.fNot||'';
+      document.getElementById('ref-d-not').value  = saved.dNot||'';
+      document.getElementById('ref-k-not').value  = saved.kNot||'';
+      document.getElementById('ref-adjust').value = saved.adjust||'';
+    }
+  }
+}
+
+function saveReflection() {
+  const sp = activeSprint(); if (!sp) { toast('Нет активного спринта'); return; }
+  const weekNum = sp.currentWeek;
+  const entry = {
+    weekNum,
+    fDone:   document.getElementById('ref-f-done').value,
+    dDone:   document.getElementById('ref-d-done').value,
+    kDone:   document.getElementById('ref-k-done').value,
+    fNot:    document.getElementById('ref-f-not').value,
+    dNot:    document.getElementById('ref-d-not').value,
+    kNot:    document.getElementById('ref-k-not').value,
+    adjust:  document.getElementById('ref-adjust').value,
+    savedAt: new Date().toISOString(),
+  };
+  sp.weeks = sp.weeks.filter(w => w.weekNum !== weekNum);
+  sp.weeks.push(entry);
+  persist();
+  toast(`Итоги недели ${weekNum} сохранены ✓`);
+}
+
+function goNextWeek() {
+  saveReflection();
+  const sp = activeSprint(); if (!sp) return;
+  if (sp.currentWeek < 3) {
+    sp.currentWeek++;
+    persist();
+    toast(`Переход к неделе ${sp.currentWeek}`);
+    // clear fields for new week
+    ['ref-f-done','ref-d-done','ref-k-done','ref-f-not','ref-d-not','ref-k-not','ref-adjust'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+    renderWeekly(sp.currentWeek);
+    go('weekly', document.querySelector('.nav-item[onclick*=weekly]'));
+  } else {
+    toast('Все 3 недели пройдены! Перейдите к Интеграции.');
+    go('transform', document.querySelector('.nav-item[onclick*=transform]'));
+  }
+}
+
+// ═══════════════════ TRANSFORM ═══════════════════
+function saveTransform() {
+  const sp = activeSprint(); if (!sp) { toast('Нет активного спринта'); return; }
+  sp.transform = {
+    change:      document.getElementById('tr-change').value,
+    actions:     document.getElementById('tr-actions').value,
+    belief:      document.getElementById('tr-belief').value,
+    opportunity: document.getElementById('tr-opportunity').value,
+    savedAt:     new Date().toISOString(),
+  };
+  persist();
+  toast('Интеграция сохранена в историю спринта ✓');
+}
+
+function startNewCycle() {
+  saveTransform();
+  const sp = activeSprint();
+  if (sp) {
+    sp.completedAt = new Date().toISOString();
+  }
+  // clear plan form
+  ['plan-f-name','plan-d-name','plan-k-name'].forEach(id => document.getElementById(id).value = '');
+  ['plan-f-desc','plan-d-desc','plan-k-desc'].forEach(id => document.getElementById(id).value = '');
+  ['tr-change','tr-actions','tr-belief','tr-opportunity'].forEach(id => document.getElementById(id).value = '');
+  planDur = 7; planStruct = 1;
+  selectDur(7); selectStruct(1);
+  toast('Спринт завершён! Заполните план нового цикла.');
+  go('plan', document.querySelector('.nav-item[onclick*=plan]'));
+}
+
+// ═══════════════════ DIARY ═══════════════════
+function renderDiary() {
+  const el = document.getElementById('diary-list');
+  if (!DB.diary.length) {
+    el.innerHTML = '<div class="card"><div class="empty">Пока нет записей.<br>Сохраните первый замечательный момент в разделе «Сегодня».</div></div>';
+    return;
+  }
+  const sorted = [...DB.diary].reverse();
+  el.innerHTML = sorted.map(m => {
+    const d = new Date(m.date);
+    const dateStr = `${d.getDate()}.${String(d.getMonth()+1).padStart(2,'0')}.${d.getFullYear()} · ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+    return `<div class="history-item">
+      <button class="history-del" onclick="deleteDiary(${m.id})">×</button>
+      <div class="history-date">${dateStr}</div>
+      <div class="history-text">${m.text}</div>
+    </div>`;
+  }).join('');
+}
+
+function deleteDiary(id) {
+  DB.diary = DB.diary.filter(m => m.id !== id);
+  persist(); renderDiary();
+}
+
+// ═══════════════════ HISTORY ═══════════════════
+function renderHistory() {
+  const el = document.getElementById('history-list');
+  if (!DB.sprints.length) {
+    el.innerHTML = '<div class="card"><div class="empty">История пуста.<br>Завершите первый спринт чтобы увидеть итоги.</div></div>';
+    return;
+  }
+  el.innerHTML = DB.sprints.map((sp, idx) => {
+    const isActive = DB.activeSprint === idx;
+    const start = new Date(sp.startDate);
+    const dateStr = `${start.getDate()}.${String(start.getMonth()+1).padStart(2,'0')}.${start.getFullYear()}`;
+    const weeksHtml = sp.weeks.length ? sp.weeks.map(w => `
+      <div style="margin-top:14px;padding:12px 14px;background:var(--surface2);border-radius:10px">
+        <div style="font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Итоги недели ${w.weekNum}</div>
+        ${w.fDone||w.dDone||w.kDone ? `<div style="font-size:12px;margin-bottom:4px"><span style="color:var(--f);font-weight:500">Сделано:</span><br>${[w.fDone,w.dDone,w.kDone].filter(Boolean).join(' · ')}</div>` : ''}
+        ${w.fNot||w.dNot||w.kNot ? `<div style="font-size:12px;margin-bottom:4px"><span style="color:var(--d);font-weight:500">Не сделано:</span><br>${[w.fNot,w.dNot,w.kNot].filter(Boolean).join(' · ')}</div>` : ''}
+        ${w.adjust ? `<div style="font-size:12px"><span style="color:var(--accent);font-weight:500">Корректировка:</span><br>${w.adjust}</div>` : ''}
+      </div>`).join('') : '';
+    const trHtml = sp.transform ? `
+      <div style="margin-top:14px;padding:12px 14px;background:var(--accent-bg);border-radius:10px;border:1px solid rgba(91,79,207,.15)">
+        <div style="font-size:11px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">✨ Трансформирующая рефлексия</div>
+        ${sp.transform.change ? `<div style="font-size:12px;margin-bottom:6px"><strong>Изменение:</strong> ${sp.transform.change}</div>` : ''}
+        ${sp.transform.actions ? `<div style="font-size:12px;margin-bottom:6px"><strong>Действия:</strong> ${sp.transform.actions}</div>` : ''}
+        ${sp.transform.belief ? `<div style="font-size:12px;margin-bottom:6px"><strong>Убеждения:</strong> ${sp.transform.belief}</div>` : ''}
+        ${sp.transform.opportunity ? `<div style="font-size:12px"><strong>Возможности:</strong> ${sp.transform.opportunity}</div>` : ''}
+      </div>` : '';
+    return `<div class="card" style="border-left:4px solid ${isActive?'var(--accent)':'var(--border2)'}">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div>
+          <div style="font-size:16px;font-weight:600;color:var(--text)">Спринт #${sp.num}</div>
+          <div style="font-size:12px;color:var(--text3);margin-top:2px">Начало: ${dateStr} · ${sp.duration} дней · Структура ${sp.structure}</div>
+        </div>
+        ${isActive ? '<span class="chip chip-f">Активный</span>' : '<span class="chip chip-r">Завершён</span>'}
+      </div>
+      <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
+        ${sp.projects.f.name ? `<span class="chip chip-f">🌱 ${sp.projects.f.name}</span>` : ''}
+        ${sp.projects.d.name ? `<span class="chip chip-d">🚀 ${sp.projects.d.name}</span>` : ''}
+        ${sp.projects.k.name ? `<span class="chip chip-k">💫 ${sp.projects.k.name}</span>` : ''}
+      </div>
+      ${weeksHtml}
+      ${trHtml}
+    </div>`;
+  }).join('');
+}
+
+// ═══════════════════ TOAST ═══════════════════
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2800);
+}
+
+// ═══════════════════ INIT ═══════════════════
+updateSidebar();
+renderToday();
 </script>
 </body>
 </html>
