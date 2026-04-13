@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>НейроСпринт</title>
+<link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Onest:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F7F5F0;
+  --surface: #FFFFFF;
+  --surface2: #F0EDE6;
+  --border: rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.14);
+  --text: #1A1814;
+  --text2: #6B6760;
+  --text3: #A09D98;
+  --f: #1D9E75;
+  --f-bg: #E6F7F1;
+  --f-border: #9FE1CB;
+  --d: #C4501F;
+  --d-bg: #FAECE7;
+  --d-border: #F0997B;
+  --k: #B8406A;
+  --k-bg: #FBEAF0;
+  --k-border: #ED93B1;
+  --r: #2D6FBF;
+  --r-bg: #E6F0FB;
+  --accent: #5B4FCF;
+  --accent-bg: #EEEDFE;
+  --radius: 14px;
+  --radius-sm: 8px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Onest', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* LAYOUT */
+.app { display: flex; min-height: 100vh; }
+.sidebar {
+  width: 220px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 24px 0;
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  z-index: 100;
+}
+.main { margin-left: 220px; padding: 32px 40px; flex: 1; max-width: 960px; }
+
+/* SIDEBAR */
+.logo {
+  padding: 0 20px 24px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 12px;
+}
+.logo-title {
+  font-family: 'Gochi Hand', cursive;
+  font-size: 22px;
+  color: var(--accent);
+  letter-spacing: 0.5px;
+}
+.logo-sub { font-size: 11px; color: var(--text3); margin-top: 1px; }
+
+.nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 20px;
+  cursor: pointer;
+  border-radius: 0;
+  border: none; background: none;
+  width: 100%;
+  text-align: left;
+  font-family: 'Onest', sans-serif;
+  font-size: 13.5px;
+  color: var(--text2);
+  transition: all 0.15s;
+  position: relative;
+}
+.nav-item:hover { background: var(--bg); color: var(--text); }
+.nav-item.active {
+  background: var(--accent-bg);
+  color: var(--accent);
+  font-weight: 500;
+}
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--accent);
+  border-radius: 0 2px 2px 0;
+}
+.nav-icon { font-size: 16px; width: 20px; text-align: center; }
+.nav-section {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text3);
+  padding: 16px 20px 6px;
+}
+
+.sprint-badge {
+  margin: 0 20px;
+  background: var(--accent-bg);
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-top: auto;
+  border: 1px solid rgba(91,79,207,0.15);
+}
+.sprint-badge .label { font-size: 10px; color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+.sprint-badge .value { font-size: 13px; font-weight: 500; color: var(--text); margin-top: 2px; }
+.progress-mini { height: 4px; background: rgba(91,79,207,0.15); border-radius: 2px; margin-top: 8px; overflow: hidden; }
+.progress-mini-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.3s; }
+
+/* SCREENS */
+.screen { display: none; }
+.screen.active { display: block; }
+
+/* PAGE HEADER */
+.page-header { margin-bottom: 28px; }
+.page-title { font-size: 26px; font-weight: 600; color: var(--text); }
+.page-sub { font-size: 13px; color: var(--text3); margin-top: 3px; }
+
+/* CARDS */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+.card-title {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text3);
+  margin-bottom: 14px;
+}
+
+/* GRID */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+/* PROJECT CHIPS */
+.chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 11px; font-weight: 600;
+  padding: 3px 9px; border-radius: 20px;
+  letter-spacing: 0.3px;
+}
+.chip-f { background: var(--f-bg); color: var(--f); border: 1px solid var(--f-border); }
+.chip-d { background: var(--d-bg); color: var(--d); border: 1px solid var(--d-border); }
+.chip-k { background: var(--k-bg); color: var(--k); border: 1px solid var(--k-border); }
+.chip-r { background: var(--r-bg); color: var(--r); border: 1px solid rgba(45,111,191,0.3); }
+
+/* STAT CARDS */
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+}
+.stat-label { font-size: 11px; color: var(--text3); font-weight: 500; }
+.stat-value { font-size: 26px; font-weight: 600; color: var(--text); margin-top: 2px; line-height: 1; }
+.stat-unit { font-size: 13px; color: var(--text2); font-weight: 400; }
+.stat-sub { font-size: 12px; color: var(--text3); margin-top: 4px; }
+
+/* TASKS */
+.task-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.task-item:last-child { border-bottom: none; padding-bottom: 0; }
+.task-item.done { opacity: 0.45; }
+.task-item.done .task-name { text-decoration: line-through; }
+.checkbox {
+  width: 18px; height: 18px;
+  border-radius: 5px;
+  border: 1.5px solid var(--border2);
+  flex-shrink: 0;
+  margin-top: 1px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+  background: transparent;
+}
+.task-item.done .checkbox { background: var(--f); border-color: var(--f); }
+.task-name { font-size: 14px; color: var(--text); flex: 1; }
+.task-meta { display: flex; align-items: center; gap: 6px; margin-top: 3px; }
+.task-time { font-size: 11px; color: var(--text3); background: var(--surface2); padding: 2px 7px; border-radius: 6px; }
+
+/* ADD TASK */
+.add-row {
+  display: flex; gap-8px;
+  padding: 10px 0 0;
+}
+.add-input {
+  flex: 1; border: none; background: transparent;
+  font-family: 'Onest', sans-serif;
+  font-size: 13px; color: var(--text);
+  outline: none;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+}
+.add-input::placeholder { color: var(--text3); }
+.add-input:focus { border-bottom-color: var(--accent); }
+.add-btn {
+  background: var(--accent); color: white;
+  border: none; border-radius: var(--radius-sm);
+  padding: 7px 14px;
+  font-family: 'Onest', sans-serif;
+  font-size: 13px; font-weight: 500;
+  cursor: pointer;
+  margin-left: 8px;
+  transition: opacity 0.15s;
+}
+.add-btn:hover { opacity: 0.88; }
+.btn-ghost {
+  background: transparent;
+  border: 1px solid var(--border2);
+  color: var(--text2);
+  border-radius: var(--radius-sm);
+  padding: 7px 14px;
+  font-family: 'Onest', sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-ghost:hover { background: var(--surface2); }
+.btn-primary {
+  background: var(--accent); color: white;
+  border: none; border-radius: var(--radius-sm);
+  padding: 10px 20px;
+  font-family: 'Onest', sans-serif;
+  font-size: 14px; font-weight: 500;
+  cursor: pointer; width: 100%;
+  transition: opacity 0.15s;
+  margin-top: 8px;
+}
+.btn-primary:hover { opacity: 0.88; }
+
+/* WEEK GRID */
+.week-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 6px; }
+.day-cell {
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  padding: 10px 6px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.15s;
+  background: var(--surface);
+}
+.day-cell:hover { border-color: var(--accent); }
+.day-cell .dn { font-size: 10px; color: var(--text3); font-weight: 500; text-transform: uppercase; }
+.day-cell .dd { font-size: 15px; font-weight: 500; color: var(--text); margin-top: 2px; }
+.day-cell .dots { display: flex; justify-content: center; gap: 3px; margin-top: 6px; }
+.dot { width: 5px; height: 5px; border-radius: 50%; }
+.day-cell.is-today { border-color: var(--accent); background: var(--accent-bg); }
+.day-cell.is-today .dd { color: var(--accent); font-weight: 600; }
+.day-cell.is-done { background: #E6F7F1; border-color: var(--f-border); }
+.day-cell.is-done .dd { color: var(--f); }
+
+/* PROGRESS RING */
+.ring-wrap { position: relative; display: inline-flex; align-items: center; justify-content: center; }
+.ring-text { position: absolute; text-align: center; }
+.ring-text .pct { font-size: 20px; font-weight: 600; color: var(--text); }
+.ring-text .lbl { font-size: 10px; color: var(--text3); }
+
+/* STRUCTURE OPTIONS */
+.structure-opt {
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.structure-opt:hover { border-color: var(--accent); }
+.structure-opt.selected { border-color: var(--accent); background: var(--accent-bg); }
+.structure-opt .s-name { font-size: 13px; font-weight: 500; color: var(--text); }
+.structure-opt .s-desc { font-size: 12px; color: var(--text2); margin-top: 1px; }
+.structure-opt .s-total { font-size: 13px; font-weight: 600; color: var(--accent); }
+.structure-opt .time-bar { display: flex; gap: 2px; margin-top: 8px; height: 6px; border-radius: 3px; overflow: hidden; }
+.tb-f { background: var(--f); }
+.tb-d { background: var(--d); }
+.tb-k { background: var(--k); }
+
+/* STANDUP */
+.standup-q {
+  background: var(--surface2);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin-bottom: 10px;
+}
+.standup-q .q { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+.mood-scale { display: flex; gap: 5px; margin-top: 6px; }
+.mood-btn {
+  flex: 1; padding: 6px 0; border-radius: 8px;
+  border: 1px solid var(--border2);
+  background: var(--surface);
+  cursor: pointer; font-size: 12px; color: var(--text2);
+  transition: all 0.15s; text-align: center;
+  font-family: 'Onest', sans-serif;
+}
+.mood-btn:hover, .mood-btn.active { border-color: var(--accent); background: var(--accent-bg); color: var(--accent); font-weight: 500; }
+.text-area {
+  width: 100%; border: 1px solid var(--border2);
+  border-radius: var(--radius-sm); padding: 10px 12px;
+  font-family: 'Onest', sans-serif; font-size: 13px;
+  color: var(--text); background: var(--surface);
+  resize: none; outline: none;
+  transition: border-color 0.15s;
+  line-height: 1.6;
+}
+.text-area:focus { border-color: var(--accent); }
+.text-area::placeholder { color: var(--text3); }
+
+/* REFLECTION */
+.reflect-section {
+  border-left: 3px solid var(--border2);
+  padding-left: 14px;
+  margin-bottom: 16px;
+}
+.reflect-section.done-f { border-color: var(--f); }
+.reflect-section.done-d { border-color: var(--d); }
+.reflect-section.done-k { border-color: var(--k); }
+.reflect-section.done-r { border-color: var(--r); }
+.reflect-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text3); margin-bottom: 6px; }
+
+/* TRANSFORM */
+.transform-step {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  margin-bottom: 12px;
+}
+.transform-step .step-num {
+  font-size: 11px; font-weight: 600; color: var(--accent);
+  text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;
+}
+.transform-step .step-q { font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 10px; }
+.transform-step .step-time { font-size: 11px; color: var(--text3); margin-left: 8px; }
+
+/* INTEGRATION BADGE */
+.integration-hero {
+  background: linear-gradient(135deg, var(--accent-bg) 0%, #f0effe 100%);
+  border: 1px solid rgba(91,79,207,0.2);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+.integration-hero .hero-icon { font-size: 40px; margin-bottom: 10px; }
+.integration-hero h3 { font-size: 18px; font-weight: 600; color: var(--accent); }
+.integration-hero p { font-size: 13px; color: var(--text2); margin-top: 4px; }
+
+/* TIMELINE */
+.timeline { position: relative; padding-left: 24px; }
+.timeline::before { content: ''; position: absolute; left: 7px; top: 0; bottom: 0; width: 1px; background: var(--border2); }
+.timeline-item { position: relative; margin-bottom: 16px; }
+.timeline-dot { position: absolute; left: -24px; top: 3px; width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--surface); background: var(--accent); box-shadow: 0 0 0 2px rgba(91,79,207,0.2); }
+.timeline-dot.f { background: var(--f); box-shadow: 0 0 0 2px rgba(29,158,117,0.2); }
+.timeline-dot.d { background: var(--d); box-shadow: 0 0 0 2px rgba(196,80,31,0.2); }
+.timeline-dot.k { background: var(--k); box-shadow: 0 0 0 2px rgba(184,64,106,0.2); }
+.timeline-label { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.5px; }
+.timeline-text { font-size: 13px; color: var(--text); margin-top: 2px; line-height: 1.5; }
+
+/* TABLE */
+.week-table { width: 100%; border-collapse: collapse; }
+.week-table th { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text3); padding: 8px 12px; border-bottom: 1px solid var(--border); text-align: left; }
+.week-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); font-size: 13px; color: var(--text2); vertical-align: top; }
+.week-table tr:last-child td { border-bottom: none; }
+.week-table td:first-child { font-weight: 500; color: var(--text); width: 40px; }
+.cell-tasks { display: flex; flex-direction: column; gap: 4px; }
+.cell-task { font-size: 12px; padding: 3px 8px; border-radius: 6px; display: inline-block; }
+.ct-f { background: var(--f-bg); color: var(--f); }
+.ct-d { background: var(--d-bg); color: var(--d); }
+.ct-k { background: var(--k-bg); color: var(--k); }
+
+/* FOCUS ROW */
+.focus-task {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 0; border-bottom: 1px solid var(--border);
+}
+.focus-task:last-child { border-bottom: none; }
+.focus-num {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--accent-bg); color: var(--accent);
+  font-size: 11px; font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.focus-text { font-size: 13px; color: var(--text); flex: 1; }
+
+/* DIVIDER */
+.divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+
+/* RESPONSIVE NOTE */
+@media (max-width: 720px) {
+  .sidebar { transform: translateX(-100%); }
+  .main { margin-left: 0; padding: 20px; }
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="logo">
+      <div class="logo-title">НейроСпринт</div>
+      <div class="logo-sub">метод Катерины Ленгольд</div>
+    </div>
+
+    <div class="nav-section">Сегодня</div>
+    <button class="nav-item active" onclick="go('today',this)">
+      <span class="nav-icon">☀️</span> Ежедневная сверка
+    </button>
+
+    <div class="nav-section">Спринт</div>
+    <button class="nav-item" onclick="go('sprint',this)">
+      <span class="nav-icon">🗂️</span> Обзор спринта
+    </button>
+    <button class="nav-item" onclick="go('plan',this)">
+      <span class="nav-icon">📋</span> Планирование
+    </button>
+    <button class="nav-item" onclick="go('weekly',this)">
+      <span class="nav-icon">📅</span> Недельный план
+    </button>
+
+    <div class="nav-section">Рефлексия</div>
+    <button class="nav-item" onclick="go('reflection',this)">
+      <span class="nav-icon">🔍</span> Итоги недели
+    </button>
+    <button class="nav-item" onclick="go('transform',this)">
+      <span class="nav-icon">✨</span> Интеграция
+    </button>
+
+    <div class="sprint-badge" id="sidebar-sprint">
+      <div class="label">Текущий спринт</div>
+      <div class="value" id="sb-sprint-name">Спринт #1 · 7 дней</div>
+      <div class="progress-mini"><div class="progress-mini-fill" id="sb-progress" style="width:40%"></div></div>
+      <div style="font-size:11px;color:var(--text3);margin-top:4px" id="sb-days">4 из 7 дней · 4/10 ч</div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- TODAY -->
+    <div class="screen active" id="s-today">
+      <div class="page-header">
+        <div class="page-title">Ежедневная сверка</div>
+        <div class="page-sub" id="today-date">Загрузка...</div>
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <div class="card">
+            <div class="card-title">Состояние — как я себя сейчас чувствую?</div>
+            <div class="mood-scale">
+              <button class="mood-btn" onclick="selectMood(this,'🟣 Спокойно')">🟣<br><span style="font-size:10px">Спокойно</span></button>
+              <button class="mood-btn" onclick="selectMood(this,'🟢 В потоке')">🟢<br><span style="font-size:10px">В потоке</span></button>
+              <button class="mood-btn" onclick="selectMood(this,'🔵 Ясно')">🔵<br><span style="font-size:10px">Ясно</span></button>
+              <button class="mood-btn" onclick="selectMood(this,'🟡 Тепло')">🟡<br><span style="font-size:10px">Тепло</span></button>
+              <button class="mood-btn" onclick="selectMood(this,'🔴 Огонь')">🔴<br><span style="font-size:10px">Огонь</span></button>
+            </div>
+            <textarea class="text-area" rows="3" placeholder="Опишите ощущения в теле, эмоции…" style="margin-top:10px" id="today-state" onchange="save('today-state',this.value)"></textarea>
+          </div>
+
+          <div class="card">
+            <div class="card-title">☀️ Замечательный момент суток</div>
+            <textarea class="text-area" rows="4" placeholder="Отмотайте последние 24 часа… какой момент хочется сохранить?" id="today-moment" onchange="save('today-moment',this.value)"></textarea>
+          </div>
+        </div>
+
+        <div>
+          <div class="card">
+            <div class="card-title">🎯 Три задачи на сегодня</div>
+            <div id="focus-list">
+              <div class="focus-task">
+                <div class="focus-num">1</div>
+                <input class="text-area" style="border:none;padding:4px 0;background:transparent;border-bottom:1px solid var(--border)" placeholder="Задача из проекта Фундамент…" onchange="saveFocus(0,this.value)" />
+                <span class="chip chip-f" style="flex-shrink:0">Ф</span>
+              </div>
+              <div class="focus-task">
+                <div class="focus-num">2</div>
+                <input class="text-area" style="border:none;padding:4px 0;background:transparent;border-bottom:1px solid var(--border)" placeholder="Задача из проекта Драйв…" onchange="saveFocus(1,this.value)" />
+                <span class="chip chip-d" style="flex-shrink:0">Д</span>
+              </div>
+              <div class="focus-task">
+                <div class="focus-num">3</div>
+                <input class="text-area" style="border:none;padding:4px 0;background:transparent;border-bottom:1px solid var(--border)" placeholder="Задача из проекта Кайф…" onchange="saveFocus(2,this.value)" />
+                <span class="chip chip-k" style="flex-shrink:0">К</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">⏱ Прогресс сегодня</div>
+            <div class="grid-3" style="gap:8px">
+              <div class="stat-card" style="border-left:3px solid var(--f)">
+                <div class="stat-label">Фундамент</div>
+                <div class="stat-value" id="today-f">0<span class="stat-unit"> м</span></div>
+              </div>
+              <div class="stat-card" style="border-left:3px solid var(--d)">
+                <div class="stat-label">Драйв</div>
+                <div class="stat-value" id="today-d">0<span class="stat-unit"> м</span></div>
+              </div>
+              <div class="stat-card" style="border-left:3px solid var(--k)">
+                <div class="stat-label">Кайф</div>
+                <div class="stat-value" id="today-k">0<span class="stat-unit"> м</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SPRINT OVERVIEW -->
+    <div class="screen" id="s-sprint">
+      <div class="page-header">
+        <div class="page-title">Обзор спринта</div>
+        <div class="page-sub">Прогресс по всем проектам</div>
+      </div>
+
+      <div class="grid-3" style="margin-bottom:20px">
+        <div class="stat-card">
+          <div class="stat-label">Потрачено часов</div>
+          <div class="stat-value">4.5<span class="stat-unit"> / 10 ч</span></div>
+          <div class="stat-sub">45% бюджета</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">День спринта</div>
+          <div class="stat-value">4<span class="stat-unit"> / 7</span></div>
+          <div class="stat-sub">57% пути</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Выполнено задач</div>
+          <div class="stat-value" id="done-count">0<span class="stat-unit"> шт</span></div>
+          <div class="stat-sub">из всех задач</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Прогресс по дням</div>
+        <div class="week-grid" id="week-grid"></div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card" style="border-left:4px solid var(--f)">
+          <div class="card-title">🌱 Фундамент</div>
+          <div id="tasks-f">
+            <div class="task-item" onclick="toggleTask(this)">
+              <div class="checkbox"><svg width="10" height="10" viewBox="0 0 10 10" style="display:none"><polyline points="1.5,5 4,7.5 8.5,2.5" fill="none" stroke="white" stroke-width="1.5"/></svg></div>
+              <div><div class="task-name">Прогулка у офиса</div><div class="task-meta"><span class="task-time">25 мин · каждый день</span></div></div>
+            </div>
+            <div class="task-item" onclick="toggleTask(this)">
+              <div class="checkbox"><svg width="10" height="10" viewBox="0 0 10 10" style="display:none"><polyline points="1.5,5 4,7.5 8.5,2.5" fill="none" stroke="white" stroke-width="1.5"/></svg></div>
+              <div><div class="task-name">Медитация утром</div><div class="task-meta"><span class="task-time">10 мин · будни</span></div></div>
+            </div>
+          </div>
+          <div class="add-row" style="display:flex;gap:8px;padding-top:10px">
+            <input class="add-input" placeholder="+ добавить задачу Фундамента…" id="add-f" />
+            <button class="add-btn" onclick="addTask('f')">+</button>
+          </div>
+        </div>
+
+        <div class="card" style="border-left:4px solid var(--d)">
+          <div class="card-title">🚀 Драйв</div>
+          <div id="tasks-d">
+            <div class="task-item" onclick="toggleTask(this)">
+              <div class="checkbox"><svg width="10" height="10" viewBox="0 0 10 10" style="display:none"><polyline points="1.5,5 4,7.5 8.5,2.5" fill="none" stroke="white" stroke-width="1.5"/></svg></div>
+              <div><div class="task-name">Написать скрипт для видео</div><div class="task-meta"><span class="task-time">50 мин · пн, вт</span></div></div>
+            </div>
+            <div class="task-item" onclick="toggleTask(this)">
+              <div class="checkbox"><svg width="10" height="10" viewBox="0 0 10 10" style="display:none"><polyline points="1.5,5 4,7.5 8.5,2.5" fill="none" stroke="white" stroke-width="1.5"/></svg></div>
+              <div><div class="task-name">Снять три видео</div><div class="task-meta"><span class="task-time">50 мин · чт</span></div></div>
+            </div>
+            <div class="task-item" onclick="toggleTask(this)">
+              <div class="checkbox"><svg width="10" height="10" viewBox="0 0 10 10" style="display:none"><polyline points="1.5,5 4,7.5 8.5,2.5" fill="none" stroke="white" stroke-width="1.5"/></svg></div>
+              <div><div class="task-name">Смонтировать и опубликовать</div><div class="task-meta"><span class="task-time">50 мин · пт</span></div></div>
+            </div>
+          </div>
+          <div class="add-row" style="display:flex;gap:8px;padding-top:10px">
+            <input class="add-input" placeholder="+ добавить задачу Драйва…" id="add-d" />
+            <button class="add-btn" onclick="addTask('d')">+</button>
+          </div>
+        </div>
+
+        <div class="card" style="border-left:4px solid var(--k)">
+          <div class="card-title">💫 Кайф</div>
+          <div id="tasks-k">
+            <div class="task-item" onclick="toggleTask(this)">
+              <div class="checkbox"><svg width="10" height="10" viewBox="0 0 10 10" style="display:none"><polyline points="1.5,5 4,7.5 8.5,2.5" fill="none" stroke="white" stroke-width="1.5"/></svg></div>
+              <div><div class="task-name">Сварить кофе без спешки</div><div class="task-meta"><span class="task-time">15 мин · каждый день</span></div></div>
+            </div>
+            <div class="task-item" onclick="toggleTask(this)">
+              <div class="checkbox"><svg width="10" height="10" viewBox="0 0 10 10" style="display:none"><polyline points="1.5,5 4,7.5 8.5,2.5" fill="none" stroke="white" stroke-width="1.5"/></svg></div>
+              <div><div class="task-name">Книжный магазин</div><div class="task-meta"><span class="task-time">90 мин · суббота</span></div></div>
+            </div>
+          </div>
+          <div class="add-row" style="display:flex;gap:8px;padding-top:10px">
+            <input class="add-input" placeholder="+ добавить задачу Кайфа…" id="add-k" />
+            <button class="add-btn" onclick="addTask('k')">+</button>
+          </div>
+        </div>
+
+        <div class="card" style="border-left:4px solid var(--r)">
+          <div class="card-title">📊 Бюджет времени</div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+                <span style="font-size:12px;color:var(--f);font-weight:500">Фундамент</span>
+                <span style="font-size:12px;color:var(--text2)">2 ч 25 м / 4 ч</span>
+              </div>
+              <div style="height:6px;background:var(--f-bg);border-radius:3px;overflow:hidden"><div style="height:100%;background:var(--f);border-radius:3px;width:60%"></div></div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+                <span style="font-size:12px;color:var(--d);font-weight:500">Драйв</span>
+                <span style="font-size:12px;color:var(--text2)">1 ч 40 м / 4 ч</span>
+              </div>
+              <div style="height:6px;background:var(--d-bg);border-radius:3px;overflow:hidden"><div style="height:100%;background:var(--d);border-radius:3px;width:42%"></div></div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+                <span style="font-size:12px;color:var(--k);font-weight:500">Кайф</span>
+                <span style="font-size:12px;color:var(--text2)">25 м / 2 ч</span>
+              </div>
+              <div style="height:6px;background:var(--k-bg);border-radius:3px;overflow:hidden"><div style="height:100%;background:var(--k);border-radius:3px;width:21%"></div></div>
+            </div>
+          </div>
+          <hr class="divider">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:12px;color:var(--text2)">Итого потрачено</span>
+            <span style="font-size:15px;font-weight:600;color:var(--accent)">4,5 / 10 ч</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PLANNING -->
+    <div class="screen" id="s-plan">
+      <div class="page-header">
+        <div class="page-title">Планирование спринта</div>
+        <div class="page-sub">Настройте структуру и задачи нового спринта</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Длительность спринта</div>
+        <div style="display:flex;gap:10px">
+          <div class="structure-opt selected" onclick="selectDuration(this,'7 дней')" style="flex:1">
+            <div>
+              <div class="s-name">7 дней</div>
+              <div class="s-desc">Рекомендуется для новичков и при высоком стрессе</div>
+            </div>
+          </div>
+          <div class="structure-opt" onclick="selectDuration(this,'21 день')" style="flex:1">
+            <div>
+              <div class="s-name">21 день</div>
+              <div class="s-desc">Для тех, кто уже знаком с методом</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Структура времени</div>
+        <div class="structure-opt selected" onclick="selectStructure(this)">
+          <div style="flex:1">
+            <div class="s-name">Опция 1 — рекомендуемая</div>
+            <div class="s-desc">90 минут каждый день = 10 ч 30 мин</div>
+            <div style="display:flex;height:5px;gap:2px;margin-top:8px;border-radius:3px;overflow:hidden">
+              <div class="tb-f" style="flex:2"></div><div class="tb-d" style="flex:4"></div><div class="tb-k" style="flex:1"></div>
+            </div>
+            <div style="display:flex;gap:12px;margin-top:4px">
+              <span style="font-size:10px;color:var(--f)">Ф: 25м/день</span>
+              <span style="font-size:10px;color:var(--d)">Д: 50м/день</span>
+              <span style="font-size:10px;color:var(--k)">К: 15м + 90м сб</span>
+            </div>
+          </div>
+          <div class="s-total">10,5 ч</div>
+        </div>
+        <div class="structure-opt" onclick="selectStructure(this)">
+          <div style="flex:1">
+            <div class="s-name">Опция 2</div>
+            <div class="s-desc">45 минут будни + 3 часа выходные = 9 ч 45 мин</div>
+            <div style="display:flex;height:5px;gap:2px;margin-top:8px;border-radius:3px;overflow:hidden">
+              <div class="tb-f" style="flex:1"></div><div class="tb-d" style="flex:3"></div><div class="tb-k" style="flex:6"></div>
+            </div>
+          </div>
+          <div class="s-total">9,75 ч</div>
+        </div>
+        <div class="structure-opt" onclick="selectStructure(this)">
+          <div style="flex:1">
+            <div class="s-name">Опция 3</div>
+            <div class="s-desc">60 минут будни + 2,5 часа выходные = 10 ч</div>
+            <div style="display:flex;height:5px;gap:2px;margin-top:8px;border-radius:3px;overflow:hidden">
+              <div class="tb-f" style="flex:1"></div><div class="tb-d" style="flex:4.5"></div><div class="tb-k" style="flex:4.5"></div>
+            </div>
+          </div>
+          <div class="s-total">10 ч</div>
+        </div>
+        <div class="structure-opt" onclick="selectStructure(this)">
+          <div style="flex:1">
+            <div class="s-name">Опция 4</div>
+            <div class="s-desc">2,5 часа четыре раза в неделю = 10 ч</div>
+          </div>
+          <div class="s-total">10 ч</div>
+        </div>
+        <div class="structure-opt" onclick="selectStructure(this)">
+          <div style="flex:1">
+            <div class="s-name">Опция 5</div>
+            <div class="s-desc">3 часа три раза в неделю = 9 ч</div>
+          </div>
+          <div class="s-total">9 ч</div>
+        </div>
+      </div>
+
+      <div class="card" style="border-left:4px solid var(--f)">
+        <div class="card-title">🌱 Проект «Фундамент» — забота о здоровье</div>
+        <textarea class="text-area" rows="3" placeholder="Опишите проект: что будете делать каждый день для физического и психологического здоровья?&#10;Например: прогулки на свежем воздухе 25 мин каждый день + йога в воскресенье 60 мин" id="plan-f" onchange="save('plan-f',this.value)"></textarea>
+      </div>
+      <div class="card" style="border-left:4px solid var(--d)">
+        <div class="card-title">🚀 Проект «Драйв» — вызов и рост</div>
+        <textarea class="text-area" rows="3" placeholder="Опишите проект: что хотите освоить или достичь? Это должно быть немного за пределами зоны комфорта.&#10;Например: снять и опубликовать 3 видео для соцсетей" id="plan-d" onchange="save('plan-d',this.value)"></textarea>
+      </div>
+      <div class="card" style="border-left:4px solid var(--k)">
+        <div class="card-title">💫 Проект «Кайф» — замедлиться и насладиться</div>
+        <textarea class="text-area" rows="3" placeholder="Опишите проект: что приносит чистую радость и позволяет насладиться тем, что уже есть?&#10;Например: кофейный ритуал каждое утро + поход в книжный в субботу" id="plan-k" onchange="save('plan-k',this.value)"></textarea>
+      </div>
+      <button class="btn-primary" onclick="startSprint()">🚀 Запустить спринт</button>
+    </div>
+
+    <!-- WEEKLY VIEW -->
+    <div class="screen" id="s-weekly">
+      <div class="page-header">
+        <div class="page-title">Недельный план</div>
+        <div class="page-sub">Распределение задач по дням</div>
+      </div>
+      <div class="card">
+        <table class="week-table">
+          <thead>
+            <tr>
+              <th>День</th>
+              <th><span class="chip chip-f">Фундамент</span></th>
+              <th><span class="chip chip-d">Драйв</span></th>
+              <th><span class="chip chip-k">Кайф</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Пн</td>
+              <td><div class="cell-task ct-f">Прогулка 25 м</div></td>
+              <td><div class="cell-task ct-d">Скрипт видео 50 м</div></td>
+              <td><div class="cell-task ct-k">Кофе 15 м</div></td>
+            </tr>
+            <tr>
+              <td>Вт</td>
+              <td><div class="cell-task ct-f">Прогулка 25 м</div></td>
+              <td><div class="cell-task ct-d">Скрипт видео 50 м</div></td>
+              <td><div class="cell-task ct-k">Кофе 15 м</div></td>
+            </tr>
+            <tr>
+              <td>Ср</td>
+              <td><div class="cell-task ct-f">Прогулка 25 м</div></td>
+              <td><div class="cell-task ct-d">Скрипт видео 50 м</div></td>
+              <td><div class="cell-task ct-k">Кофе 15 м</div></td>
+            </tr>
+            <tr>
+              <td>Чт</td>
+              <td><div class="cell-task ct-f">Прогулка 25 м</div></td>
+              <td><div class="cell-task ct-d">Снять видео 50 м</div></td>
+              <td><div class="cell-task ct-k">Кофе 15 м</div></td>
+            </tr>
+            <tr>
+              <td>Пт</td>
+              <td><div class="cell-task ct-f">Прогулка 25 м</div></td>
+              <td><div class="cell-task ct-d">Монтаж/публикация 50 м</div></td>
+              <td><div class="cell-task ct-k">Кофе 15 м</div></td>
+            </tr>
+            <tr>
+              <td>Сб</td>
+              <td>—</td>
+              <td>—</td>
+              <td><div class="cell-task ct-k">Книжный магазин 90 м</div></td>
+            </tr>
+            <tr>
+              <td>Вс</td>
+              <td><div class="cell-task ct-f">Велосипед в парке 60 м</div></td>
+              <td>—</td>
+              <td><div class="cell-task ct-k" style="opacity:0.5">Рефлексия 30 м</div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- REFLECTION -->
+    <div class="screen" id="s-reflection">
+      <div class="page-header">
+        <div class="page-title">Итоги недели</div>
+        <div class="page-sub">Рефлексия — 15 минут</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">1. Что было сделано — признайте свои победы</div>
+        <div class="reflect-section done-f">
+          <div class="reflect-label">🌱 Фундамент</div>
+          <textarea class="text-area" rows="2" placeholder="Что удалось сделать по Фундаменту?" id="ref-f-done" onchange="save('ref-f-done',this.value)"></textarea>
+        </div>
+        <div class="reflect-section done-d" style="margin-top:10px">
+          <div class="reflect-label">🚀 Драйв</div>
+          <textarea class="text-area" rows="2" placeholder="Что удалось сделать по Драйву?" id="ref-d-done" onchange="save('ref-d-done',this.value)"></textarea>
+        </div>
+        <div class="reflect-section done-k" style="margin-top:10px">
+          <div class="reflect-label">💫 Кайф</div>
+          <textarea class="text-area" rows="2" placeholder="Что удалось сделать по Кайфу?" id="ref-k-done" onchange="save('ref-k-done',this.value)"></textarea>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">2. Что не было сделано — честно и без осуждения</div>
+        <div class="reflect-section done-f">
+          <div class="reflect-label">🌱 Фундамент</div>
+          <textarea class="text-area" rows="2" placeholder="С какими сложностями столкнулись?" id="ref-f-notdone" onchange="save('ref-f-notdone',this.value)"></textarea>
+        </div>
+        <div class="reflect-section done-d" style="margin-top:10px">
+          <div class="reflect-label">🚀 Драйв</div>
+          <textarea class="text-area" rows="2" placeholder="Что не удалось и почему?" id="ref-d-notdone" onchange="save('ref-d-notdone',this.value)"></textarea>
+        </div>
+        <div class="reflect-section done-k" style="margin-top:10px">
+          <div class="reflect-label">💫 Кайф</div>
+          <textarea class="text-area" rows="2" placeholder="Что пропустили или заменили?" id="ref-k-notdone" onchange="save('ref-k-notdone',this.value)"></textarea>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">3. Как скорректировать подход — самое важное</div>
+        <textarea class="text-area" rows="5" placeholder="Какие уроки из этой недели помогут следующей быть успешнее?&#10;Например:&#10;— Поставить напоминание за 15 мин до старта блока&#10;— Упростить монтаж, делать с телефона&#10;— Заблокировать соцсети на время проекта Кайф" id="ref-adjust" onchange="save('ref-adjust',this.value)"></textarea>
+        <button class="btn-primary" style="margin-top:12px" onclick="go('plan', document.querySelector('[onclick*=plan]'))">→ Запланировать следующую неделю</button>
+      </div>
+    </div>
+
+    <!-- TRANSFORM -->
+    <div class="screen" id="s-transform">
+      <div class="integration-hero">
+        <div class="hero-icon">✨</div>
+        <h3>Интеграционная неделя</h3>
+        <p>Трансформирующая рефлексия после трёх спринтов · ~30 минут</p>
+      </div>
+
+      <div class="transform-step">
+        <div class="step-num">Шаг 1 <span class="step-time">· 7 минут</span></div>
+        <div class="step-q">Какое главное изменение произошло со мной за этот месяц?</div>
+        <textarea class="text-area" rows="4" placeholder="Это может быть не связано с проектами спринта напрямую. Например: стала спокойнее реагировать на неожиданные ситуации на работе…" id="tr-change" onchange="save('tr-change',this.value)"></textarea>
+      </div>
+
+      <div class="transform-step">
+        <div class="step-num">Шаг 2 <span class="step-time">· 7 минут</span></div>
+        <div class="step-q">Какие мои действия привели к этому изменению?</div>
+        <textarea class="text-area" rows="4" placeholder="Смотрите на изменение с позиции вашей роли. Что сделали именно вы? Например: регулярно инвестировала время в Фундамент — прогулки…" id="tr-actions" onchange="save('tr-actions',this.value)"></textarea>
+      </div>
+
+      <div class="transform-step">
+        <div class="step-num">Шаг 3 <span class="step-time">· 7 минут</span></div>
+        <div class="step-q">Как в связи с этим трансформировался мой взгляд на себя?</div>
+        <textarea class="text-area" rows="4" placeholder="Что вы о себе узнали? Какие грани опыт подсветил? Например: я не «раздражительный человек» — я вполне спокойный и уверенный…" id="tr-belief" onchange="save('tr-belief',this.value)"></textarea>
+      </div>
+
+      <div class="transform-step">
+        <div class="step-num">Шаг 4 <span class="step-time">· 7 минут</span></div>
+        <div class="step-q">Какие новые возможности благодаря этому мне открылись?</div>
+        <textarea class="text-area" rows="4" placeholder="Что для «обновлённой» версии вас теперь доступно? Какие «нельзя» стали «можно»?…" id="tr-opportunity" onchange="save('tr-opportunity',this.value)"></textarea>
+      </div>
+
+      <button class="btn-primary" onclick="go('plan', document.querySelector('[onclick*=plan]'))">🚀 Начать новый цикл спринтов</button>
+    </div>
+
+  </main>
+</div>
+
+<script>
+// ── STATE ──────────────────────────────────────────────────
+const DATA_KEY = 'neurosprint_v1';
+let state = JSON.parse(localStorage.getItem(DATA_KEY) || '{}');
+
+function save(key, val) {
+  state[key] = val;
+  localStorage.setItem(DATA_KEY, JSON.stringify(state));
+}
+function load(key, def='') { return state[key] || def; }
+
+// ── NAVIGATION ─────────────────────────────────────────────
+function go(id, btn) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('s-' + id).classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+
+// ── DATE ───────────────────────────────────────────────────
+const days = ['воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'];
+const months = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+function updateDate() {
+  const d = new Date();
+  const el = document.getElementById('today-date');
+  if (el) el.textContent = `${days[d.getDay()]}, ${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()} · Спринт #1, день ${load('sprint-day',1)}`;
+}
+
+// ── WEEK GRID ──────────────────────────────────────────────
+const dayNames = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
+function buildWeekGrid() {
+  const grid = document.getElementById('week-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  const today = new Date();
+  const dow = today.getDay() === 0 ? 6 : today.getDay() - 1;
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(today);
+    d.setDate(today.getDate() - dow + i);
+    const cell = document.createElement('div');
+    cell.className = 'day-cell';
+    if (i === dow) cell.classList.add('is-today');
+    else if (i < dow) cell.classList.add('is-done');
+    cell.innerHTML = `<div class="dn">${dayNames[i]}</div><div class="dd">${d.getDate()}</div><div class="dots"><div class="dot" style="background:var(--f);opacity:${i<dow?1:0.25}"></div><div class="dot" style="background:var(--d);opacity:${i<dow?1:0.25}"></div><div class="dot" style="background:var(--k);opacity:${i<dow?1:0.25}"></div></div>`;
+    grid.appendChild(cell);
+  }
+}
+
+// ── TASKS ──────────────────────────────────────────────────
+function toggleTask(item) {
+  item.classList.toggle('done');
+  const cb = item.querySelector('.checkbox');
+  const svg = cb.querySelector('svg');
+  if (item.classList.contains('done')) {
+    cb.style.background = 'var(--f)';
+    cb.style.borderColor = 'var(--f)';
+    if(svg) svg.style.display = 'block';
+  } else {
+    cb.style.background = '';
+    cb.style.borderColor = '';
+    if(svg) svg.style.display = 'none';
+  }
+  updateDoneCount();
+}
+
+function updateDoneCount() {
+  const done = document.querySelectorAll('.task-item.done').length;
+  const el = document.getElementById('done-count');
+  if(el) el.innerHTML = `${done}<span class="stat-unit"> шт</span>`;
+}
+
+function addTask(type) {
+  const input = document.getElementById('add-' + type);
+  const val = input.value.trim();
+  if (!val) return;
+  const container = document.getElementById('tasks-' + type);
+  const item = document.createElement('div');
+  item.className = 'task-item';
+  item.onclick = function() { toggleTask(this); };
+  item.innerHTML = `<div class="checkbox"><svg width="10" height="10" viewBox="0 0 10 10" style="display:none"><polyline points="1.5,5 4,7.5 8.5,2.5" fill="none" stroke="white" stroke-width="1.5"/></svg></div><div><div class="task-name">${val}</div></div>`;
+  container.appendChild(item);
+  input.value = '';
+}
+
+// ── MOOD ───────────────────────────────────────────────────
+function selectMood(btn, label) {
+  document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  save('today-mood', label);
+}
+
+// ── STRUCTURE ──────────────────────────────────────────────
+function selectStructure(el) {
+  document.querySelectorAll('.structure-opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function selectDuration(el) {
+  el.closest('.card').querySelectorAll('.structure-opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+// ── SPRINT START ───────────────────────────────────────────
+function startSprint() {
+  alert('Спринт запущен! 🚀\nЗаписи сохранены. Перейдите на «Ежедневную сверку».');
+  go('today', document.querySelector('.nav-item'));
+}
+
+// ── RESTORE DATA ───────────────────────────────────────────
+function restoreData() {
+  ['today-state','today-moment','plan-f','plan-d','plan-k','ref-f-done','ref-d-done','ref-k-done','ref-f-notdone','ref-d-notdone','ref-k-notdone','ref-adjust','tr-change','tr-actions','tr-belief','tr-opportunity'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el && state[id]) el.value = state[id];
+  });
+}
+
+// ── INIT ───────────────────────────────────────────────────
+updateDate();
+buildWeekGrid();
+restoreData();
+</script>
+</body>
+</html>
