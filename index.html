@@ -21,8 +21,6 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Onest',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;line-height:1.6}
 .app{display:flex;min-height:100vh}
-
-/* SIDEBAR */
 .sidebar{width:230px;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:24px 0;position:fixed;top:0;left:0;bottom:0;z-index:100;overflow-y:auto}
 .logo{padding:0 20px 20px;border-bottom:1px solid var(--border);margin-bottom:8px}
 .logo-title{font-family:'Gochi Hand',cursive;font-size:22px;color:var(--accent);letter-spacing:.5px}
@@ -38,45 +36,32 @@ body{font-family:'Onest',sans-serif;background:var(--bg);color:var(--text);min-h
 .sprint-info .si-val{font-size:13px;font-weight:500;color:var(--text);margin-top:2px}
 .prog-mini{height:4px;background:rgba(91,79,207,.15);border-radius:2px;margin-top:8px;overflow:hidden}
 .prog-mini-fill{height:100%;background:var(--accent);border-radius:2px;transition:width .3s}
-
-/* MAIN */
 .main{margin-left:230px;padding:32px 40px;flex:1;max-width:1000px}
 .screen{display:none}.screen.active{display:block}
 .page-header{margin-bottom:26px}
 .page-title{font-size:26px;font-weight:600}
 .page-sub{font-size:13px;color:var(--text3);margin-top:3px}
-
-/* CARDS */
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rad);padding:20px;margin-bottom:16px}
 .card-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:14px}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-
-/* CHIPS */
 .chip{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px}
 .chip-f{background:var(--f-bg);color:var(--f);border:1px solid var(--f-bd)}
 .chip-d{background:var(--d-bg);color:var(--d);border:1px solid var(--d-bd)}
 .chip-k{background:var(--k-bg);color:var(--k);border:1px solid var(--k-bd)}
 .chip-r{background:var(--r-bg);color:var(--r);border:1px solid rgba(45,111,191,.3)}
-
-/* STATS */
 .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rad);padding:14px 18px}
 .stat-label{font-size:11px;color:var(--text3);font-weight:500}
 .stat-value{font-size:24px;font-weight:600;color:var(--text);margin-top:2px;line-height:1}
 .stat-unit{font-size:13px;color:var(--text2);font-weight:400}
 .stat-sub{font-size:11px;color:var(--text3);margin-top:4px}
-
-/* BUTTONS */
 .btn{border:none;border-radius:var(--rad-sm);padding:8px 16px;font-family:'Onest',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:opacity .15s}
 .btn:hover{opacity:.85}
 .btn-primary{background:var(--accent);color:#fff}
 .btn-secondary{background:var(--surface2);color:var(--text2);border:1px solid var(--border2)}
-.btn-danger{background:#FEE;color:#A32D2D;border:1px solid #F7C1C1}
 .btn-success{background:var(--f-bg);color:var(--f);border:1px solid var(--f-bd)}
 .btn-full{width:100%;margin-top:10px;padding:11px}
 .btn-sm{padding:5px 10px;font-size:12px}
-
-/* INPUTS */
 .ta{width:100%;border:1px solid var(--border2);border-radius:var(--rad-sm);padding:10px 12px;font-family:'Onest',sans-serif;font-size:13px;color:var(--text);background:var(--surface);resize:none;outline:none;transition:border-color .15s;line-height:1.6}
 .ta:focus{border-color:var(--accent)}
 .ta::placeholder{color:var(--text3)}
@@ -86,22 +71,39 @@ body{font-family:'Onest',sans-serif;background:var(--bg);color:var(--text);min-h
 
 /* MOOD */
 .mood-scale{display:flex;gap:6px;margin-top:8px}
-.mood-btn{flex:1;padding:7px 0;border-radius:8px;border:1px solid var(--border2);background:var(--surface);cursor:pointer;font-size:11px;color:var(--text2);transition:all .15s;text-align:center;font-family:'Onest',sans-serif;line-height:1.4}
-.mood-btn:hover,.mood-btn.active{border-color:var(--accent);background:var(--accent-bg);color:var(--accent);font-weight:500}
+.mood-btn{flex:1;padding:7px 0;border-radius:8px;border:1px solid var(--border2);background:var(--surface);cursor:pointer;font-size:11px;color:var(--text2);transition:all .2s;text-align:center;font-family:'Onest',sans-serif;line-height:1.4}
+.mood-btn.active{font-weight:600;transform:scale(1.04)}
+.mood-btn[data-s="1"].active{background:#EDE8FD;border-color:#7B6FD4;color:#4A3FA8}
+.mood-btn[data-s="2"].active{background:#DFF5EC;border-color:#1D9E75;color:#0F6E56}
+.mood-btn[data-s="3"].active{background:#E0EEFB;border-color:#3A8CD4;color:#1A5C9A}
+.mood-btn[data-s="4"].active{background:#FFF8DC;border-color:#D4A017;color:#8A6800}
+.mood-btn[data-s="5"].active{background:#FDECEA;border-color:#D95040;color:#992020}
 .mood-val{display:block;font-size:16px;margin-bottom:2px}
+.mood-log-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)}
+.mood-log-item:last-child{border-bottom:none}
+.mood-badge{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
 
 /* TASKS */
 .task-item{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid var(--border)}
 .task-item:last-child{border-bottom:none;padding-bottom:0}
-.task-item.done .task-name{text-decoration:line-through;opacity:.5}
+.task-item.done .task-name{text-decoration:line-through;opacity:.45}
 .cb{width:18px;height:18px;border-radius:5px;border:1.5px solid var(--border2);flex-shrink:0;margin-top:2px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;background:transparent}
 .task-item.done .cb{background:var(--f);border-color:var(--f)}
 .task-name{font-size:13px;color:var(--text);flex:1}
-.task-time{font-size:11px;color:var(--text3);background:var(--surface2);padding:2px 7px;border-radius:6px;margin-top:3px;display:inline-block}
-.task-del{background:none;border:none;cursor:pointer;color:var(--text3);font-size:16px;padding:0 4px;line-height:1;transition:color .15s;flex-shrink:0}
+.task-time{font-size:11px;color:var(--text3);background:var(--surface2);padding:2px 7px;border-radius:6px;display:inline-block}
+.task-date-tag{font-size:10px;color:var(--accent);background:var(--accent-bg);padding:2px 6px;border-radius:5px;display:inline-block;margin-left:4px}
+.task-del{background:none;border:none;cursor:pointer;color:var(--text3);font-size:16px;padding:0 4px;line-height:1;flex-shrink:0}
 .task-del:hover{color:#A32D2D}
-.add-row{display:flex;gap:8px;padding-top:12px;border-top:1px dashed var(--border2);margin-top:8px}
-.add-row .inp{flex:1}
+.add-row{display:flex;gap:6px;flex-wrap:wrap;padding-top:12px;border-top:1px dashed var(--border2);margin-top:8px}
+.add-row .inp{flex:1;min-width:80px}
+
+/* DATE NAV */
+.date-nav{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.dnav-btn{background:var(--surface);border:1px solid var(--border2);border-radius:8px;padding:6px 12px;cursor:pointer;font-family:'Onest',sans-serif;font-size:12px;color:var(--text2);transition:all .15s}
+.dnav-btn:hover,.dnav-btn.active{border-color:var(--accent);color:var(--accent);background:var(--accent-bg)}
+.dnav-arrow{background:none;border:none;cursor:pointer;font-size:20px;color:var(--text2);padding:2px 8px;border-radius:6px;transition:background .15s;line-height:1}
+.dnav-arrow:hover{background:var(--surface2)}
+.dnav-label{font-size:14px;font-weight:500;color:var(--text);min-width:140px;text-align:center}
 
 /* WEEK GRID */
 .week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
@@ -115,22 +117,21 @@ body{font-family:'Onest',sans-serif;background:var(--bg);color:var(--text);min-h
 .day-cell.is-today .dd{color:var(--accent);font-weight:600}
 .day-cell.is-done{background:#E6F7F1;border-color:var(--f-bd)}
 .day-cell.is-done .dd{color:var(--f)}
+.day-cell.is-sel{border:2px solid var(--accent)}
 
-/* HISTORY / DIARY */
+/* CHART */
+.chart-wrap{position:relative;height:200px;margin-top:12px}
+
+/* HISTORY */
 .history-item{border:1px solid var(--border);border-radius:var(--rad);padding:14px 16px;margin-bottom:10px;background:var(--surface)}
 .history-date{font-size:11px;color:var(--text3);font-weight:500;margin-bottom:5px}
 .history-text{font-size:13px;color:var(--text);line-height:1.55}
 .history-del{float:right;background:none;border:none;cursor:pointer;color:var(--text3);font-size:14px}
 .history-del:hover{color:#A32D2D}
 
-/* CHART */
-.chart-wrap{position:relative;height:180px;margin-top:12px}
-
 /* REFLECT */
-.reflect-sec{border-left:3px solid var(--border2);padding-left:14px;margin-bottom:14px;border-radius:0}
-.reflect-sec.rf{border-color:var(--f)}
-.reflect-sec.rd{border-color:var(--d)}
-.reflect-sec.rk{border-color:var(--k)}
+.reflect-sec{border-left:3px solid var(--border2);padding-left:14px;margin-bottom:14px}
+.reflect-sec.rf{border-color:var(--f)}.reflect-sec.rd{border-color:var(--d)}.reflect-sec.rk{border-color:var(--k)}
 .reflect-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--text3);margin-bottom:6px}
 
 /* TRANSFORM */
@@ -139,23 +140,17 @@ body{font-family:'Onest',sans-serif;background:var(--bg);color:var(--text);min-h
 .tr-step .sq{font-size:15px;font-weight:500;color:var(--text);margin-bottom:10px}
 .tr-step .st{font-size:11px;color:var(--text3);margin-left:8px}
 
-/* PROG BARS */
+/* MISC */
 .prog-bar{height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;margin-top:6px}
 .prog-fill{height:100%;border-radius:3px;transition:width .4s}
-
-/* WEEK TABLE */
 .week-table{width:100%;border-collapse:collapse}
 .week-table th{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--text3);padding:8px 12px;border-bottom:1px solid var(--border);text-align:left}
 .week-table td{padding:10px 12px;border-bottom:1px solid var(--border);font-size:13px;color:var(--text2);vertical-align:top}
 .week-table tr:last-child td{border-bottom:none}
 .week-table td:first-child{font-weight:500;color:var(--text);width:50px}
 .cell-task{font-size:12px;padding:3px 8px;border-radius:6px;display:inline-block;margin:2px 0}
-.ct-f{background:var(--f-bg);color:var(--f)}
-.ct-d{background:var(--d-bg);color:var(--d)}
-.ct-k{background:var(--k-bg);color:var(--k)}
+.ct-f{background:var(--f-bg);color:var(--f)}.ct-d{background:var(--d-bg);color:var(--d)}.ct-k{background:var(--k-bg);color:var(--k)}
 .today-row td{background:var(--accent-bg)}
-
-/* STRUCTURE OPTS */
 .struct-opt{border:1px solid var(--border2);border-radius:var(--rad);padding:12px 16px;margin-bottom:8px;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:space-between}
 .struct-opt:hover{border-color:var(--accent)}
 .struct-opt.selected{border-color:var(--accent);background:var(--accent-bg)}
@@ -163,23 +158,13 @@ body{font-family:'Onest',sans-serif;background:var(--bg);color:var(--text);min-h
 .struct-opt .sd{font-size:12px;color:var(--text2);margin-top:1px}
 .struct-opt .sv{font-size:13px;font-weight:600;color:var(--accent)}
 .tb{display:flex;height:5px;gap:2px;margin-top:8px;border-radius:3px;overflow:hidden}
-
-/* TOAST */
 .toast{position:fixed;bottom:24px;right:24px;background:var(--text);color:#fff;padding:10px 18px;border-radius:10px;font-size:13px;font-weight:500;opacity:0;pointer-events:none;transition:opacity .25s;z-index:9999}
 .toast.show{opacity:1}
-
-/* INTEGRATION HERO */
 .int-hero{background:var(--accent-bg);border:1px solid rgba(91,79,207,.2);border-radius:var(--rad);padding:22px;margin-bottom:22px;text-align:center}
-.int-hero .ih-icon{font-size:36px;margin-bottom:8px}
 .int-hero h3{font-size:18px;font-weight:600;color:var(--accent)}
 .int-hero p{font-size:13px;color:var(--text2);margin-top:4px}
-
-/* EMPTY STATE */
 .empty{text-align:center;padding:24px;color:var(--text3);font-size:13px}
-
-/* DIVIDER */
-hr{border:none;border-top:1px solid var(--border);margin:18px 0}
-
+hr{border:none;border-top:1px solid var(--border);margin:16px 0}
 ::-webkit-scrollbar{width:5px}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
 </style>
@@ -187,7 +172,6 @@ hr{border:none;border-top:1px solid var(--border);margin:18px 0}
 <body>
 <div class="app">
 
-<!-- SIDEBAR -->
 <aside class="sidebar">
   <div class="logo">
     <div class="logo-title">НейроСпринт</div>
@@ -213,10 +197,9 @@ hr{border:none;border-top:1px solid var(--border);margin:18px 0}
   </div>
 </aside>
 
-<!-- MAIN -->
 <main class="main">
 
-<!-- ═══════════════════════════════════════ TODAY ═══ -->
+<!-- TODAY -->
 <div class="screen active" id="s-today">
   <div class="page-header">
     <div class="page-title">Ежедневная сверка</div>
@@ -226,19 +209,26 @@ hr{border:none;border-top:1px solid var(--border);margin:18px 0}
     <div>
       <div class="card">
         <div class="card-title">Состояние — как я себя сейчас чувствую?</div>
-        <div class="mood-scale" id="mood-btns">
-          <button class="mood-btn" onclick="selectMood(1,this)"><span class="mood-val">🟣</span>Спокойно</button>
-          <button class="mood-btn" onclick="selectMood(2,this)"><span class="mood-val">🟢</span>В потоке</button>
-          <button class="mood-btn" onclick="selectMood(3,this)"><span class="mood-val">🔵</span>Ясно</button>
-          <button class="mood-btn" onclick="selectMood(4,this)"><span class="mood-val">🟡</span>Тепло</button>
-          <button class="mood-btn" onclick="selectMood(5,this)"><span class="mood-val">🔴</span>Огонь</button>
+        <div class="mood-scale">
+          <button class="mood-btn" data-s="1" onclick="selectMood(1,this)"><span class="mood-val">🟣</span>Спокойно</button>
+          <button class="mood-btn" data-s="2" onclick="selectMood(2,this)"><span class="mood-val">🟢</span>В потоке</button>
+          <button class="mood-btn" data-s="3" onclick="selectMood(3,this)"><span class="mood-val">🔵</span>Ясно</button>
+          <button class="mood-btn" data-s="4" onclick="selectMood(4,this)"><span class="mood-val">🟡</span>Тепло</button>
+          <button class="mood-btn" data-s="5" onclick="selectMood(5,this)"><span class="mood-val">🔴</span>Огонь</button>
         </div>
         <textarea class="ta" rows="3" placeholder="Опишите ощущения в теле и эмоции…" id="inp-state" style="margin-top:10px"></textarea>
         <button class="btn btn-success btn-full" onclick="saveState()">✓ Сохранить состояние</button>
       </div>
       <div class="card">
-        <div class="card-title">График состояния</div>
+        <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">
+          <span>График состояния</span>
+          <span id="mood-avg-label" style="font-size:11px;color:var(--text3)"></span>
+        </div>
         <div class="chart-wrap"><canvas id="mood-chart"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">История состояний</div>
+        <div id="mood-log-list" style="max-height:220px;overflow-y:auto"></div>
       </div>
     </div>
     <div>
@@ -249,14 +239,14 @@ hr{border:none;border-top:1px solid var(--border);margin:18px 0}
       </div>
       <div class="card">
         <div class="card-title">🎯 Три задачи на сегодня</div>
+        <p style="font-size:11px;color:var(--text3);margin-bottom:10px">По одной задаче от каждого проекта на сегодня</p>
         <div id="today-tasks-list"></div>
-        <p style="font-size:12px;color:var(--text3);margin-top:10px">Задачи берутся из активного спринта</p>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════ SPRINT ═══ -->
+<!-- SPRINT -->
 <div class="screen" id="s-sprint">
   <div class="page-header">
     <div class="page-title" id="sprint-title">Обзор спринта</div>
@@ -268,43 +258,51 @@ hr{border:none;border-top:1px solid var(--border);margin:18px 0}
     <div class="stat-card"><div class="stat-label">Выполнено задач</div><div class="stat-value" id="st-done">0</div><div class="stat-sub">из всех задач</div></div>
   </div>
   <div class="card">
-    <div class="card-title">Прогресс по дням</div>
+    <div class="card-title">Прогресс по дням — нажмите на день для фильтра</div>
     <div class="week-grid" id="week-grid"></div>
+  </div>
+  <div class="card" style="padding:14px 20px">
+    <div class="date-nav">
+      <div style="display:flex;gap:6px">
+        <button class="dnav-btn active" id="sf-all" onclick="setSF('all')">Все задачи</button>
+        <button class="dnav-btn" id="sf-today" onclick="setSF('today')">Сегодня</button>
+        <button class="dnav-btn" id="sf-nodate" onclick="setSF('nodate')">Без даты</button>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px">
+        <button class="dnav-arrow" onclick="shiftSD(-1)">‹</button>
+        <span class="dnav-label" id="sprint-filter-label">Все задачи</span>
+        <button class="dnav-arrow" onclick="shiftSD(1)">›</button>
+      </div>
+    </div>
   </div>
   <div class="grid2">
     <div class="card" style="border-left:4px solid var(--f)">
-      <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">
-        <span>🌱 Фундамент</span>
-        <span id="f-project-name" style="font-size:12px;font-weight:400;color:var(--text2);max-width:200px;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></span>
-      </div>
+      <div class="card-title" style="display:flex;justify-content:space-between"><span>🌱 Фундамент</span><span id="f-pname" style="font-size:12px;color:var(--text2);font-weight:400;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></span></div>
       <div id="tasks-f-list"></div>
       <div class="add-row">
-        <input class="inp" placeholder="Новая задача Фундамента…" id="add-f-inp">
-        <input class="inp" placeholder="25 мин" id="add-f-time" style="width:80px">
+        <input class="inp" placeholder="Задача…" id="add-f-inp" style="flex:2">
+        <input class="inp" placeholder="25 мин" id="add-f-time" style="width:65px;flex:none">
+        <input class="inp" type="date" id="add-f-date" style="width:125px;flex:none">
         <button class="btn btn-primary btn-sm" onclick="addTask('f')">+</button>
       </div>
     </div>
     <div class="card" style="border-left:4px solid var(--d)">
-      <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">
-        <span>🚀 Драйв</span>
-        <span id="d-project-name" style="font-size:12px;font-weight:400;color:var(--text2);max-width:200px;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></span>
-      </div>
+      <div class="card-title" style="display:flex;justify-content:space-between"><span>🚀 Драйв</span><span id="d-pname" style="font-size:12px;color:var(--text2);font-weight:400;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></span></div>
       <div id="tasks-d-list"></div>
       <div class="add-row">
-        <input class="inp" placeholder="Новая задача Драйва…" id="add-d-inp">
-        <input class="inp" placeholder="50 мин" id="add-d-time" style="width:80px">
+        <input class="inp" placeholder="Задача…" id="add-d-inp" style="flex:2">
+        <input class="inp" placeholder="50 мин" id="add-d-time" style="width:65px;flex:none">
+        <input class="inp" type="date" id="add-d-date" style="width:125px;flex:none">
         <button class="btn btn-primary btn-sm" onclick="addTask('d')">+</button>
       </div>
     </div>
     <div class="card" style="border-left:4px solid var(--k)">
-      <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">
-        <span>💫 Кайф</span>
-        <span id="k-project-name" style="font-size:12px;font-weight:400;color:var(--text2);max-width:200px;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></span>
-      </div>
+      <div class="card-title" style="display:flex;justify-content:space-between"><span>💫 Кайф</span><span id="k-pname" style="font-size:12px;color:var(--text2);font-weight:400;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></span></div>
       <div id="tasks-k-list"></div>
       <div class="add-row">
-        <input class="inp" placeholder="Новая задача Кайфа…" id="add-k-inp">
-        <input class="inp" placeholder="15 мин" id="add-k-time" style="width:80px">
+        <input class="inp" placeholder="Задача…" id="add-k-inp" style="flex:2">
+        <input class="inp" placeholder="15 мин" id="add-k-time" style="width:65px;flex:none">
+        <input class="inp" type="date" id="add-k-date" style="width:125px;flex:none">
         <button class="btn btn-primary btn-sm" onclick="addTask('k')">+</button>
       </div>
     </div>
@@ -315,76 +313,87 @@ hr{border:none;border-top:1px solid var(--border);margin:18px 0}
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════ PLAN ═══ -->
+<!-- PLAN -->
 <div class="screen" id="s-plan">
   <div class="page-header">
     <div class="page-title">Планирование спринта</div>
-    <div class="page-sub">Настройте структуру и задачи нового спринта</div>
+    <div class="page-sub">Настройте структуру и добавьте задачи с датами</div>
   </div>
   <div class="card">
-    <div class="card-title">Длительность спринта</div>
+    <div class="card-title">Длительность</div>
     <div style="display:flex;gap:10px">
-      <div class="struct-opt selected" id="dur-7" onclick="selectDur(7)" style="flex:1">
-        <div><div class="sn">7 дней</div><div class="sd">Рекомендуется для новичков</div></div>
-      </div>
-      <div class="struct-opt" id="dur-21" onclick="selectDur(21)" style="flex:1">
-        <div><div class="sn">21 день</div><div class="sd">Для опытных спринтёров</div></div>
-      </div>
+      <div class="struct-opt selected" id="dur-7" onclick="selDur(7)" style="flex:1"><div><div class="sn">7 дней</div><div class="sd">Рекомендуется для новичков</div></div></div>
+      <div class="struct-opt" id="dur-21" onclick="selDur(21)" style="flex:1"><div><div class="sn">21 день</div><div class="sd">Для опытных спринтёров</div></div></div>
     </div>
   </div>
   <div class="card">
     <div class="card-title">Структура времени</div>
-    <div class="struct-opt selected" id="struct-1" onclick="selectStruct(1)">
-      <div style="flex:1"><div class="sn">Опция 1 — рекомендуемая</div><div class="sd">90 мин каждый день</div><div class="tb"><div style="flex:2;background:var(--f)"></div><div style="flex:4;background:var(--d)"></div><div style="flex:1;background:var(--k)"></div></div><div style="font-size:10px;color:var(--text3);margin-top:4px">Ф: 25м · Д: 50м · К: 15м</div></div>
-      <div class="sv">10.5 ч</div>
-    </div>
-    <div class="struct-opt" id="struct-2" onclick="selectStruct(2)">
-      <div style="flex:1"><div class="sn">Опция 2</div><div class="sd">45 мин будни + 3 ч выходные</div><div class="tb"><div style="flex:1;background:var(--f)"></div><div style="flex:3;background:var(--d)"></div><div style="flex:6;background:var(--k)"></div></div></div>
-      <div class="sv">9.75 ч</div>
-    </div>
-    <div class="struct-opt" id="struct-3" onclick="selectStruct(3)">
-      <div style="flex:1"><div class="sn">Опция 3</div><div class="sd">60 мин будни + 2.5 ч выходные</div></div>
-      <div class="sv">10 ч</div>
-    </div>
-    <div class="struct-opt" id="struct-4" onclick="selectStruct(4)">
-      <div style="flex:1"><div class="sn">Опция 4</div><div class="sd">2.5 ч четыре раза в неделю</div></div>
-      <div class="sv">10 ч</div>
-    </div>
-    <div class="struct-opt" id="struct-5" onclick="selectStruct(5)">
-      <div style="flex:1"><div class="sn">Опция 5</div><div class="sd">3 ч три раза в неделю</div></div>
-      <div class="sv">9 ч</div>
-    </div>
+    <div class="struct-opt selected" id="struct-1" onclick="selStruct(1)"><div style="flex:1"><div class="sn">Опция 1 — рекомендуемая</div><div class="sd">90 мин каждый день</div><div class="tb"><div style="flex:2;background:var(--f)"></div><div style="flex:4;background:var(--d)"></div><div style="flex:1;background:var(--k)"></div></div></div><div class="sv">10.5 ч</div></div>
+    <div class="struct-opt" id="struct-2" onclick="selStruct(2)"><div style="flex:1"><div class="sn">Опция 2</div><div class="sd">45 мин будни + 3 ч выходные</div></div><div class="sv">9.75 ч</div></div>
+    <div class="struct-opt" id="struct-3" onclick="selStruct(3)"><div style="flex:1"><div class="sn">Опция 3</div><div class="sd">60 мин будни + 2.5 ч выходные</div></div><div class="sv">10 ч</div></div>
+    <div class="struct-opt" id="struct-4" onclick="selStruct(4)"><div style="flex:1"><div class="sn">Опция 4</div><div class="sd">2.5 ч четыре раза в неделю</div></div><div class="sv">10 ч</div></div>
+    <div class="struct-opt" id="struct-5" onclick="selStruct(5)"><div style="flex:1"><div class="sn">Опция 5</div><div class="sd">3 ч три раза в неделю</div></div><div class="sv">9 ч</div></div>
   </div>
   <div class="card" style="border-left:4px solid var(--f)">
-    <div class="card-title">🌱 Проект «Фундамент» — забота о здоровье</div>
-    <input class="inp" placeholder="Название / краткое описание проекта" id="plan-f-name" style="margin-bottom:8px">
-    <textarea class="ta" rows="3" placeholder="Задачи и расписание: прогулки 25 мин каждый день, йога в воскресенье 60 мин…" id="plan-f-desc"></textarea>
+    <div class="card-title">🌱 Проект «Фундамент»</div>
+    <input class="inp" placeholder="Название проекта" id="plan-f-name" style="margin-bottom:8px">
+    <textarea class="ta" rows="2" placeholder="Краткое описание…" id="plan-f-desc" style="margin-bottom:10px"></textarea>
+    <div id="plan-f-tasks"></div>
+    <div class="add-row">
+      <input class="inp" placeholder="Задача…" id="plan-add-f-inp" style="flex:2">
+      <input class="inp" placeholder="25 мин" id="plan-add-f-time" style="width:65px;flex:none">
+      <input class="inp" type="date" id="plan-add-f-date" style="width:125px;flex:none">
+      <button class="btn btn-primary btn-sm" onclick="planAdd('f')">+</button>
+    </div>
   </div>
   <div class="card" style="border-left:4px solid var(--d)">
-    <div class="card-title">🚀 Проект «Драйв» — вызов и рост</div>
-    <input class="inp" placeholder="Название / краткое описание проекта" id="plan-d-name" style="margin-bottom:8px">
-    <textarea class="ta" rows="3" placeholder="Задачи и расписание: снять 3 видео — пн/вт скрипты, чт съёмка, пт монтаж…" id="plan-d-desc"></textarea>
+    <div class="card-title">🚀 Проект «Драйв»</div>
+    <input class="inp" placeholder="Название проекта" id="plan-d-name" style="margin-bottom:8px">
+    <textarea class="ta" rows="2" placeholder="Краткое описание…" id="plan-d-desc" style="margin-bottom:10px"></textarea>
+    <div id="plan-d-tasks"></div>
+    <div class="add-row">
+      <input class="inp" placeholder="Задача…" id="plan-add-d-inp" style="flex:2">
+      <input class="inp" placeholder="50 мин" id="plan-add-d-time" style="width:65px;flex:none">
+      <input class="inp" type="date" id="plan-add-d-date" style="width:125px;flex:none">
+      <button class="btn btn-primary btn-sm" onclick="planAdd('d')">+</button>
+    </div>
   </div>
   <div class="card" style="border-left:4px solid var(--k)">
-    <div class="card-title">💫 Проект «Кайф» — замедлиться и насладиться</div>
-    <input class="inp" placeholder="Название / краткое описание проекта" id="plan-k-name" style="margin-bottom:8px">
-    <textarea class="ta" rows="3" placeholder="Задачи и расписание: кофе каждое утро 15 мин, книжный в субботу 90 мин…" id="plan-k-desc"></textarea>
+    <div class="card-title">💫 Проект «Кайф»</div>
+    <input class="inp" placeholder="Название проекта" id="plan-k-name" style="margin-bottom:8px">
+    <textarea class="ta" rows="2" placeholder="Краткое описание…" id="plan-k-desc" style="margin-bottom:10px"></textarea>
+    <div id="plan-k-tasks"></div>
+    <div class="add-row">
+      <input class="inp" placeholder="Задача…" id="plan-add-k-inp" style="flex:2">
+      <input class="inp" placeholder="15 мин" id="plan-add-k-time" style="width:65px;flex:none">
+      <input class="inp" type="date" id="plan-add-k-date" style="width:125px;flex:none">
+      <button class="btn btn-primary btn-sm" onclick="planAdd('k')">+</button>
+    </div>
   </div>
   <button class="btn btn-primary btn-full" onclick="launchSprint()">🚀 Запустить спринт</button>
 </div>
 
-<!-- ═══════════════════════════════════════ WEEKLY ═══ -->
+<!-- WEEKLY -->
 <div class="screen" id="s-weekly">
   <div class="page-header">
     <div class="page-title" id="weekly-title">Недельный план</div>
     <div class="page-sub" id="weekly-sub">—</div>
   </div>
-  <div class="card" id="weekly-card">
-    <div id="weekly-content"></div>
+  <div class="card" style="padding:14px 20px">
+    <div class="date-nav">
+      <button class="dnav-btn" onclick="resetWeekOffset()">Текущая неделя</button>
+      <div style="display:flex;align-items:center;gap:6px">
+        <button class="dnav-arrow" onclick="shiftWeek(-1)">‹</button>
+        <span class="dnav-label" id="weekly-range-label">—</span>
+        <button class="dnav-arrow" onclick="shiftWeek(1)">›</button>
+      </div>
+      <div style="font-size:12px;color:var(--text3)" id="weekly-week-num"></div>
+    </div>
   </div>
+  <div class="card"><div id="weekly-content"></div></div>
 </div>
 
-<!-- ═══════════════════════════════════════ REFLECTION ═══ -->
+<!-- REFLECTION -->
 <div class="screen" id="s-reflection">
   <div class="page-header">
     <div class="page-title">Итоги недели</div>
@@ -403,635 +412,495 @@ hr{border:none;border-top:1px solid var(--border);margin:18px 0}
     <div class="reflect-sec rk" style="margin-top:10px"><div class="reflect-label">💫 Кайф</div><textarea class="ta" rows="2" id="ref-k-not" placeholder="Сложности…"></textarea></div>
   </div>
   <div class="card">
-    <div class="card-title">3. Как скорректировать подход — самое важное</div>
+    <div class="card-title">3. Как скорректировать подход</div>
     <textarea class="ta" rows="4" id="ref-adjust" placeholder="Что поменяю в следующей неделе…"></textarea>
   </div>
   <button class="btn btn-success btn-full" onclick="saveReflection()">✓ Сохранить итоги недели</button>
   <button class="btn btn-primary btn-full" style="margin-top:8px" onclick="goNextWeek()">→ Запланировать следующую неделю</button>
 </div>
 
-<!-- ═══════════════════════════════════════ TRANSFORM ═══ -->
+<!-- TRANSFORM -->
 <div class="screen" id="s-transform">
-  <div class="int-hero">
-    <div class="ih-icon">✨</div>
-    <h3>Интеграционная неделя</h3>
-    <p>Трансформирующая рефлексия · ~30 минут</p>
-  </div>
-  <div class="tr-step">
-    <div class="sn">Шаг 1 <span class="st">· 7 минут</span></div>
-    <div class="sq">Какое главное изменение произошло со мной за этот месяц?</div>
-    <textarea class="ta" rows="4" id="tr-change" placeholder="Это может быть не связано с проектами напрямую…"></textarea>
-  </div>
-  <div class="tr-step">
-    <div class="sn">Шаг 2 <span class="st">· 7 минут</span></div>
-    <div class="sq">Какие мои действия привели к этому изменению?</div>
-    <textarea class="ta" rows="4" id="tr-actions" placeholder="Смотрите на изменение с позиции вашей роли…"></textarea>
-  </div>
-  <div class="tr-step">
-    <div class="sn">Шаг 3 <span class="st">· 7 минут</span></div>
-    <div class="sq">Как в связи с этим трансформировался мой взгляд на себя?</div>
-    <textarea class="ta" rows="4" id="tr-belief" placeholder="Что вы о себе узнали?…"></textarea>
-  </div>
-  <div class="tr-step">
-    <div class="sn">Шаг 4 <span class="st">· 7 минут</span></div>
-    <div class="sq">Какие новые возможности благодаря этому мне открылись?</div>
-    <textarea class="ta" rows="4" id="tr-opportunity" placeholder="Что для «обновлённой» версии вас теперь доступно?…"></textarea>
-  </div>
+  <div class="int-hero"><div style="font-size:36px;margin-bottom:8px">✨</div><h3>Интеграционная неделя</h3><p>Трансформирующая рефлексия · ~30 минут</p></div>
+  <div class="tr-step"><div class="sn">Шаг 1 <span class="st">· 7 минут</span></div><div class="sq">Какое главное изменение произошло со мной за этот месяц?</div><textarea class="ta" rows="4" id="tr-change" placeholder="Это может быть не связано с проектами напрямую…"></textarea></div>
+  <div class="tr-step"><div class="sn">Шаг 2 <span class="st">· 7 минут</span></div><div class="sq">Какие мои действия привели к этому изменению?</div><textarea class="ta" rows="4" id="tr-actions" placeholder="Смотрите на изменение с позиции вашей роли…"></textarea></div>
+  <div class="tr-step"><div class="sn">Шаг 3 <span class="st">· 7 минут</span></div><div class="sq">Как в связи с этим трансформировался мой взгляд на себя?</div><textarea class="ta" rows="4" id="tr-belief" placeholder="Что вы о себе узнали?…"></textarea></div>
+  <div class="tr-step"><div class="sn">Шаг 4 <span class="st">· 7 минут</span></div><div class="sq">Какие новые возможности благодаря этому мне открылись?</div><textarea class="ta" rows="4" id="tr-opportunity" placeholder="Что для «обновлённой» версии вас теперь доступно?…"></textarea></div>
   <button class="btn btn-success btn-full" onclick="saveTransform()">✓ Сохранить в историю спринта</button>
   <button class="btn btn-primary btn-full" style="margin-top:8px" onclick="startNewCycle()">🚀 Начать новый цикл спринтов</button>
 </div>
 
-<!-- ═══════════════════════════════════════ DIARY ═══ -->
+<!-- DIARY -->
 <div class="screen" id="s-diary">
-  <div class="page-header">
-    <div class="page-title">Дневник моментов</div>
-    <div class="page-sub">Замечательные мгновения каждого дня</div>
-  </div>
+  <div class="page-header"><div class="page-title">Дневник моментов</div><div class="page-sub">Замечательные мгновения каждого дня</div></div>
   <div id="diary-list"></div>
 </div>
 
-<!-- ═══════════════════════════════════════ HISTORY ═══ -->
+<!-- HISTORY -->
 <div class="screen" id="s-history">
-  <div class="page-header">
-    <div class="page-title">История спринтов</div>
-    <div class="page-sub">Итоги всех завершённых спринтов</div>
-  </div>
+  <div class="page-header"><div class="page-title">История спринтов</div><div class="page-sub">Итоги всех спринтов</div></div>
   <div id="history-list"></div>
 </div>
 
 </main>
 </div>
-
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <script>
-// ═══════════════════ DATA LAYER ═══════════════════
-const SK = 'ns_v2';
-let DB = JSON.parse(localStorage.getItem(SK) || 'null') || getDefaultDB();
+// ════ DATA ════
+const SK='ns_v4';
+let DB=JSON.parse(localStorage.getItem(SK)||'null')||{sprints:[],activeSprint:null,diary:[],moodLog:[]};
+const persist=()=>localStorage.setItem(SK,JSON.stringify(DB));
+const activeSp=()=>DB.activeSprint!==null?DB.sprints[DB.activeSprint]||null:null;
+const isoDate=d=>d.toISOString().slice(0,10);
+const todayISO=()=>isoDate(new Date());
+const fmtD=iso=>{const d=new Date(iso);return`${d.getDate()}.${String(d.getMonth()+1).padStart(2,'0')}`;};
+const fmtDT=iso=>{const d=new Date(iso);return`${fmtD(iso)}.${d.getFullYear()} · ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;};
 
-function getDefaultDB() {
-  return {
-    sprints: [],          // array of sprint objects
-    activeSprint: null,   // index into sprints[]
-    diary: [],            // [{id, date, text}]
-    moodLog: [],          // [{date, score, label, note}]
-  };
+function dayOfSp(sp){return Math.min(Math.max(Math.floor((new Date()-new Date(sp.startDate))/86400000)+1,1),sp.duration);}
+
+// ════ NAV ════
+function go(id,btn){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  if(btn)btn.classList.add('active');
+  ({today:renderToday,sprint:renderSprint,weekly:renderWeekly,diary:renderDiary,history:renderHistory,reflection:renderReflection}[id]||function(){})();
 }
 
-function persist() { localStorage.setItem(SK, JSON.stringify(DB)); }
-
-function activeSprint() {
-  if (DB.activeSprint === null || !DB.sprints[DB.activeSprint]) return null;
-  return DB.sprints[DB.activeSprint];
+// ════ SIDEBAR ════
+function updateSB(){
+  const sp=activeSp();
+  document.getElementById('sb-sprint-label').textContent=sp?`Спринт #${sp.num} · ${sp.duration} дней`:'Нет активного спринта';
+  document.getElementById('sb-sprint-name').textContent=sp?`Неделя ${sp.currentWeek}`:'—';
+  if(sp){const p=Math.min(100,Math.round(dayOfSp(sp)/sp.duration*100));document.getElementById('sb-prog').style.width=p+'%';document.getElementById('sb-prog-label').textContent=`День ${dayOfSp(sp)} из ${sp.duration}`;}
+  else{document.getElementById('sb-prog').style.width='0%';document.getElementById('sb-prog-label').textContent='—';}
 }
 
-function newSprintObj(dur, struct, fName, fDesc, dName, dDesc, kName, kDesc) {
-  const start = new Date();
-  return {
-    id: Date.now(),
-    num: DB.sprints.length + 1,
-    duration: dur,
-    structure: struct,
-    startDate: start.toISOString(),
-    projects: {
-      f: { name: fName, desc: fDesc, tasks: [] },
-      d: { name: dName, desc: dDesc, tasks: [] },
-      k: { name: kName, desc: kDesc, tasks: [] },
-    },
-    weeks: [],        // weekly reflections [{weekNum, done, notDone, adjust, savedAt}]
-    transform: null,  // integration reflection
-    currentWeek: 1,
-  };
-}
+// ════ TODAY ════
+let moodScore=0;
 
-// ═══════════════════ NAVIGATION ═══════════════════
-function go(id, btn) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.getElementById('s-' + id).classList.add('active');
-  if (btn) btn.classList.add('active');
-  if (id === 'today')      renderToday();
-  if (id === 'sprint')     renderSprint();
-  if (id === 'weekly')     renderWeekly();
-  if (id === 'diary')      renderDiary();
-  if (id === 'history')    renderHistory();
-  if (id === 'reflection') renderReflection();
-}
-
-// ═══════════════════ SIDEBAR ═══════════════════
-function updateSidebar() {
-  const sp = activeSprint();
-  const label = sp ? `Спринт #${sp.num} · ${sp.duration} дней` : 'Нет активного спринта';
-  document.getElementById('sb-sprint-label').textContent = label;
-  document.getElementById('sb-sprint-name').textContent = sp ? `Неделя ${sp.currentWeek}` : '—';
-  if (sp) {
-    const day = dayOfSprint(sp);
-    const pct = Math.min(100, Math.round(day / sp.duration * 100));
-    document.getElementById('sb-prog').style.width = pct + '%';
-    document.getElementById('sb-prog-label').textContent = `День ${day} из ${sp.duration}`;
-  } else {
-    document.getElementById('sb-prog').style.width = '0%';
-    document.getElementById('sb-prog-label').textContent = '—';
-  }
-}
-
-function dayOfSprint(sp) {
-  const start = new Date(sp.startDate);
-  const now = new Date();
-  const diff = Math.floor((now - start) / 86400000) + 1;
-  return Math.min(diff, sp.duration);
-}
-
-// ═══════════════════ TODAY ═══════════════════
-let selectedMoodScore = 0;
-let selectedMoodLabel = '';
-
-function renderToday() {
-  const d = new Date();
-  const days = ['воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'];
-  const months = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
-  document.getElementById('today-date-label').textContent =
-    `${days[d.getDay()]}, ${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+function renderToday(){
+  const d=new Date();
+  const DN=['воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'];
+  const MN=['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+  document.getElementById('today-date-label').textContent=`${DN[d.getDay()]}, ${d.getDate()} ${MN[d.getMonth()]} ${d.getFullYear()}`;
   renderTodayTasks();
   renderMoodChart();
+  renderMoodLog();
 }
 
-function renderTodayTasks() {
-  const sp = activeSprint();
-  const el = document.getElementById('today-tasks-list');
-  if (!sp) { el.innerHTML = '<div class="empty">Нет активного спринта.<br>Перейдите в «Планирование» чтобы начать.</div>'; return; }
-  const all = [
-    ...sp.projects.f.tasks.map(t => ({...t, type:'f'})),
-    ...sp.projects.d.tasks.map(t => ({...t, type:'d'})),
-    ...sp.projects.k.tasks.map(t => ({...t, type:'k'})),
-  ].filter(t => !t.done).slice(0,6);
-  if (!all.length) { el.innerHTML = '<div class="empty">Все задачи выполнены! 🎉</div>'; return; }
-  el.innerHTML = all.map(t => `
-    <div class="task-item" onclick="toggleTodayTask('${t.type}','${t.id}',this)">
-      <div class="cb"><svg width="10" height="10" viewBox="0 0 10 10" style="display:none"><polyline points="1.5,5 4,7.5 8.5,2.5" fill="none" stroke="white" stroke-width="1.5"/></svg></div>
-      <div>
-        <span class="chip chip-${t.type}" style="margin-right:6px;font-size:10px">${t.type==='f'?'Ф':t.type==='d'?'Д':'К'}</span>
-        <span class="task-name">${t.name}</span>
-        ${t.time ? `<div><span class="task-time">${t.time}</span></div>` : ''}
+function renderTodayTasks(){
+  const sp=activeSp();
+  const el=document.getElementById('today-tasks-list');
+  if(!sp){el.innerHTML='<div class="empty">Нет активного спринта</div>';return;}
+  const today=todayISO();
+  const pick=type=>{
+    const t=sp.projects[type].tasks;
+    return t.find(x=>!x.done&&x.date===today)||t.find(x=>!x.done&&!x.date)||null;
+  };
+  const items=[{type:'f',task:pick('f')},{type:'d',task:pick('d')},{type:'k',task:pick('k')}].filter(i=>i.task);
+  if(!items.length){el.innerHTML='<div class="empty">Все задачи выполнены! 🎉</div>';return;}
+  el.innerHTML=items.map(({type,task})=>`
+    <div class="task-item ${task.done?'done':''}" onclick="toggleTT('${type}','${task.id}')">
+      <div class="cb" style="${task.done?'background:var(--f);border-color:var(--f)':''}">
+        <svg width="10" height="10" viewBox="0 0 10 10" style="display:${task.done?'block':'none'}"><polyline points="1.5,5 4,7.5 8.5,2.5" fill="none" stroke="white" stroke-width="1.5"/></svg>
+      </div>
+      <div style="flex:1">
+        <span class="chip chip-${type}" style="font-size:10px;margin-right:5px">${type==='f'?'Ф':type==='d'?'Д':'К'}</span>
+        <span class="task-name">${task.name}</span>
+        <div style="margin-top:3px">${task.time?`<span class="task-time">${task.time}</span>`:''} ${task.date?`<span class="task-date-tag">📅 ${task.date}</span>`:''}</div>
       </div>
     </div>`).join('');
 }
 
-function toggleTodayTask(type, id, el) {
-  const sp = activeSprint(); if (!sp) return;
-  const task = sp.projects[type].tasks.find(t => t.id == id);
-  if (task) { task.done = !task.done; persist(); renderTodayTasks(); renderSprint(); updateSidebar(); }
+function toggleTT(type,id){
+  const sp=activeSp();if(!sp)return;
+  const t=sp.projects[type].tasks.find(x=>x.id==id);
+  if(t){t.done=!t.done;persist();renderTodayTasks();renderSprint();updateSB();}
 }
 
-function selectMood(score, btn) {
-  document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
+// ════ MOOD COLORS ════
+const MC=['','#7B6FD4','#1D9E75','#3A8CD4','#D4A017','#D95040'];
+const MB=['','#EDE8FD','#DFF5EC','#E0EEFB','#FFF8DC','#FDECEA'];
+const ME=['','🟣','🟢','🔵','🟡','🔴'];
+const ML=['','Спокойно','В потоке','Ясно','Тепло','Огонь'];
+
+function selectMood(score,btn){
+  document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
-  selectedMoodScore = score;
-  selectedMoodLabel = btn.textContent.trim().replace(/[🟣🟢🔵🟡🔴]/g,'').trim();
+  moodScore=score;
 }
 
-function saveState() {
-  if (!selectedMoodScore) { toast('Выберите состояние на шкале'); return; }
-  const note = document.getElementById('inp-state').value.trim();
-  DB.moodLog.push({
-    date: new Date().toISOString(),
-    score: selectedMoodScore,
-    label: selectedMoodLabel,
-    note
-  });
+function saveState(){
+  if(!moodScore){toast('Выберите состояние на шкале');return;}
+  const note=document.getElementById('inp-state').value.trim();
+  DB.moodLog.push({id:Date.now(),date:new Date().toISOString(),score:moodScore,label:ML[moodScore],note});
   persist();
-  document.getElementById('inp-state').value = '';
-  document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
-  selectedMoodScore = 0;
-  renderMoodChart();
+  document.getElementById('inp-state').value='';
+  document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('active'));
+  moodScore=0;
+  renderMoodChart();renderMoodLog();
   toast('Состояние сохранено ✓');
 }
 
-function saveMoment() {
-  const text = document.getElementById('inp-moment').value.trim();
-  if (!text) { toast('Напишите момент перед сохранением'); return; }
-  DB.diary.push({ id: Date.now(), date: new Date().toISOString(), text });
-  persist();
-  document.getElementById('inp-moment').value = '';
-  toast('Сохранено в дневник моментов ✓');
-}
+function renderMoodChart(){
+  const data=DB.moodLog.slice(-20);
+  const ctx=document.getElementById('mood-chart').getContext('2d');
+  if(window._mc)window._mc.destroy();
+  if(!data.length){document.getElementById('mood-avg-label').textContent='';window._mc=null;return;}
+  const scores=data.map(m=>m.score);
+  const avg=+(scores.reduce((a,b)=>a+b,0)/scores.length).toFixed(1);
+  document.getElementById('mood-avg-label').textContent=`Среднее: ${avg} ${ME[Math.round(avg)]}`;
 
-function renderMoodChart() {
-  const last14 = DB.moodLog.slice(-14);
-  const labels = last14.map(m => {
-    const d = new Date(m.date);
-    return `${d.getDate()}.${String(d.getMonth()+1).padStart(2,'0')}`;
-  });
-  const data = last14.map(m => m.score);
-  const ctx = document.getElementById('mood-chart').getContext('2d');
-  if (window._moodChart) window._moodChart.destroy();
-  window._moodChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels,
-      datasets: [{
-        data,
-        borderColor: '#5B4FCF',
-        backgroundColor: 'rgba(91,79,207,0.08)',
-        borderWidth: 2,
-        pointBackgroundColor: '#5B4FCF',
-        pointRadius: 4,
-        tension: 0.35,
-        fill: true,
+  window._mc=new Chart(ctx,{
+    type:'line',
+    data:{
+      labels:data.map(m=>fmtD(m.date)),
+      datasets:[{
+        data:scores,
+        borderColor:ctx=>{
+          const{ctx:c,chartArea}=ctx.chart;
+          if(!chartArea)return MC[3];
+          const g=c.createLinearGradient(chartArea.left,0,chartArea.right,0);
+          data.forEach((m,i)=>g.addColorStop(i/Math.max(data.length-1,1),MC[m.score]+'CC'));
+          return g;
+        },
+        backgroundColor:ctx=>{
+          const{ctx:c,chartArea}=ctx.chart;
+          if(!chartArea)return MB[Math.round(avg)]+'30';
+          const g=c.createLinearGradient(0,chartArea.top,0,chartArea.bottom);
+          g.addColorStop(0,MC[Math.round(avg)]+'50');
+          g.addColorStop(1,MC[Math.round(avg)]+'05');
+          return g;
+        },
+        borderWidth:2.5,
+        pointBackgroundColor:data.map(m=>MC[m.score]),
+        pointBorderColor:'#fff',pointBorderWidth:2,pointRadius:5,pointHoverRadius:7,
+        tension:0.4,fill:true,
       }]
     },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { display: false }, tooltip: {
-        callbacks: { label: ctx => {
-          const m = last14[ctx.dataIndex];
-          return `${m.label}${m.note ? ' — ' + m.note : ''}`;
-        }}
-      }},
-      scales: {
-        y: { min:0, max:5, ticks: { stepSize:1, callback: v => ['','🟣','🟢','🔵','🟡','🔴'][v]||'' }, grid: { color:'rgba(0,0,0,0.05)' } },
-        x: { grid: { display:false }, ticks: { font: { size:11 } } }
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{
+        legend:{display:false},
+        tooltip:{
+          callbacks:{label:c=>{
+            const m=data[c.dataIndex];
+            const d=new Date(m.date);
+            return`${ME[m.score]} ${m.label} · ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}${m.note?' — '+m.note:''}`;
+          }},
+          backgroundColor:'rgba(26,24,20,0.88)',padding:10,cornerRadius:8,
+        }
+      },
+      scales:{
+        y:{min:0,max:6,ticks:{stepSize:1,callback:v=>ME[v]||''},grid:{color:'rgba(0,0,0,0.04)'}},
+        x:{grid:{display:false},ticks:{font:{size:11}}}
       }
     }
   });
 }
 
-// ═══════════════════ SPRINT ═══════════════════
-function renderSprint() {
-  const sp = activeSprint();
-  if (!sp) {
-    document.getElementById('sprint-title').textContent = 'Нет активного спринта';
-    document.getElementById('sprint-sub').textContent = 'Перейдите в Планирование чтобы начать';
-    ['tasks-f-list','tasks-d-list','tasks-k-list','budget-bars'].forEach(id => {
-      document.getElementById(id).innerHTML = '<div class="empty">Спринт не запущен</div>';
-    });
-    return;
-  }
-  document.getElementById('sprint-title').textContent = `Спринт #${sp.num} · Неделя ${sp.currentWeek}`;
-  document.getElementById('sprint-sub').textContent = `Прогресс по всем проектам · День ${dayOfSprint(sp)} из ${sp.duration}`;
-
-  const day = dayOfSprint(sp);
-  document.getElementById('st-day').innerHTML = `${day}<span class="stat-unit"> / ${sp.duration}</span>`;
-  document.getElementById('st-day-sub').textContent = Math.round(day/sp.duration*100) + '% пути';
-
-  const allTasks = [...sp.projects.f.tasks, ...sp.projects.d.tasks, ...sp.projects.k.tasks];
-  const doneCount = allTasks.filter(t=>t.done).length;
-  document.getElementById('st-done').innerHTML = `${doneCount}<span class="stat-unit"> / ${allTasks.length}</span>`;
-
-  const structHours = [10.5,9.75,10,10,9];
-  const totalH = structHours[(sp.structure||1)-1];
-  const spentH = (day / sp.duration * totalH * 0.9).toFixed(1);
-  document.getElementById('st-hours').innerHTML = `${spentH}<span class="stat-unit"> / ${totalH}ч</span>`;
-  document.getElementById('st-hours-sub').textContent = Math.round(spentH/totalH*100) + '% бюджета';
-
-  buildWeekGrid(sp);
-  ['f','d','k'].forEach(type => renderTaskList(type, sp));
-  document.getElementById('f-project-name').textContent = sp.projects.f.name || '';
-  document.getElementById('d-project-name').textContent = sp.projects.d.name || '';
-  document.getElementById('k-project-name').textContent = sp.projects.k.name || '';
-  renderBudget(sp);
+function renderMoodLog(){
+  const el=document.getElementById('mood-log-list');
+  if(!DB.moodLog.length){el.innerHTML='<div class="empty">Нет записей</div>';return;}
+  el.innerHTML=[...DB.moodLog].reverse().slice(0,15).map(m=>`
+    <div class="mood-log-item">
+      <div class="mood-badge" style="background:${MB[m.score]}">${ME[m.score]}</div>
+      <div style="flex:1">
+        <div style="font-size:12px;font-weight:600;color:${MC[m.score]}">${m.label}</div>
+        ${m.note?`<div style="font-size:12px;color:var(--text2);line-height:1.4">${m.note}</div>`:''}
+        <div style="font-size:10px;color:var(--text3)">${fmtDT(m.date)}</div>
+      </div>
+      <button class="task-del" onclick="delMood(${m.id})">×</button>
+    </div>`).join('');
 }
 
-function renderTaskList(type, sp) {
-  const tasks = sp.projects[type].tasks;
-  const el = document.getElementById(`tasks-${type}-list`);
-  if (!tasks.length) { el.innerHTML = '<div class="empty" style="padding:12px 0">Нет задач — добавьте первую</div>'; return; }
-  el.innerHTML = tasks.map(t => `
+function delMood(id){DB.moodLog=DB.moodLog.filter(m=>m.id!==id);persist();renderMoodChart();renderMoodLog();}
+
+// ════ SPRINT ════
+let sf='all', sfDate=todayISO();
+
+function setSF(f){
+  sf=f;sfDate=f==='today'?todayISO():sfDate;
+  ['all','today','nodate'].forEach(k=>document.getElementById('sf-'+k).classList.toggle('active',k===f));
+  const lbl={all:'Все задачи',today:'Сегодня',nodate:'Без даты',date:sfDate}[f]||sfDate;
+  document.getElementById('sprint-filter-label').textContent=lbl;
+  renderSprint();
+}
+
+function shiftSD(dir){
+  const d=new Date(sfDate);d.setDate(d.getDate()+dir);sfDate=isoDate(d);
+  sf='date';
+  ['all','today','nodate'].forEach(k=>document.getElementById('sf-'+k).classList.remove('active'));
+  document.getElementById('sprint-filter-label').textContent=sfDate;
+  renderSprint();
+}
+
+function taskVis(t){
+  if(sf==='all')return true;
+  if(sf==='nodate')return!t.date;
+  const target=sf==='today'?todayISO():sfDate;
+  return t.date===target;
+}
+
+function renderSprint(){
+  const sp=activeSp();
+  if(!sp){
+    document.getElementById('sprint-title').textContent='Нет активного спринта';
+    document.getElementById('sprint-sub').textContent='Перейдите в Планирование';
+    ['tasks-f-list','tasks-d-list','tasks-k-list','budget-bars'].forEach(id=>document.getElementById(id).innerHTML='<div class="empty">Спринт не запущен</div>');
+    return;
+  }
+  const day=dayOfSp(sp);
+  document.getElementById('sprint-title').textContent=`Спринт #${sp.num} · Неделя ${sp.currentWeek}`;
+  document.getElementById('sprint-sub').textContent=`День ${day} из ${sp.duration}`;
+  document.getElementById('st-day').innerHTML=`${day}<span class="stat-unit"> / ${sp.duration}</span>`;
+  document.getElementById('st-day-sub').textContent=Math.round(day/sp.duration*100)+'% пути';
+  const all=[...sp.projects.f.tasks,...sp.projects.d.tasks,...sp.projects.k.tasks];
+  document.getElementById('st-done').innerHTML=`${all.filter(t=>t.done).length}<span class="stat-unit"> / ${all.length}</span>`;
+  const sH=[10.5,9.75,10,10,9][(sp.structure||1)-1];
+  const spent=+(day/sp.duration*sH*0.9).toFixed(1);
+  document.getElementById('st-hours').innerHTML=`${spent}<span class="stat-unit"> / ${sH}ч</span>`;
+  document.getElementById('st-hours-sub').textContent=Math.round(spent/sH*100)+'% бюджета';
+  buildWeekGrid(sp);
+  ['f','d','k'].forEach(type=>renderTL(type,sp));
+  document.getElementById('f-pname').textContent=sp.projects.f.name||'';
+  document.getElementById('d-pname').textContent=sp.projects.d.name||'';
+  document.getElementById('k-pname').textContent=sp.projects.k.name||'';
+  renderBudget(sp);
+  ['f','d','k'].forEach(t=>{const el=document.getElementById('add-'+t+'-date');if(el&&!el.value)el.value=todayISO();});
+}
+
+function renderTL(type,sp){
+  const tasks=sp.projects[type].tasks.filter(taskVis);
+  const el=document.getElementById('tasks-'+type+'-list');
+  if(!tasks.length){el.innerHTML=`<div class="empty" style="padding:10px 0;font-size:12px">Нет задач${sf!=='all'?' для этого фильтра':''}</div>`;return;}
+  el.innerHTML=tasks.map(t=>`
     <div class="task-item ${t.done?'done':''}">
-      <div class="cb" onclick="toggleTask('${type}','${t.id}')" style="${t.done?'background:var(--f);border-color:var(--f)':''}">
+      <div class="cb" onclick="toggleT('${type}','${t.id}')" style="${t.done?'background:var(--f);border-color:var(--f)':''}">
         <svg width="10" height="10" viewBox="0 0 10 10" style="display:${t.done?'block':'none'}"><polyline points="1.5,5 4,7.5 8.5,2.5" fill="none" stroke="white" stroke-width="1.5"/></svg>
       </div>
       <div style="flex:1">
         <div class="task-name">${t.name}</div>
-        ${t.time ? `<span class="task-time">${t.time}</span>` : ''}
+        <div style="margin-top:2px">${t.time?`<span class="task-time">${t.time}</span>`:''} ${t.date?`<span class="task-date-tag">📅 ${t.date}</span>`:`<span class="task-time" style="opacity:.4">без даты</span>`}</div>
       </div>
-      <button class="task-del" onclick="deleteTask('${type}','${t.id}')" title="Удалить">×</button>
+      <button class="task-del" onclick="delTask('${type}','${t.id}')">×</button>
     </div>`).join('');
 }
 
-function toggleTask(type, id) {
-  const sp = activeSprint(); if (!sp) return;
-  const t = sp.projects[type].tasks.find(t => t.id == id);
-  if (t) { t.done = !t.done; persist(); renderSprint(); renderTodayTasks(); updateSidebar(); }
-}
+function toggleT(type,id){const sp=activeSp();if(!sp)return;const t=sp.projects[type].tasks.find(x=>x.id==id);if(t){t.done=!t.done;persist();renderSprint();renderTodayTasks();updateSB();}}
+function delTask(type,id){const sp=activeSp();if(!sp)return;sp.projects[type].tasks=sp.projects[type].tasks.filter(x=>x.id!=id);persist();renderSprint();renderTodayTasks();}
 
-function deleteTask(type, id) {
-  const sp = activeSprint(); if (!sp) return;
-  sp.projects[type].tasks = sp.projects[type].tasks.filter(t => t.id != id);
-  persist(); renderSprint(); renderTodayTasks();
-}
-
-function addTask(type) {
-  const sp = activeSprint(); if (!sp) { toast('Сначала запустите спринт'); return; }
-  const inp = document.getElementById(`add-${type}-inp`);
-  const timeInp = document.getElementById(`add-${type}-time`);
-  const name = inp.value.trim();
-  if (!name) return;
-  sp.projects[type].tasks.push({ id: Date.now(), name, time: timeInp.value.trim(), done: false });
-  persist(); renderSprint(); renderTodayTasks();
-  inp.value = ''; timeInp.value = '';
+function addTask(type){
+  const sp=activeSp();if(!sp){toast('Сначала запустите спринт');return;}
+  const name=document.getElementById('add-'+type+'-inp').value.trim();if(!name)return;
+  const time=document.getElementById('add-'+type+'-time').value.trim();
+  const date=document.getElementById('add-'+type+'-date').value||'';
+  sp.projects[type].tasks.push({id:Date.now(),name,time,date,done:false});
+  persist();renderSprint();renderTodayTasks();
+  document.getElementById('add-'+type+'-inp').value='';
   toast('Задача добавлена ✓');
 }
 
-function renderBudget(sp) {
-  const el = document.getElementById('budget-bars');
-  const types = [
-    { key:'f', label:'🌱 Фундамент', color:'var(--f)', bg:'var(--f-bg)' },
-    { key:'d', label:'🚀 Драйв',     color:'var(--d)', bg:'var(--d-bg)' },
-    { key:'k', label:'💫 Кайф',      color:'var(--k)', bg:'var(--k-bg)' },
-  ];
-  const total = [4,4,2];
-  const day = dayOfSprint(sp);
-  el.innerHTML = types.map((t,i) => {
-    const spent = +(day/sp.duration*total[i]*0.9).toFixed(1);
-    const pct = Math.min(100, Math.round(spent/total[i]*100));
-    return `<div style="margin-bottom:12px">
-      <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-        <span style="font-size:12px;font-weight:500;color:${t.color}">${t.label}</span>
-        <span style="font-size:12px;color:var(--text2)">${spent} / ${total[i]} ч</span>
-      </div>
-      <div class="prog-bar" style="background:${t.bg}"><div class="prog-fill" style="width:${pct}%;background:${t.color}"></div></div>
-    </div>`;
-  }).join('') + `<hr><div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px"><span style="font-size:12px;color:var(--text2)">Итого</span><span style="font-size:15px;font-weight:600;color:var(--accent)">${(+(day/sp.duration*9*0.9).toFixed(1))} / 10 ч</span></div>`;
-}
-
-function buildWeekGrid(sp) {
-  const grid = document.getElementById('week-grid');
-  grid.innerHTML = '';
-  const start = new Date(sp.startDate);
-  const today = new Date();
-  const dayNames = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
-  const days = sp.duration === 7 ? 7 : 7;
-  for (let i = 0; i < days; i++) {
-    const d = new Date(start); d.setDate(start.getDate() + i);
-    const isToday = d.toDateString() === today.toDateString();
-    const isPast = d < today && !isToday;
-    const cell = document.createElement('div');
-    cell.className = 'day-cell' + (isToday?' is-today':'') + (isPast?' is-done':'');
-    const dow = (d.getDay() + 6) % 7;
-    const hasTasks = {f: sp.projects.f.tasks.length > 0, d: sp.projects.d.tasks.length > 0, k: sp.projects.k.tasks.length > 0};
-    cell.innerHTML = `<div class="dn">${dayNames[dow]}</div><div class="dd">${d.getDate()}</div><div class="dots"><div class="dot" style="background:var(--f);opacity:${hasTasks.f?(isPast||isToday?1:.3):.15}"></div><div class="dot" style="background:var(--d);opacity:${hasTasks.d?(isPast||isToday?1:.3):.15}"></div><div class="dot" style="background:var(--k);opacity:${hasTasks.k?(isPast||isToday?1:.3):.15}"></div></div>`;
+function buildWeekGrid(sp){
+  const grid=document.getElementById('week-grid');grid.innerHTML='';
+  const start=new Date(sp.startDate),today=new Date();
+  const DNS=['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
+  for(let i=0;i<7;i++){
+    const d=new Date(start);d.setDate(start.getDate()+i);
+    const dISO=isoDate(d),isToday=d.toDateString()===today.toDateString(),isPast=d<today&&!isToday;
+    const isSel=sf==='date'&&dISO===sfDate;
+    const dow=(d.getDay()+6)%7;
+    const hF=sp.projects.f.tasks.some(t=>t.date===dISO);
+    const hD=sp.projects.d.tasks.some(t=>t.date===dISO);
+    const hK=sp.projects.k.tasks.some(t=>t.date===dISO);
+    const cell=document.createElement('div');
+    cell.className='day-cell'+(isToday?' is-today':'')+(isPast&&!isSel?' is-done':'')+(isSel?' is-sel':'');
+    cell.innerHTML=`<div class="dn">${DNS[dow]}</div><div class="dd">${d.getDate()}</div><div class="dots"><div class="dot" style="background:var(--f);opacity:${hF?1:.12}"></div><div class="dot" style="background:var(--d);opacity:${hD?1:.12}"></div><div class="dot" style="background:var(--k);opacity:${hK?1:.12}"></div></div>`;
+    cell.onclick=()=>{sfDate=dISO;setSF('date');};
     grid.appendChild(cell);
   }
 }
 
-// ═══════════════════ PLANNING ═══════════════════
-let planDur = 7, planStruct = 1;
-
-function selectDur(d) {
-  planDur = d;
-  document.getElementById('dur-7').classList.toggle('selected', d===7);
-  document.getElementById('dur-21').classList.toggle('selected', d===21);
-}
-function selectStruct(n) {
-  planStruct = n;
-  for(let i=1;i<=5;i++) document.getElementById('struct-'+i).classList.toggle('selected', i===n);
+function renderBudget(sp){
+  const el=document.getElementById('budget-bars'),day=dayOfSp(sp);
+  const types=[{l:'🌱 Фундамент',c:'var(--f)',b:'var(--f-bg)',h:4},{l:'🚀 Драйв',c:'var(--d)',b:'var(--d-bg)',h:4},{l:'💫 Кайф',c:'var(--k)',b:'var(--k-bg)',h:2}];
+  el.innerHTML=types.map(t=>{const s=+(day/sp.duration*t.h*0.9).toFixed(1),p=Math.min(100,Math.round(s/t.h*100));return`<div style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:12px;font-weight:500;color:${t.c}">${t.l}</span><span style="font-size:12px;color:var(--text2)">${s} / ${t.h} ч</span></div><div class="prog-bar" style="background:${t.b}"><div class="prog-fill" style="width:${p}%;background:${t.c}"></div></div></div>`;}).join('')+'<hr><div style="display:flex;justify-content:space-between"><span style="font-size:12px;color:var(--text2)">Итого</span><span style="font-size:15px;font-weight:600;color:var(--accent)">'+(+(day/sp.duration*9*0.9).toFixed(1))+' / 10 ч</span></div>';
 }
 
-function launchSprint() {
-  const fName = document.getElementById('plan-f-name').value.trim();
-  const fDesc = document.getElementById('plan-f-desc').value.trim();
-  const dName = document.getElementById('plan-d-name').value.trim();
-  const dDesc = document.getElementById('plan-d-desc').value.trim();
-  const kName = document.getElementById('plan-k-name').value.trim();
-  const kDesc = document.getElementById('plan-k-desc').value.trim();
-  if (!fName || !dName || !kName) { toast('Заполните названия всех трёх проектов'); return; }
-  const sp = newSprintObj(planDur, planStruct, fName, fDesc, dName, dDesc, kName, kDesc);
-  // pre-populate tasks from description lines
-  [['f',fDesc],['d',dDesc],['k',kDesc]].forEach(([type, desc]) => {
-    if (desc) {
-      desc.split('\n').filter(l=>l.trim()).slice(0,6).forEach(line => {
-        const timeMatch = line.match(/(\d+\s*мин)/i);
-        sp.projects[type].tasks.push({ id: Date.now()+Math.random(), name: line.replace(/(\d+\s*мин)/i,'').replace(/^[-–·•]\s*/,'').trim(), time: timeMatch?timeMatch[0]:'', done:false });
-      });
-    }
-  });
-  DB.sprints.push(sp);
-  DB.activeSprint = DB.sprints.length - 1;
-  persist();
-  updateSidebar();
-  toast(`Спринт #${sp.num} запущен! 🚀`);
-  go('sprint', document.querySelector('.nav-item[onclick*=sprint]'));
+// ════ PLAN ════
+let pDur=7,pStruct=1,pTasks={f:[],d:[],k:[]};
+function selDur(d){pDur=d;document.getElementById('dur-7').classList.toggle('selected',d===7);document.getElementById('dur-21').classList.toggle('selected',d===21);}
+function selStruct(n){pStruct=n;for(let i=1;i<=5;i++)document.getElementById('struct-'+i).classList.toggle('selected',i===n);}
+
+function planAdd(type){
+  const name=document.getElementById('plan-add-'+type+'-inp').value.trim();if(!name)return;
+  const time=document.getElementById('plan-add-'+type+'-time').value.trim();
+  const date=document.getElementById('plan-add-'+type+'-date').value||'';
+  pTasks[type].push({id:Date.now(),name,time,date,done:false});
+  document.getElementById('plan-add-'+type+'-inp').value='';
+  renderPlanTasks(type);
 }
 
-// ═══════════════════ WEEKLY ═══════════════════
-let weeklyEditWeek = 1;
+function renderPlanTasks(type){
+  const el=document.getElementById('plan-'+type+'-tasks');
+  if(!pTasks[type].length){el.innerHTML='';return;}
+  el.innerHTML=pTasks[type].map(t=>`<div class="task-item"><div class="cb"></div><div style="flex:1"><div class="task-name">${t.name}</div><div style="margin-top:2px">${t.time?`<span class="task-time">${t.time}</span>`:''} ${t.date?`<span class="task-date-tag">📅 ${t.date}</span>`:''}</div></div><button class="task-del" onclick="planDel('${type}','${t.id}')">×</button></div>`).join('');
+}
 
-function renderWeekly(weekNum) {
-  const sp = activeSprint();
-  weeklyEditWeek = weekNum || (sp ? sp.currentWeek : 1);
-  if (!sp) {
-    document.getElementById('weekly-title').textContent = 'Недельный план';
-    document.getElementById('weekly-sub').textContent = 'Нет активного спринта';
-    document.getElementById('weekly-content').innerHTML = '<div class="empty">Запустите спринт в разделе «Планирование»</div>';
+function planDel(type,id){pTasks[type]=pTasks[type].filter(t=>t.id!=id);renderPlanTasks(type);}
+
+function launchSprint(){
+  const fN=document.getElementById('plan-f-name').value.trim();
+  const dN=document.getElementById('plan-d-name').value.trim();
+  const kN=document.getElementById('plan-k-name').value.trim();
+  if(!fN||!dN||!kN){toast('Заполните названия всех трёх проектов');return;}
+  const sp={id:Date.now(),num:DB.sprints.length+1,duration:pDur,structure:pStruct,startDate:new Date().toISOString(),
+    projects:{
+      f:{name:fN,desc:document.getElementById('plan-f-desc').value,tasks:[...pTasks.f]},
+      d:{name:dN,desc:document.getElementById('plan-d-desc').value,tasks:[...pTasks.d]},
+      k:{name:kN,desc:document.getElementById('plan-k-desc').value,tasks:[...pTasks.k]},
+    },
+    weeks:[],transform:null,currentWeek:1};
+  DB.sprints.push(sp);DB.activeSprint=DB.sprints.length-1;persist();
+  pTasks={f:[],d:[],k:[]};['plan-f-tasks','plan-d-tasks','plan-k-tasks'].forEach(id=>document.getElementById(id).innerHTML='');
+  updateSB();toast(`Спринт #${sp.num} запущен! 🚀`);
+  go('sprint',document.querySelector('.nav-item[onclick*=sprint]'));
+}
+
+// ════ WEEKLY ════
+let wkOffset=0;
+
+function renderWeekly(weekNum){
+  const sp=activeSp();const wk=weekNum||(sp?sp.currentWeek:1);
+  if(!sp){
+    document.getElementById('weekly-title').textContent='Недельный план';
+    document.getElementById('weekly-sub').textContent='Нет активного спринта';
+    document.getElementById('weekly-content').innerHTML='<div class="empty">Запустите спринт</div>';
     return;
   }
-  document.getElementById('weekly-title').textContent = `Спринт #${sp.num} · Неделя ${weeklyEditWeek}`;
-  document.getElementById('weekly-sub').textContent = `${sp.duration}-дневный спринт · Структура ${sp.structure}`;
+  document.getElementById('weekly-title').textContent=`Спринт #${sp.num} · Неделя ${wk}`;
+  document.getElementById('weekly-sub').textContent=`${sp.duration}-дневный спринт · Структура ${sp.structure}`;
+  document.getElementById('weekly-week-num').textContent=`Смещение: ${wkOffset>0?'+':''}${wkOffset} нед.`;
 
-  const dayNames = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
-  const start = new Date(sp.startDate);
-  start.setDate(start.getDate() + (weeklyEditWeek-1)*7);
+  const start=new Date(sp.startDate);
+  start.setDate(start.getDate()+(wk-1)*7+wkOffset*7);
+  document.getElementById('weekly-range-label').textContent=fmtWeekRange(start);
 
-  const fTasks = sp.projects.f.tasks;
-  const dTasks = sp.projects.d.tasks;
-  const kTasks = sp.projects.k.tasks;
-
-  let rows = '';
-  for (let i = 0; i < 7; i++) {
-    const d = new Date(start); d.setDate(start.getDate()+i);
-    const isToday = d.toDateString() === new Date().toDateString();
-    const dow = (d.getDay()+6)%7;
-    const isWeekend = dow >= 5;
-    const fT = isWeekend ? [] : fTasks.filter((_,idx) => idx%5===i%5).slice(0,1);
-    const dT = isWeekend ? [] : dTasks.filter((_,idx) => idx%5===i%5).slice(0,2);
-    const kT = isWeekend ? kTasks.filter(t=>t.time&&t.time.includes('90')) : kTasks.filter(t=>!t.time||!t.time.includes('90')).slice(0,1);
-    rows += `<tr ${isToday?'class="today-row"':''}>
-      <td>${dayNames[dow]}<br><span style="font-size:11px;color:var(--text3)">${d.getDate()}.${String(d.getMonth()+1).padStart(2,'0')}</span></td>
-      <td>${fT.map(t=>`<span class="cell-task ct-f">${t.name}${t.time?' · '+t.time:''}</span>`).join('')||'<span style="color:var(--text3);font-size:12px">—</span>'}</td>
-      <td>${dT.map(t=>`<span class="cell-task ct-d">${t.name}${t.time?' · '+t.time:''}</span>`).join('')||'<span style="color:var(--text3);font-size:12px">—</span>'}</td>
-      <td>${kT.map(t=>`<span class="cell-task ct-k">${t.name}${t.time?' · '+t.time:''}</span>`).join('')||'<span style="color:var(--text3);font-size:12px">—</span>'}</td>
+  const DNS=['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
+  let rows='';
+  for(let i=0;i<7;i++){
+    const d=new Date(start);d.setDate(start.getDate()+i);
+    const dISO=isoDate(d),isToday=d.toDateString()===new Date().toDateString();
+    const dow=(d.getDay()+6)%7;
+    const fT=sp.projects.f.tasks.filter(t=>t.date===dISO);
+    const dT=sp.projects.d.tasks.filter(t=>t.date===dISO);
+    const kT=sp.projects.k.tasks.filter(t=>t.date===dISO);
+    rows+=`<tr ${isToday?'class="today-row"':''}>
+      <td>${DNS[dow]}<br><span style="font-size:11px;color:var(--text3)">${d.getDate()}.${String(d.getMonth()+1).padStart(2,'0')}</span></td>
+      <td>${fT.map(t=>`<span class="cell-task ct-f ${t.done?'done':''}">${t.name}${t.time?' · '+t.time:''}</span>`).join('')||'<span style="color:var(--text3);font-size:12px">—</span>'}</td>
+      <td>${dT.map(t=>`<span class="cell-task ct-d ${t.done?'done':''}">${t.name}${t.time?' · '+t.time:''}</span>`).join('')||'<span style="color:var(--text3);font-size:12px">—</span>'}</td>
+      <td>${kT.map(t=>`<span class="cell-task ct-k ${t.done?'done':''}">${t.name}${t.time?' · '+t.time:''}</span>`).join('')||'<span style="color:var(--text3);font-size:12px">—</span>'}</td>
     </tr>`;
   }
-
-  document.getElementById('weekly-content').innerHTML = `
+  document.getElementById('weekly-content').innerHTML=`
     <table class="week-table">
       <thead><tr><th>День</th><th><span class="chip chip-f">Фундамент</span></th><th><span class="chip chip-d">Драйв</span></th><th><span class="chip chip-k">Кайф</span></th></tr></thead>
       <tbody>${rows}</tbody>
     </table>
-    <p style="font-size:12px;color:var(--text3);margin-top:12px">Задачи берутся из «Обзора спринта» — редактируйте их там.</p>`;
+    <p style="font-size:12px;color:var(--text3);margin-top:10px">Задачи отображаются по назначенной дате. Добавить/изменить даты можно в «Обзоре спринта».</p>`;
 }
 
-// ═══════════════════ REFLECTION ═══════════════════
-function renderReflection() {
-  const sp = activeSprint();
-  const weekNum = sp ? sp.currentWeek : 1;
-  document.getElementById('ref-week-label').textContent = sp ? `Спринт #${sp.num} · Итоги недели ${weekNum}` : 'Нет активного спринта';
-  // restore saved
-  if (sp) {
-    const saved = sp.weeks.find(w => w.weekNum === weekNum);
-    if (saved) {
-      document.getElementById('ref-f-done').value = saved.fDone||'';
-      document.getElementById('ref-d-done').value = saved.dDone||'';
-      document.getElementById('ref-k-done').value = saved.kDone||'';
-      document.getElementById('ref-f-not').value  = saved.fNot||'';
-      document.getElementById('ref-d-not').value  = saved.dNot||'';
-      document.getElementById('ref-k-not').value  = saved.kNot||'';
-      document.getElementById('ref-adjust').value = saved.adjust||'';
-    }
-  }
+function fmtWeekRange(start){
+  const end=new Date(start);end.setDate(start.getDate()+6);
+  const M=['янв','фев','мар','апр','мая','июн','июл','авг','сен','окт','ноя','дек'];
+  return`${start.getDate()} ${M[start.getMonth()]} — ${end.getDate()} ${M[end.getMonth()]}`;
 }
 
-function saveReflection() {
-  const sp = activeSprint(); if (!sp) { toast('Нет активного спринта'); return; }
-  const weekNum = sp.currentWeek;
-  const entry = {
-    weekNum,
-    fDone:   document.getElementById('ref-f-done').value,
-    dDone:   document.getElementById('ref-d-done').value,
-    kDone:   document.getElementById('ref-k-done').value,
-    fNot:    document.getElementById('ref-f-not').value,
-    dNot:    document.getElementById('ref-d-not').value,
-    kNot:    document.getElementById('ref-k-not').value,
-    adjust:  document.getElementById('ref-adjust').value,
-    savedAt: new Date().toISOString(),
-  };
-  sp.weeks = sp.weeks.filter(w => w.weekNum !== weekNum);
-  sp.weeks.push(entry);
-  persist();
-  toast(`Итоги недели ${weekNum} сохранены ✓`);
+function shiftWeek(dir){wkOffset+=dir;renderWeekly();}
+function resetWeekOffset(){wkOffset=0;renderWeekly();}
+
+// ════ REFLECTION ════
+function renderReflection(){
+  const sp=activeSp();const wk=sp?sp.currentWeek:1;
+  document.getElementById('ref-week-label').textContent=sp?`Спринт #${sp.num} · Итоги недели ${wk}`:'Нет активного спринта';
+  if(sp){const sv=sp.weeks.find(w=>w.weekNum===wk);if(sv){['ref-f-done','ref-d-done','ref-k-done','ref-f-not','ref-d-not','ref-k-not','ref-adjust'].forEach(id=>document.getElementById(id).value=sv[id.replace('ref-','').replace(/-/g,'').replace('done','Done').replace('not','Not').replace('adjust','adjust')]||sv[id.slice(4)]||'');}}
 }
 
-function goNextWeek() {
-  saveReflection();
-  const sp = activeSprint(); if (!sp) return;
-  if (sp.currentWeek < 3) {
-    sp.currentWeek++;
-    persist();
+function saveReflection(){
+  const sp=activeSp();if(!sp){toast('Нет активного спринта');return;}
+  const wk=sp.currentWeek;
+  const e={weekNum:wk,fDone:document.getElementById('ref-f-done').value,dDone:document.getElementById('ref-d-done').value,kDone:document.getElementById('ref-k-done').value,fNot:document.getElementById('ref-f-not').value,dNot:document.getElementById('ref-d-not').value,kNot:document.getElementById('ref-k-not').value,adjust:document.getElementById('ref-adjust').value,savedAt:new Date().toISOString()};
+  sp.weeks=sp.weeks.filter(w=>w.weekNum!==wk);sp.weeks.push(e);persist();
+  toast(`Итоги недели ${wk} сохранены ✓`);
+}
+
+function goNextWeek(){
+  saveReflection();const sp=activeSp();if(!sp)return;
+  if(sp.currentWeek<3){
+    sp.currentWeek++;persist();
+    ['ref-f-done','ref-d-done','ref-k-done','ref-f-not','ref-d-not','ref-k-not','ref-adjust'].forEach(id=>document.getElementById(id).value='');
+    wkOffset=0;renderWeekly(sp.currentWeek);
+    go('weekly',document.querySelector('.nav-item[onclick*=weekly]'));
     toast(`Переход к неделе ${sp.currentWeek}`);
-    // clear fields for new week
-    ['ref-f-done','ref-d-done','ref-k-done','ref-f-not','ref-d-not','ref-k-not','ref-adjust'].forEach(id => {
-      document.getElementById(id).value = '';
-    });
-    renderWeekly(sp.currentWeek);
-    go('weekly', document.querySelector('.nav-item[onclick*=weekly]'));
   } else {
-    toast('Все 3 недели пройдены! Перейдите к Интеграции.');
-    go('transform', document.querySelector('.nav-item[onclick*=transform]'));
+    toast('Все 3 недели пройдены! Переходите к Интеграции.');
+    go('transform',document.querySelector('.nav-item[onclick*=transform]'));
   }
 }
 
-// ═══════════════════ TRANSFORM ═══════════════════
-function saveTransform() {
-  const sp = activeSprint(); if (!sp) { toast('Нет активного спринта'); return; }
-  sp.transform = {
-    change:      document.getElementById('tr-change').value,
-    actions:     document.getElementById('tr-actions').value,
-    belief:      document.getElementById('tr-belief').value,
-    opportunity: document.getElementById('tr-opportunity').value,
-    savedAt:     new Date().toISOString(),
-  };
-  persist();
-  toast('Интеграция сохранена в историю спринта ✓');
+// ════ TRANSFORM ════
+function saveTransform(){
+  const sp=activeSp();if(!sp){toast('Нет активного спринта');return;}
+  sp.transform={change:document.getElementById('tr-change').value,actions:document.getElementById('tr-actions').value,belief:document.getElementById('tr-belief').value,opportunity:document.getElementById('tr-opportunity').value,savedAt:new Date().toISOString()};
+  persist();toast('Интеграция сохранена ✓');
 }
 
-function startNewCycle() {
-  saveTransform();
-  const sp = activeSprint();
-  if (sp) {
-    sp.completedAt = new Date().toISOString();
-  }
-  // clear plan form
-  ['plan-f-name','plan-d-name','plan-k-name'].forEach(id => document.getElementById(id).value = '');
-  ['plan-f-desc','plan-d-desc','plan-k-desc'].forEach(id => document.getElementById(id).value = '');
-  ['tr-change','tr-actions','tr-belief','tr-opportunity'].forEach(id => document.getElementById(id).value = '');
-  planDur = 7; planStruct = 1;
-  selectDur(7); selectStruct(1);
+function startNewCycle(){
+  saveTransform();const sp=activeSp();if(sp)sp.completedAt=new Date().toISOString();
+  ['plan-f-name','plan-d-name','plan-k-name','plan-f-desc','plan-d-desc','plan-k-desc','tr-change','tr-actions','tr-belief','tr-opportunity'].forEach(id=>document.getElementById(id).value='');
+  pTasks={f:[],d:[],k:[]};['plan-f-tasks','plan-d-tasks','plan-k-tasks'].forEach(id=>document.getElementById(id).innerHTML='');
+  pDur=7;pStruct=1;selDur(7);selStruct(1);
   toast('Спринт завершён! Заполните план нового цикла.');
-  go('plan', document.querySelector('.nav-item[onclick*=plan]'));
+  go('plan',document.querySelector('.nav-item[onclick*=plan]'));
 }
 
-// ═══════════════════ DIARY ═══════════════════
-function renderDiary() {
-  const el = document.getElementById('diary-list');
-  if (!DB.diary.length) {
-    el.innerHTML = '<div class="card"><div class="empty">Пока нет записей.<br>Сохраните первый замечательный момент в разделе «Сегодня».</div></div>';
-    return;
-  }
-  const sorted = [...DB.diary].reverse();
-  el.innerHTML = sorted.map(m => {
-    const d = new Date(m.date);
-    const dateStr = `${d.getDate()}.${String(d.getMonth()+1).padStart(2,'0')}.${d.getFullYear()} · ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
-    return `<div class="history-item">
-      <button class="history-del" onclick="deleteDiary(${m.id})">×</button>
-      <div class="history-date">${dateStr}</div>
-      <div class="history-text">${m.text}</div>
-    </div>`;
+// ════ DIARY ════
+function saveMoment(){
+  const text=document.getElementById('inp-moment').value.trim();if(!text){toast('Напишите момент');return;}
+  DB.diary.push({id:Date.now(),date:new Date().toISOString(),text});persist();
+  document.getElementById('inp-moment').value='';toast('Сохранено в дневник ✓');
+}
+
+function renderDiary(){
+  const el=document.getElementById('diary-list');
+  if(!DB.diary.length){el.innerHTML='<div class="card"><div class="empty">Пока нет записей</div></div>';return;}
+  el.innerHTML=[...DB.diary].reverse().map(m=>`<div class="history-item"><button class="history-del" onclick="delDiary(${m.id})">×</button><div class="history-date">${fmtDT(m.date)}</div><div class="history-text">${m.text}</div></div>`).join('');
+}
+
+function delDiary(id){DB.diary=DB.diary.filter(m=>m.id!==id);persist();renderDiary();}
+
+// ════ HISTORY ════
+function renderHistory(){
+  const el=document.getElementById('history-list');
+  if(!DB.sprints.length){el.innerHTML='<div class="card"><div class="empty">История пуста</div></div>';return;}
+  el.innerHTML=[...DB.sprints].reverse().map(sp=>{
+    const idx=DB.sprints.indexOf(sp),isActive=DB.activeSprint===idx;
+    const start=new Date(sp.startDate);
+    const ds=`${start.getDate()}.${String(start.getMonth()+1).padStart(2,'0')}.${start.getFullYear()}`;
+    const weeksH=sp.weeks.map(w=>`<div style="margin-top:12px;padding:10px 14px;background:var(--surface2);border-radius:10px"><div style="font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Итоги недели ${w.weekNum}</div>${w.fDone||w.dDone||w.kDone?`<div style="font-size:12px;margin-bottom:4px"><span style="color:var(--f);font-weight:500">Сделано:</span> ${[w.fDone,w.dDone,w.kDone].filter(Boolean).join(' · ')}</div>`:''} ${w.fNot||w.dNot||w.kNot?`<div style="font-size:12px;margin-bottom:4px"><span style="color:var(--d);font-weight:500">Не сделано:</span> ${[w.fNot,w.dNot,w.kNot].filter(Boolean).join(' · ')}</div>`:''} ${w.adjust?`<div style="font-size:12px"><span style="color:var(--accent);font-weight:500">Корректировка:</span> ${w.adjust}</div>`:''}</div>`).join('');
+    const trH=sp.transform?`<div style="margin-top:12px;padding:10px 14px;background:var(--accent-bg);border-radius:10px;border:1px solid rgba(91,79,207,.15)"><div style="font-size:11px;font-weight:600;color:var(--accent);margin-bottom:6px">✨ Интеграция</div>${sp.transform.change?`<div style="font-size:12px;margin-bottom:4px"><strong>Изменение:</strong> ${sp.transform.change}</div>`:''} ${sp.transform.actions?`<div style="font-size:12px;margin-bottom:4px"><strong>Действия:</strong> ${sp.transform.actions}</div>`:''} ${sp.transform.belief?`<div style="font-size:12px;margin-bottom:4px"><strong>Убеждения:</strong> ${sp.transform.belief}</div>`:''} ${sp.transform.opportunity?`<div style="font-size:12px"><strong>Возможности:</strong> ${sp.transform.opportunity}</div>`:''}</div>`:'';
+    return`<div class="card" style="border-left:4px solid ${isActive?'var(--accent)':'var(--border2)'}"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div><div style="font-size:16px;font-weight:600">Спринт #${sp.num}</div><div style="font-size:12px;color:var(--text3);margin-top:2px">Начало: ${ds} · ${sp.duration} дней</div></div>${isActive?'<span class="chip chip-f">Активный</span>':'<span class="chip chip-r">Завершён</span>'}</div><div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">${sp.projects.f.name?`<span class="chip chip-f">🌱 ${sp.projects.f.name}</span>`:''} ${sp.projects.d.name?`<span class="chip chip-d">🚀 ${sp.projects.d.name}</span>`:''} ${sp.projects.k.name?`<span class="chip chip-k">💫 ${sp.projects.k.name}</span>`:''}</div>${weeksH}${trH}</div>`;
   }).join('');
 }
 
-function deleteDiary(id) {
-  DB.diary = DB.diary.filter(m => m.id !== id);
-  persist(); renderDiary();
-}
+// ════ TOAST ════
+function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2800);}
 
-// ═══════════════════ HISTORY ═══════════════════
-function renderHistory() {
-  const el = document.getElementById('history-list');
-  if (!DB.sprints.length) {
-    el.innerHTML = '<div class="card"><div class="empty">История пуста.<br>Завершите первый спринт чтобы увидеть итоги.</div></div>';
-    return;
-  }
-  el.innerHTML = DB.sprints.map((sp, idx) => {
-    const isActive = DB.activeSprint === idx;
-    const start = new Date(sp.startDate);
-    const dateStr = `${start.getDate()}.${String(start.getMonth()+1).padStart(2,'0')}.${start.getFullYear()}`;
-    const weeksHtml = sp.weeks.length ? sp.weeks.map(w => `
-      <div style="margin-top:14px;padding:12px 14px;background:var(--surface2);border-radius:10px">
-        <div style="font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Итоги недели ${w.weekNum}</div>
-        ${w.fDone||w.dDone||w.kDone ? `<div style="font-size:12px;margin-bottom:4px"><span style="color:var(--f);font-weight:500">Сделано:</span><br>${[w.fDone,w.dDone,w.kDone].filter(Boolean).join(' · ')}</div>` : ''}
-        ${w.fNot||w.dNot||w.kNot ? `<div style="font-size:12px;margin-bottom:4px"><span style="color:var(--d);font-weight:500">Не сделано:</span><br>${[w.fNot,w.dNot,w.kNot].filter(Boolean).join(' · ')}</div>` : ''}
-        ${w.adjust ? `<div style="font-size:12px"><span style="color:var(--accent);font-weight:500">Корректировка:</span><br>${w.adjust}</div>` : ''}
-      </div>`).join('') : '';
-    const trHtml = sp.transform ? `
-      <div style="margin-top:14px;padding:12px 14px;background:var(--accent-bg);border-radius:10px;border:1px solid rgba(91,79,207,.15)">
-        <div style="font-size:11px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">✨ Трансформирующая рефлексия</div>
-        ${sp.transform.change ? `<div style="font-size:12px;margin-bottom:6px"><strong>Изменение:</strong> ${sp.transform.change}</div>` : ''}
-        ${sp.transform.actions ? `<div style="font-size:12px;margin-bottom:6px"><strong>Действия:</strong> ${sp.transform.actions}</div>` : ''}
-        ${sp.transform.belief ? `<div style="font-size:12px;margin-bottom:6px"><strong>Убеждения:</strong> ${sp.transform.belief}</div>` : ''}
-        ${sp.transform.opportunity ? `<div style="font-size:12px"><strong>Возможности:</strong> ${sp.transform.opportunity}</div>` : ''}
-      </div>` : '';
-    return `<div class="card" style="border-left:4px solid ${isActive?'var(--accent)':'var(--border2)'}">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start">
-        <div>
-          <div style="font-size:16px;font-weight:600;color:var(--text)">Спринт #${sp.num}</div>
-          <div style="font-size:12px;color:var(--text3);margin-top:2px">Начало: ${dateStr} · ${sp.duration} дней · Структура ${sp.structure}</div>
-        </div>
-        ${isActive ? '<span class="chip chip-f">Активный</span>' : '<span class="chip chip-r">Завершён</span>'}
-      </div>
-      <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
-        ${sp.projects.f.name ? `<span class="chip chip-f">🌱 ${sp.projects.f.name}</span>` : ''}
-        ${sp.projects.d.name ? `<span class="chip chip-d">🚀 ${sp.projects.d.name}</span>` : ''}
-        ${sp.projects.k.name ? `<span class="chip chip-k">💫 ${sp.projects.k.name}</span>` : ''}
-      </div>
-      ${weeksHtml}
-      ${trHtml}
-    </div>`;
-  }).join('');
-}
-
-// ═══════════════════ TOAST ═══════════════════
-function toast(msg) {
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.classList.add('show');
-  setTimeout(() => el.classList.remove('show'), 2800);
-}
-
-// ═══════════════════ INIT ═══════════════════
-updateSidebar();
-renderToday();
+// ════ INIT ════
+['f','d','k'].forEach(t=>{const el=document.getElementById('plan-add-'+t+'-date');if(el)el.value=todayISO();});
+updateSB();renderToday();
 </script>
 </body>
 </html>
