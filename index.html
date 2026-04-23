@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>НейроСпринт</title>
-<link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Onest:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Cabinet+Grotesk:wght@300;400;500;700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
 :root{
-  --bg:#F7F5F0;--surface:#FFFFFF;--surface2:#F0EDE6;
+  --bg:#F4F1EC;--surface:#FFFFFF;--surface2:#F9F7F4;
   --border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.14);
   --text:#1A1814;--text2:#6B6760;--text3:#A09D98;
   --f:#1D9E75;--f-bg:#E6F7F1;--f-bd:#9FE1CB;
@@ -19,14 +19,14 @@
   --rad:14px;--rad-sm:8px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Onest',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;line-height:1.6}
+body{font-family:'Cabinet Grotesk',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;line-height:1.6}
 .app{display:flex;min-height:100vh}
 .sidebar{width:230px;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:24px 0;position:fixed;top:0;left:0;bottom:0;z-index:100;overflow-y:auto}
 .logo{padding:0 20px 20px;border-bottom:1px solid var(--border);margin-bottom:8px}
 .logo-title{font-family:'Gochi Hand',cursive;font-size:22px;color:var(--accent);letter-spacing:.5px}
 .logo-sub{font-size:11px;color:var(--text3);margin-top:1px}
 .nav-sec{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--text3);padding:14px 20px 5px}
-.nav-item{display:flex;align-items:center;gap:10px;padding:9px 20px;cursor:pointer;border:none;background:none;width:100%;text-align:left;font-family:'Onest',sans-serif;font-size:13px;color:var(--text2);transition:all .15s;position:relative}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 20px;cursor:pointer;border:none;background:none;width:100%;text-align:left;font-family:'Cabinet Grotesk',sans-serif;font-size:13px;color:var(--text2);transition:all .15s;position:relative}
 .nav-item:hover{background:var(--bg);color:var(--text)}
 .nav-item.active{background:var(--accent-bg);color:var(--accent);font-weight:500}
 .nav-item.active::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);border-radius:0 2px 2px 0}
@@ -55,23 +55,23 @@ body{font-family:'Onest',sans-serif;background:var(--bg);color:var(--text);min-h
 .stat-value{font-size:24px;font-weight:600;color:var(--text);margin-top:2px;line-height:1}
 .stat-unit{font-size:13px;color:var(--text2);font-weight:400}
 .stat-sub{font-size:11px;color:var(--text3);margin-top:4px}
-.btn{border:none;border-radius:var(--rad-sm);padding:8px 16px;font-family:'Onest',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:opacity .15s}
+.btn{border:none;border-radius:var(--rad-sm);padding:8px 16px;font-family:'Cabinet Grotesk',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:opacity .15s}
 .btn:hover{opacity:.85}
 .btn-primary{background:var(--accent);color:#fff}
 .btn-secondary{background:var(--surface2);color:var(--text2);border:1px solid var(--border2)}
 .btn-success{background:var(--f-bg);color:var(--f);border:1px solid var(--f-bd)}
 .btn-full{width:100%;margin-top:10px;padding:11px}
 .btn-sm{padding:5px 10px;font-size:12px}
-.ta{width:100%;border:1px solid var(--border2);border-radius:var(--rad-sm);padding:10px 12px;font-family:'Onest',sans-serif;font-size:13px;color:var(--text);background:var(--surface);resize:none;outline:none;transition:border-color .15s;line-height:1.6}
+.ta{width:100%;border:1px solid var(--border2);border-radius:var(--rad-sm);padding:10px 12px;font-family:'Cabinet Grotesk',sans-serif;font-size:13px;color:var(--text);background:var(--surface);resize:none;outline:none;transition:border-color .15s;line-height:1.6}
 .ta:focus{border-color:var(--accent)}
 .ta::placeholder{color:var(--text3)}
-.inp{width:100%;border:1px solid var(--border2);border-radius:var(--rad-sm);padding:8px 12px;font-family:'Onest',sans-serif;font-size:13px;color:var(--text);background:var(--surface);outline:none;transition:border-color .15s}
+.inp{width:100%;border:1px solid var(--border2);border-radius:var(--rad-sm);padding:8px 12px;font-family:'Cabinet Grotesk',sans-serif;font-size:13px;color:var(--text);background:var(--surface);outline:none;transition:border-color .15s}
 .inp:focus{border-color:var(--accent)}
 .inp::placeholder{color:var(--text3)}
 
 /* MOOD */
 .mood-scale{display:flex;gap:6px;margin-top:8px}
-.mood-btn{flex:1;padding:7px 0;border-radius:8px;border:1px solid var(--border2);background:var(--surface);cursor:pointer;font-size:11px;color:var(--text2);transition:all .2s;text-align:center;font-family:'Onest',sans-serif;line-height:1.4}
+.mood-btn{flex:1;padding:7px 0;border-radius:8px;border:1px solid var(--border2);background:var(--surface);cursor:pointer;font-size:11px;color:var(--text2);transition:all .2s;text-align:center;font-family:'Cabinet Grotesk',sans-serif;line-height:1.4}
 .mood-btn.active{font-weight:600;transform:scale(1.04)}
 .mood-btn[data-s="1"].active{background:#EDE8FD;border-color:#7B6FD4;color:#4A3FA8}
 .mood-btn[data-s="2"].active{background:#DFF5EC;border-color:#1D9E75;color:#0F6E56}
@@ -99,7 +99,7 @@ body{font-family:'Onest',sans-serif;background:var(--bg);color:var(--text);min-h
 
 /* DATE NAV */
 .date-nav{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
-.dnav-btn{background:var(--surface);border:1px solid var(--border2);border-radius:8px;padding:6px 12px;cursor:pointer;font-family:'Onest',sans-serif;font-size:12px;color:var(--text2);transition:all .15s}
+.dnav-btn{background:var(--surface);border:1px solid var(--border2);border-radius:8px;padding:6px 12px;cursor:pointer;font-family:'Cabinet Grotesk',sans-serif;font-size:12px;color:var(--text2);transition:all .15s}
 .dnav-btn:hover,.dnav-btn.active{border-color:var(--accent);color:var(--accent);background:var(--accent-bg)}
 .dnav-arrow{background:none;border:none;cursor:pointer;font-size:20px;color:var(--text2);padding:2px 8px;border-radius:6px;transition:background .15s;line-height:1}
 .dnav-arrow:hover{background:var(--surface2)}
@@ -167,9 +167,143 @@ body{font-family:'Onest',sans-serif;background:var(--bg);color:var(--text);min-h
 hr{border:none;border-top:1px solid var(--border);margin:16px 0}
 ::-webkit-scrollbar{width:5px}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+
+/* ══ MOBILE ══ */
+.mobile-topbar{display:none;height:52px;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:180;align-items:center;padding:0 16px;gap:12px}
+.burger{background:none;border:none;cursor:pointer;padding:6px;border-radius:8px;display:flex;flex-direction:column;gap:4.5px}
+.burger span{display:block;width:20px;height:1.5px;background:var(--text);border-radius:2px}
+.mob-title{font-family:'Gochi Hand',cursive;font-size:18px;color:var(--accent);flex:1}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:199;backdrop-filter:blur(2px)}
+.sync-bar{display:flex;align-items:center;gap:8px;padding:7px 14px;background:var(--surface);border-bottom:1px solid var(--border);font-size:11px;color:var(--text3);font-weight:500;position:sticky;top:0;z-index:100}
+.sync-dot{width:7px;height:7px;border-radius:50%;background:var(--text3);flex-shrink:0;transition:background .3s}
+.sync-dot.ok{background:var(--f)}.sync-dot.err{background:var(--d)}.sync-dot.saving{background:#D4A800;animation:sdpulse .8s infinite alternate}
+@keyframes sdpulse{to{opacity:.3}}
+/* pastel stat cards */
+.sc-mint{background:#D6F0E6}.sc-lilac{background:#E8E4FC}.sc-peach{background:#FAE5D3}.sc-rose{background:#F9E1EC}
+/* font weight upgrade */
+.page-title{font-weight:800;letter-spacing:-.5px}
+.card-title{font-weight:700}
+.task-name{font-weight:500}
+.btn{font-weight:700}
+@media(max-width:900px){
+  .sidebar{transform:translateX(-100%);width:240px;transition:transform .28s cubic-bezier(.4,0,.2,1)}
+  .sidebar.mob-open{transform:translateX(0);box-shadow:0 8px 32px rgba(0,0,0,.10)}
+  .sidebar-overlay.mob-open{display:block}
+  .mobile-topbar{display:flex}
+  .main{margin-left:0 !important;padding:12px 14px}
+  .grid2{grid-template-columns:1fr}
+  .grid3{grid-template-columns:1fr 1fr}
+  .sync-bar{top:52px}
+  .page-header{margin-top:14px}
+}
+@media(max-width:540px){
+  .grid3{grid-template-columns:1fr}
+  .mood-scale{gap:4px}
+  .mood-btn{min-width:44px;font-size:10px;padding:6px 2px}
+  .add-row{gap:4px}
+  .add-row input[type=date]{width:110px}
+  .week-table th,.week-table td{padding:6px 5px;font-size:11px}
+  .week-grid{gap:3px}
+  .day-cell{padding:7px 2px}
+  .day-cell .dd{font-size:12px}
+}
+/* export/import buttons */
+.export-btn{background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:7px 14px;cursor:pointer;font-family:'Cabinet Grotesk',sans-serif;font-size:12px;font-weight:600;color:var(--text2);transition:all .15s;display:inline-flex;align-items:center;gap:5px}
+.export-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-bg)}
+
+
+/* ══ HABITS TRACKER ══ */
+.habit-row { margin-bottom: 20px; }
+.habit-header {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 10px;
+}
+.habit-color-dot {
+  width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+}
+.habit-label {
+  font-size: 13px; font-weight: 700; color: var(--text); flex: 1;
+  text-transform: uppercase; letter-spacing: .6px;
+}
+.habit-streak {
+  font-size: 11px; font-weight: 600; color: var(--text3);
+  background: var(--surface2); padding: 2px 8px; border-radius: 20px;
+}
+.habit-del-btn {
+  background: none; border: none; cursor: pointer;
+  color: var(--text3); font-size: 14px; opacity: .45;
+  transition: opacity .15s; padding: 2px 4px;
+}
+.habit-del-btn:hover { opacity: 1; color: var(--d); }
+.habit-cal {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+.habit-cal-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  margin-bottom: 5px;
+}
+.habit-cal-dn {
+  text-align: center;
+  font-size: 9px; font-weight: 700; color: var(--text3);
+  text-transform: uppercase; letter-spacing: .5px;
+  padding-bottom: 4px;
+}
+.habit-dot {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform .12s, filter .12s;
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 700; color: rgba(255,255,255,0.7);
+  user-select: none;
+  min-width: 0;
+}
+.habit-dot:hover { transform: scale(1.18); filter: brightness(1.1); }
+.habit-dot.today-dot {
+  box-shadow: 0 0 0 2px var(--accent);
+}
+.habit-dot.empty-dot { cursor: default; pointer-events: none; }
+.habit-stats {
+  display: flex; gap: 16px; margin-top: 8px; flex-wrap: wrap;
+}
+.habit-stat {
+  font-size: 12px; font-weight: 600; color: var(--text2);
+}
+.habit-stat span { font-weight: 800; color: var(--text); }
+/* legend */
+.habit-legend {
+  display: flex; align-items: center; gap: 6px;
+  margin-top: 6px; flex-wrap: wrap;
+}
+.habit-legend-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+}
+.habit-legend-label { font-size: 10px; color: var(--text3); font-weight: 500; }
+@media(max-width:540px){
+  .habit-cal { gap: 3px; }
+  .habit-cal-header { gap: 3px; }
+  .habit-dot { font-size: 7px; }
+}
+
 </style>
 </head>
 <body>
+
+<!-- MOBILE -->
+<div class="mobile-topbar">
+  <button class="burger" onclick="toggleSidebar()" aria-label="Меню">
+    <span></span><span></span><span></span>
+  </button>
+  <span class="mob-title">НейроСпринт</span>
+  <div class="sync-dot" id="mob-sync-dot"></div>
+</div>
+<div class="sidebar-overlay" id="sb-overlay" onclick="toggleSidebar()"></div>
+
 <div class="app">
 
 <aside class="sidebar">
@@ -187,6 +321,7 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
   <button class="nav-item" onclick="go('reflection',this)"><span class="nav-icon">🔍</span>Итоги недели</button>
   <button class="nav-item" onclick="go('transform',this)"><span class="nav-icon">✨</span>Интеграция</button>
   <div class="nav-sec">История</div>
+  <button class="nav-item" onclick="go('habits',this)"><span class="nav-icon">🔵</span>Трекер привычек</button>
   <button class="nav-item" onclick="go('diary',this)"><span class="nav-icon">📖</span>Дневник моментов</button>
   <button class="nav-item" onclick="go('history',this)"><span class="nav-icon">🏆</span>История спринтов</button>
   <div class="sprint-info">
@@ -198,6 +333,8 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
 </aside>
 
 <main class="main">
+<div class="sync-bar" id="sync-bar"><div class="sync-dot" id="sync-dot"></div><span id="sync-label">Инициализация…</span><span style="margin-left:auto;font-size:11px" id="sync-mode"></span>&nbsp;<button class="export-btn" onclick="exportData()" title="Скачать данные">⬇ Экспорт</button>&nbsp;<label class="export-btn" title="Загрузить данные">⬆ Импорт<input type="file" accept=".json" style="display:none" onchange="importData(event)"></label></div>
+
 
 <!-- TODAY -->
 <div class="screen active" id="s-today">
@@ -253,9 +390,9 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
     <div class="page-sub" id="sprint-sub">Прогресс по всем проектам</div>
   </div>
   <div class="grid3" style="margin-bottom:18px">
-    <div class="stat-card"><div class="stat-label">Потрачено</div><div class="stat-value" id="st-hours">—</div><div class="stat-sub" id="st-hours-sub">—</div></div>
-    <div class="stat-card"><div class="stat-label">День спринта</div><div class="stat-value" id="st-day">—</div><div class="stat-sub" id="st-day-sub">—</div></div>
-    <div class="stat-card"><div class="stat-label">Выполнено задач</div><div class="stat-value" id="st-done">0</div><div class="stat-sub">из всех задач</div></div>
+    <div class="stat-card sc-mint"><div class="stat-label">Потрачено</div><div class="stat-value" id="st-hours">—</div><div class="stat-sub" id="st-hours-sub">—</div></div>
+    <div class="stat-card sc-lilac"><div class="stat-label">День спринта</div><div class="stat-value" id="st-day">—</div><div class="stat-sub" id="st-day-sub">—</div></div>
+    <div class="stat-card sc-peach"><div class="stat-label">Выполнено задач</div><div class="stat-value" id="st-done">0</div><div class="stat-sub">из всех задач</div></div>
   </div>
   <div class="card">
     <div class="card-title">Прогресс по дням — нажмите на день для фильтра</div>
@@ -442,15 +579,116 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
   <div id="history-list"></div>
 </div>
 
+
+<!-- HABITS TRACKER -->
+<div class="screen" id="s-habits">
+  <div class="page-header" style="margin-top:16px">
+    <div class="page-title">Трекер привычек</div>
+    <div class="page-sub">Чем больше отметок подряд — тем ярче точка</div>
+  </div>
+
+  <!-- Add / manage habits -->
+  <div class="card card-sm" style="margin-bottom:14px">
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      <input class="inp" id="habit-name-inp" placeholder="Название привычки…" style="flex:1;min-width:160px">
+      <input class="inp" id="habit-color-inp" type="color" value="#5B4FCF" style="width:42px;height:36px;padding:2px 4px;cursor:pointer;flex:none;border-radius:8px">
+      <button class="btn btn-primary btn-sm" onclick="addHabit()">+ Добавить</button>
+    </div>
+  </div>
+
+  <!-- Month nav -->
+  <div class="card card-sm" style="margin-bottom:14px">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <button class="dnav-arrow" onclick="shiftHabitMonth(-1)">‹</button>
+      <span id="habit-month-label" style="font-size:15px;font-weight:800;color:var(--text);letter-spacing:-.3px">—</span>
+      <button class="dnav-arrow" onclick="shiftHabitMonth(1)">›</button>
+    </div>
+  </div>
+
+  <!-- Grid -->
+  <div id="habits-grid-wrap"></div>
+</div>
+
 </main>
 </div>
 <div class="toast" id="toast"></div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+// ═══════════════════════════════════════════
+//  SUPABASE + SYNC
+//  Замените значения на ваши из: Supabase → Settings → API
+// ═══════════════════════════════════════════
+const SUPABASE_URL = 'https://zvqsatfvtrjirnaiaufm.supabase.co';   // https://xxxxx.supabase.co
+const SUPABASE_KEY = 'sb_publishable_MWyULLh2mX-9R7bw_gaeEA_zEHV1fIM';   // anon public key
+
+let SB = null, useCloud = false;
+
+function setSync(state, msg) {
+  const cls = {ok:'ok',err:'err',saving:'saving'}[state]||'';
+  ['sync-dot','mob-sync-dot'].forEach(id=>{const el=document.getElementById(id);if(el)el.className='sync-dot '+cls;});
+  const lbl=document.getElementById('sync-label');if(lbl)lbl.textContent=msg;
+  const mode=document.getElementById('sync-mode');if(mode)mode.textContent=useCloud?'☁️ Supabase':'💾 localStorage';
+}
+
+async function initSupabase() {
+  if(SUPABASE_URL.includes('ВСТАВЬТЕ')){ setSync('','Локальный режим — Supabase не настроен'); return false; }
+  try {
+    SB = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    const {error} = await SB.from('ns_data').select('id').limit(1);
+    if(error) throw error;
+    useCloud = true; setSync('ok','Supabase подключён ✓'); return true;
+  } catch(e) { setSync('err','Supabase недоступен — данные хранятся локально'); return false; }
+}
+
+async function cloudSave(data) {
+  if(!useCloud||!SB) return;
+  try {
+    setSync('saving','Сохранение…');
+    await SB.from('ns_data').upsert({id:'main',payload:JSON.stringify(data)},{onConflict:'id'});
+    setSync('ok','Сохранено ✓');
+  } catch(e){ setSync('err','Ошибка сохранения'); }
+}
+
+async function cloudLoad() {
+  if(!useCloud||!SB) return;
+  try {
+    setSync('saving','Загрузка из облака…');
+    const {data,error}=await SB.from('ns_data').select('payload').eq('id','main').single();
+    if(error||!data) throw new Error('no data');
+    Object.assign(DB, JSON.parse(data.payload));
+    persistLocal();
+    setSync('ok','Данные загружены из Supabase');
+  } catch(e){ setSync('err','Нет облачных данных — используем локальные'); }
+}
+
+function exportData() {
+  const blob=new Blob([JSON.stringify(DB,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='neurosprint_'+new Date().toISOString().slice(0,10)+'.json';a.click();
+  toast('Данные экспортированы ✓');
+}
+
+function importData(evt) {
+  const file=evt.target.files[0];if(!file)return;
+  const r=new FileReader();
+  r.onload=e=>{try{Object.assign(DB,JSON.parse(e.target.result));persistLocal();updateSB();renderToday();toast('Данные импортированы ✓');}catch(err){toast('Ошибка: неверный формат');}};
+  r.readAsText(file);
+}
+
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('mob-open');
+  document.getElementById('sb-overlay').classList.toggle('mob-open');
+}
+</script>
 
 <script>
 // ════ DATA ════
 const SK='ns_v4';
 let DB=JSON.parse(localStorage.getItem(SK)||'null')||{sprints:[],activeSprint:null,diary:[],moodLog:[]};
-const persist=()=>localStorage.setItem(SK,JSON.stringify(DB));
+const persistLocal=()=>localStorage.setItem(SK,JSON.stringify(DB));
+async function persist(){ persistLocal(); await cloudSave(DB); }
 const activeSp=()=>DB.activeSprint!==null?DB.sprints[DB.activeSprint]||null:null;
 const isoDate=d=>d.toISOString().slice(0,10);
 const todayISO=()=>isoDate(new Date());
@@ -465,11 +703,17 @@ function go(id,btn){
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   document.getElementById('s-'+id).classList.add('active');
   if(btn)btn.classList.add('active');
-  ({today:renderToday,sprint:renderSprint,weekly:renderWeekly,diary:renderDiary,history:renderHistory,reflection:renderReflection}[id]||function(){})();
+  // Close mobile sidebar
+  const sb=document.getElementById('sidebar');
+  if(sb) { sb.classList.remove('mob-open'); }
+  const ov=document.getElementById('sb-overlay');
+  if(ov) ov.classList.remove('mob-open');
+  ({today:renderToday,sprint:renderSprint,weekly:renderWeekly,diary:renderDiary,history:renderHistory,reflection:renderReflection,habits:renderHabits}[id]||function(){})();
 }
 
 // ════ SIDEBAR ════
-function updateSB(){
+function updateSB_ui()
+const updateSB = updateSB_ui; // alias{
   const sp=activeSp();
   document.getElementById('sb-sprint-label').textContent=sp?`Спринт #${sp.num} · ${sp.duration} дней`:'Нет активного спринта';
   document.getElementById('sb-sprint-name').textContent=sp?`Неделя ${sp.currentWeek}`:'—';
@@ -898,9 +1142,172 @@ function renderHistory(){
 // ════ TOAST ════
 function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2800);}
 
+
+// ════════════════════════════════════════
+//  HABITS TRACKER
+// ════════════════════════════════════════
+if(!DB.habits) DB.habits = [];  // [{id, name, color, logs:[{date}]}]
+
+let habitMonthOffset = 0;
+
+function addHabit() {
+  const name = document.getElementById('habit-name-inp').value.trim();
+  if(!name) return;
+  const color = document.getElementById('habit-color-inp').value;
+  DB.habits.push({ id: Date.now(), name, color, logs: [] });
+  document.getElementById('habit-name-inp').value = '';
+  persist();
+  renderHabits();
+  toast('Привычка добавлена ✓');
+}
+
+function deleteHabit(id) {
+  DB.habits = DB.habits.filter(h => h.id != id);
+  persist(); renderHabits();
+}
+
+function toggleHabitDay(habitId, dateStr) {
+  if(!DB.habits) return;
+  const h = DB.habits.find(x => x.id == habitId);
+  if(!h) return;
+  const idx = h.logs.findIndex(l => l.date === dateStr);
+  if(idx >= 0) h.logs.splice(idx, 1);
+  else h.logs.push({ date: dateStr });
+  persist(); renderHabits();
+}
+
+function shiftHabitMonth(dir) {
+  habitMonthOffset += dir;
+  renderHabits();
+}
+
+function renderHabits() {
+  if(!DB.habits) DB.habits = [];
+  const wrap = document.getElementById('habits-grid-wrap');
+  if(!wrap) return;
+
+  // Month context
+  const now = new Date();
+  const target = new Date(now.getFullYear(), now.getMonth() + habitMonthOffset, 1);
+  const year = target.getFullYear();
+  const month = target.getMonth();
+  const MN = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
+  const lbl = document.getElementById('habit-month-label');
+  if(lbl) lbl.textContent = MN[month] + ' ' + year;
+
+  const daysInMonth = new Date(year, month+1, 0).getDate();
+  const firstDow = (new Date(year, month, 1).getDay() + 6) % 7; // Mon=0
+  const todayISO_val = todayISO();
+  const DNS = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
+
+  if(!DB.habits.length) {
+    wrap.innerHTML = '<div class="card"><div class="empty">Добавьте первую привычку выше</div></div>';
+    return;
+  }
+
+  wrap.innerHTML = DB.habits.map(h => {
+    const logSet = new Set(h.logs.map(l => l.date));
+
+    // Build cells: empty prefix + days
+    const totalCells = firstDow + daysInMonth;
+    const rows = Math.ceil(totalCells / 7);
+    const cells = Array(rows * 7).fill(null);
+    for(let i = 0; i < daysInMonth; i++) cells[firstDow + i] = i + 1;
+
+    // Calculate streak
+    let streak = 0, maxStreak = 0, tempStreak = 0, totalDone = 0;
+    for(let d = 1; d <= daysInMonth; d++) {
+      const ds = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      if(logSet.has(ds)) { tempStreak++; totalDone++; maxStreak = Math.max(maxStreak, tempStreak); }
+      else tempStreak = 0;
+    }
+    // Current streak (from today backwards)
+    for(let d = daysInMonth; d >= 1; d--) {
+      const ds = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      const dObj = new Date(year, month, d);
+      const todayD = new Date(); todayD.setHours(0,0,0,0);
+      if(dObj > todayD) continue;
+      if(logSet.has(ds)) streak++;
+      else break;
+    }
+
+    // Dot color intensity based on local streak at each day
+    const dotHtml = cells.map((day, i) => {
+      if(day === null) return `<div class="habit-dot empty-dot" style="background:transparent"></div>`;
+      const ds = `${year}-${String(month+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+      const isToday = ds === todayISO_val;
+      const isFuture = new Date(ds) > new Date(todayISO_val);
+      const done = logSet.has(ds);
+
+      // Compute local streak ending at this day for intensity
+      let localStreak = 0;
+      if(done) {
+        for(let back = day; back >= 1; back--) {
+          const bds = `${year}-${String(month+1).padStart(2,'0')}-${String(back).padStart(2,'0')}`;
+          if(logSet.has(bds)) localStreak++;
+          else break;
+        }
+      }
+
+      // Opacity: 0.12 = empty, 0.35 = 1 day, scale up to 1.0 at 21+ days
+      let bg, opacity;
+      if(isFuture) {
+        bg = h.color; opacity = 0.06;
+      } else if(done) {
+        opacity = Math.min(1, 0.32 + localStreak * 0.034);
+        bg = h.color;
+      } else {
+        bg = h.color; opacity = 0.10;
+      }
+
+      const bgAlpha = hexToRgba(bg, opacity);
+      const todayClass = isToday ? ' today-dot' : '';
+      return `<div class="habit-dot${todayClass}" style="background:${bgAlpha}" onclick="toggleHabitDay(${h.id},'${ds}')" title="${ds}">${day}</div>`;
+    }).join('');
+
+    return `
+      <div class="card habit-row">
+        <div class="habit-header">
+          <div class="habit-color-dot" style="background:${h.color}"></div>
+          <div class="habit-label">${h.name}</div>
+          <span class="habit-streak">🔥 ${streak} подряд</span>
+          <button class="habit-del-btn" onclick="deleteHabit(${h.id})">×</button>
+        </div>
+        <div class="habit-cal-header">
+          ${DNS.map(d=>`<div class="habit-cal-dn">${d}</div>`).join('')}
+        </div>
+        <div class="habit-cal">${dotHtml}</div>
+        <div class="habit-stats">
+          <div class="habit-stat">Выполнено: <span>${totalDone}</span> / ${daysInMonth} дней</div>
+          <div class="habit-stat">Максимальная серия: <span>${maxStreak}</span> дней</div>
+          <div class="habit-stat">% выполнения: <span>${Math.round(totalDone/daysInMonth*100)}%</span></div>
+        </div>
+        <div class="habit-legend">
+          ${[1,5,10,15,21].map(n=>{
+            const op = Math.min(1, 0.32 + n * 0.034);
+            return `<div class="habit-legend-dot" style="background:${hexToRgba(h.color,op)}"></div><span class="habit-legend-label">${n}+</span>`;
+          }).join('')}
+          <span class="habit-legend-label" style="margin-left:4px">дней подряд = насыщеннее</span>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function hexToRgba(hex, alpha) {
+  const r = parseInt(hex.slice(1,3),16);
+  const g = parseInt(hex.slice(3,5),16);
+  const b = parseInt(hex.slice(5,7),16);
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
 // ════ INIT ════
-['f','d','k'].forEach(t=>{const el=document.getElementById('plan-add-'+t+'-date');if(el)el.value=todayISO();});
-updateSB();renderToday();
+(async()=>{
+  ['f','d','k'].forEach(t=>{const el=document.getElementById('plan-add-'+t+'-date');if(el)el.value=todayISO();});
+  if(!DB.habits) DB.habits = [];
+  await initSupabase();
+  if(useCloud) await cloudLoad();
+  updateSB();renderToday();
+})();
 </script>
 </body>
 </html>
