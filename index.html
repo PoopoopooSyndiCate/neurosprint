@@ -397,30 +397,183 @@ hr{border:none;border-top:1px solid var(--border);margin:14px 0}
 .col12{grid-column:1/3}
 
 /* ═══ MOBILE ═══ */
+/* ═══ TABLET 1000px ═══ */
 @media(max-width:1000px){
   .dash-grid{grid-template-columns:1fr 1fr;gap:12px}
   .today-card{grid-column:1/-1}
-  .col-3{grid-column:auto}
+  .col-3{grid-column:auto;grid-row:auto}
   .col12{grid-column:1/-1}
+  .stats-row{grid-template-columns:1fr 1fr}
 }
+
+/* ═══ MOBILE 900px ═══ */
 @media(max-width:900px){
-  .sidebar{transform:translateX(-100%);width:230px;transition:transform .26s cubic-bezier(.4,0,.2,1)}
-  .sidebar.mob-open{transform:translateX(0)}
+  /* Sidebar */
+  .sidebar{transform:translateX(-100%);width:260px;transition:transform .26s cubic-bezier(.4,0,.2,1)}
+  .sidebar.mob-open{transform:translateX(0);box-shadow:0 0 40px rgba(0,0,0,.6)}
   .sidebar-overlay.mob-open{display:block}
   .mob-topbar{display:flex}
   .topbar{display:none}
   .main{margin-left:0}
-  .main-content{padding:14px}
-  .dash-grid{grid-template-columns:1fr;gap:11px}
-  .today-card,.col-3,.span-2,.col12{grid-column:auto}
-}
-@media(max-width:540px){
-  .mood-scale{gap:3px}
-  .mood-btn{min-width:40px;font-size:9px;padding:6px 2px}
-  .add-row{gap:4px}
-  .add-row input[type=date]{width:105px}
+  .main-content{padding:12px 14px 80px}
+
+  /* Dashboard grid → single column */
+  .dash-grid{grid-template-columns:1fr;gap:10px}
+  .today-card,.col-3,.span-2,.col12{grid-column:auto;grid-row:auto}
+
+  /* Stats row → 2 cols */
+  .stats-row{grid-template-columns:1fr 1fr;gap:8px}
+  .stat-big{font-size:38px}
+
+  /* Sprint grid → single col */
+  .sprint-grid-2{grid-template-columns:1fr}
+
+  /* Cards */
+  .card{padding:14px 16px}
+  .dash-header{margin-bottom:14px}
+  .dash-greeting{font-size:22px}
+  .page-title{font-size:20px}
+
+  /* Week grid */
   .week-grid{gap:3px}
+  .day-cell{padding:7px 3px}
+  .day-cell .dd{font-size:12px}
+  .day-cell .dn{font-size:7px}
+
+  /* Week table — scrollable */
+  .week-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .week-table{min-width:480px}
+
+  /* Mood */
+  .mood-scale{gap:4px}
+  .mood-btn{min-width:44px;font-size:9px;padding:7px 2px}
+  .mood-val{font-size:15px}
+
+  /* Add row — wrap properly */
+  .add-row{gap:5px}
+  .add-row .inp[placeholder="25 мин"],
+  .add-row .inp[placeholder="50 мин"],
+  .add-row .inp[placeholder="15 мин"]{width:60px}
+  .add-row input[type=date]{width:130px}
+
+  /* Habit calendar */
   .habit-cal{gap:3px}
+  .habit-cal-header{gap:3px}
+  .habit-dot{font-size:7px}
+
+  /* Date nav */
+  .dnav-label{min-width:100px;font-size:12px}
+  .date-nav{gap:6px}
+
+  /* Today meta stats row */
+  .today-meta{gap:14px}
+  .tm-val{font-size:17px}
+
+  /* Reflect sections */
+  .reflect-sec{padding-left:10px}
+
+  /* Transform steps */
+  .tr-step{padding:13px 14px}
+  .tr-step .sq{font-size:13px}
+
+  /* Struct opts */
+  .struct-opt{padding:10px 12px}
+  .struct-opt .sn{font-size:11px}
+
+  /* Buttons */
+  .btn-full{padding:11px}
+
+  /* Topbar title */
+  .mob-logo-text{font-size:16px}
+}
+
+/* ═══ SMALL MOBILE 480px ═══ */
+@media(max-width:480px){
+  .main-content{padding:10px 10px 80px}
+  .stats-row{grid-template-columns:1fr 1fr;gap:6px}
+  .stat-big{font-size:32px}
+  .stat-label{font-size:9px}
+  .card{padding:12px 13px;border-radius:11px}
+  .card-label{font-size:8px}
+
+  /* Mood scale — smaller */
+  .mood-scale{gap:3px}
+  .mood-btn{min-width:38px;font-size:8px;padding:6px 1px}
+  .mood-val{font-size:14px;margin-bottom:1px}
+
+  /* Add row — stack date below on very small */
+  .add-row{flex-wrap:wrap}
+  .add-row .inp:first-child{flex:1 1 100%}
+  .add-row .inp[placeholder="25 мин"],
+  .add-row .inp[placeholder="50 мин"],
+  .add-row .inp[placeholder="15 мин"]{width:55px;flex:none}
+  .add-row input[type=date]{flex:1;min-width:0}
+
+  /* Week grid — tighter */
+  .week-grid{gap:2px}
+  .day-cell{padding:5px 2px;border-radius:7px}
+  .day-cell .dd{font-size:11px}
+  .day-cell .dots{gap:1px;margin-top:3px}
+  .dot{width:3px;height:3px}
+
+  /* Habit */
+  .habit-cal{gap:2px}
+  .habit-cal-header{gap:2px}
+  .habit-dot{font-size:0}  /* hide numbers on tiny screens */
+  .habit-stats{gap:8px}
+  .habit-stat{font-size:10px}
+
+  /* Today meta */
+  .today-meta{gap:10px;flex-wrap:wrap}
+  .tm-val{font-size:15px}
+  .tm-key{font-size:8px}
+
+  /* Nav items */
+  .sb-item{padding:7px 10px;font-size:12px}
+
+  /* Topbar */
+  .mob-topbar{padding:0 10px;gap:8px}
+  .mob-logo-text{font-size:15px}
+
+  /* Page titles */
+  .dash-greeting{font-size:19px}
+  .page-title{font-size:18px}
+  .page-sub{font-size:10px}
+
+  /* Sprint header */
+  .sprint-title-area{flex-direction:column;gap:4px}
+
+  /* Buttons in sprint */
+  .dnav-btn{padding:5px 9px;font-size:10px}
+  .dnav-label{min-width:80px;font-size:11px}
+
+  /* Struct opts */
+  .struct-opt{flex-direction:column;gap:4px;align-items:flex-start}
+  .struct-opt .sv{align-self:flex-end}
+
+  /* Chips */
+  .chip{font-size:8px;padding:2px 6px}
+}
+
+/* ═══ BOTTOM NAV for mobile ═══ */
+@media(max-width:900px){
+  .mob-bottom-nav{
+    display:flex;position:fixed;bottom:0;left:0;right:0;
+    background:var(--bg2);border-top:1px solid var(--border);
+    z-index:190;height:56px;
+  }
+  .mob-nav-btn{
+    flex:1;display:flex;flex-direction:column;align-items:center;
+    justify-content:center;gap:2px;background:none;border:none;
+    cursor:pointer;font-family:'JetBrains Mono',monospace;
+    font-size:8px;color:var(--text3);transition:color .14s;padding:4px 0;
+  }
+  .mob-nav-btn .mni{font-size:18px;line-height:1}
+  .mob-nav-btn.active{color:var(--mint)}
+  .mob-nav-btn.active .mni{filter:drop-shadow(0 0 4px rgba(126,207,179,.4))}
+}
+@media(min-width:901px){
+  .mob-bottom-nav{display:none}
 }
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-track{background:transparent}
@@ -667,7 +820,7 @@ hr{border:none;border-top:1px solid var(--border);margin:14px 0}
       <span style="font-size:10px;color:var(--text3);font-family:'JetBrains Mono',monospace" id="weekly-week-num"></span>
     </div>
   </div>
-  <div class="card"><div id="weekly-content"></div></div>
+  <div class="card"><div class="week-table-wrap"><div id="weekly-content"></div></div></div>
 </div>
 
 <!-- ═══════════════ REFLECTION ═══════════════ -->
@@ -744,8 +897,8 @@ hr{border:none;border-top:1px solid var(--border);margin:14px 0}
 //  SUPABASE + SYNC
 //  Замените значения на ваши из: Supabase → Settings → API
 // ═══════════════════════════════════════════
-const SUPABASE_URL = 'ВСТАВЬТЕ_URL_СЮДА';   // https://xxxxx.supabase.co
-const SUPABASE_KEY = 'ВСТАВЬТЕ_KEY_СЮДА';   // anon public key
+const SUPABASE_URL = 'https://zvqsatfvtrjirnaiaufm.supabase.co';   // https://xxxxx.supabase.co
+const SUPABASE_KEY = 'sb_publishable_MWyULLh2mX-9R7bw_gaeEA_zEHV1fIM';   // anon public key
 
 let SB = null, useCloud = false;
 
@@ -808,6 +961,7 @@ function toggleSidebar(){
 </script>
 
 <script>
+
 
 // ════ TODAY RENDER (dark theme) ════
 function renderToday() {
@@ -972,7 +1126,7 @@ function renderTodayTasks() {
     const chipLabel = type==='f'?'Ф':type==='d'?'Д':'К';
     const timeHtml = task.time ? '<span class="task-time">'+task.time+'</span>' : '';
     const dateHtml = task.date ? '<span class="task-date-tag">📅 '+task.date+'</span>' : '';
-    out += '<div class="task-item'+doneClass+'" onclick="toggleTT(''+type+'',''+task.id+'')">'+
+    out += '<div class="task-item'+doneClass+'" onclick="toggleTT(\''+type+'\',\''+task.id+'\')">'+
       '<div class="cb" style="'+cbStyle+'">'+
         '<svg width="10" height="10" viewBox="0 0 10 10" style="display:'+svgShow+'">'+
           '<polyline points="1.5,5 4,7.5 8.5,2.5" fill="none" stroke="white" stroke-width="1.5"/>'+
@@ -1163,7 +1317,7 @@ function renderTL(type,sp){
     const timeHtml = t.time ? '<span class="task-time">'+t.time+'</span>' : '';
     const dateHtml = t.date ? '<span class="task-date-tag">📅 '+t.date+'</span>' : '<span class="task-time" style="opacity:.3">без даты</span>';
     out += '<div class="task-item'+doneClass+'">'+
-      '<div class="cb" onclick="toggleT(''+type+'',''+t.id+'')" style="'+cbStyle+'">'+
+      '<div class="cb" onclick="toggleT(\''+type+'\',\''+t.id+'\')" style="'+cbStyle+'">'+
         '<svg width="10" height="10" viewBox="0 0 10 10" style="display:'+svgShow+'">'+
           '<polyline points="1.5,5 4,7.5 8.5,2.5" fill="none" stroke="white" stroke-width="1.5"/>'+
         '</svg>'+
@@ -1172,7 +1326,7 @@ function renderTL(type,sp){
         '<div class="task-name">'+t.name+'</div>'+
         '<div style="margin-top:2px">'+timeHtml+' '+dateHtml+'</div>'+
       '</div>'+
-      '<button class="task-del" onclick="delTask(''+type+'',''+t.id+'')">×</button>'+
+      '<button class="task-del" onclick="delTask(\''+type+'\',\''+t.id+'\')">×</button>'+
     '</div>';
   });
   el.innerHTML = out;
@@ -1244,7 +1398,7 @@ function renderPlanTasks(type){
         '<div class="task-name">'+t.name+'</div>'+
         '<div style="margin-top:2px">'+timeHtml+' '+dateHtml+'</div>'+
       '</div>'+
-      '<button class="task-del" onclick="planDel(''+type+'',''+t.id+'')">×</button>'+
+      '<button class="task-del" onclick="planDel(\''+type+'\',\''+t.id+'\')">×</button>'+
     '</div>';
   });
   el.innerHTML = out;
@@ -1520,7 +1674,7 @@ function renderHabits() {
       const opacity=isFuture?0.06:done?Math.min(1,0.32+localStreak*0.034):0.10;
       const bg=hexToRgba(h.color,opacity);
       const todayCls=isToday?' today-dot':'';
-      dotHtml+='<div class="habit-dot'+todayCls+'" style="background:'+bg+'" onclick="toggleHabitDay('+h.id+',''+ds+'')" title="'+ds+'">'+day+'</div>';
+      dotHtml+='<div class="habit-dot'+todayCls+'" style="background:'+bg+'" onclick="toggleHabitDay('+h.id+',\''+ds+'\')" title="'+ds+'">'+day+'</div>';
     });
     let headerHtml='';
     DNS.forEach(function(d){headerHtml+='<div class="habit-cal-dn">'+d+'</div>';});
@@ -1558,6 +1712,14 @@ function hexToRgba(hex, alpha) {
   return `rgba(${r},${g},${b},${alpha})`;
 }
 
+
+// ═══ MOBILE BOTTOM NAV ACTIVE STATE ═══
+function mbnActive(id) {
+  document.querySelectorAll('.mob-nav-btn').forEach(function(b){ b.classList.remove('active'); });
+  const btn = document.getElementById('mbn-'+id);
+  if(btn) btn.classList.add('active');
+}
+
 // ════ INIT ════
 (async()=>{
   ['f','d','k'].forEach(t=>{const el=document.getElementById('plan-add-'+t+'-date');if(el)el.value=todayISO();});
@@ -1566,8 +1728,26 @@ function hexToRgba(hex, alpha) {
   if(useCloud) await cloudLoad();
   updateSB();renderToday();
 })();
+
 </script>
-</script>
-</script>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mob-bottom-nav" id="mob-bottom-nav">
+  <button class="mob-nav-btn active" id="mbn-today" onclick="go('today',document.querySelector('.sb-item'));mbnActive('today')">
+    <span class="mni">◉</span>СЕГОДНЯ
+  </button>
+  <button class="mob-nav-btn" id="mbn-sprint" onclick="go('sprint',document.querySelector('.sb-item[onclick*=sprint]'));mbnActive('sprint')">
+    <span class="mni">▦</span>СПРИНТ
+  </button>
+  <button class="mob-nav-btn" id="mbn-habits" onclick="go('habits',document.querySelector('.sb-item[onclick*=habits]'));mbnActive('habits')">
+    <span class="mni">◉</span>ПРИВЫЧКИ
+  </button>
+  <button class="mob-nav-btn" id="mbn-reflection" onclick="go('reflection',document.querySelector('.sb-item[onclick*=reflection]'));mbnActive('reflection')">
+    <span class="mni">◎</span>ИТОГИ
+  </button>
+  <button class="mob-nav-btn" id="mbn-more" onclick="toggleSidebar()">
+    <span class="mni">≡</span>ЕЩЁ
+  </button>
+</nav>
 </body>
 </html>
