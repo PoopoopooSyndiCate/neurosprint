@@ -985,6 +985,226 @@ function toggleSidebar(){
 </script>
 
 <script>
+let wkOff=0;
+
+function saveMoment(){
+  const text=document.getElementById('inp-moment').value.trim();if(!text){toast('Напишите момент');return;}
+  DB.diary.push({id:Date.now(),date:new Date().toISOString(),text});persist();
+  document.getElementById('inp-moment').value='';toast('Сохранено в дневник ✓');
+}
+
+function launchSprint(){
+  const fN=document.getElementById('plan-f-name').value.trim();
+  const dN=document.getElementById('plan-d-name').value.trim();
+  const kN=document.getElementById('plan-k-name').value.trim();
+  if(!fN||!dN||!kN){toast('Заполните названия всех трёх проектов');return;}
+  const sp={id:Date.now(),num:DB.sprints.length+1,duration:pDur,structure:pStruct,startDate:new Date().toISOString(),
+    projects:{
+      f:{name:fN,desc:document.getElementById('plan-f-desc').value,tasks:[...pTasks.f]},
+      d:{name:dN,desc:document.getElementById('plan-d-desc').value,tasks:[...pTasks.d]},
+      k:{name:kN,desc:document.getElementById('plan-k-desc').value,tasks:[...pTasks.k]},
+    },
+    weeks:[],transform:null,currentWeek:1};
+  DB.sprints.push(sp);DB.activeSprint=DB.sprints.length-1;persist();
+  pTasks={f:[],d:[],k:[]};['plan-f-tasks','plan-d-tasks','plan-k-tasks'].forEach(id=>document.getElementById(id).innerHTML='');
+  updateSB();toast(`Спринт #${sp.num} запущен! 🚀`);
+  go('sprint',document.querySelector('.nav-item[onclick*=sprint]'));
+}
+
+function planAdd(type){
+  const name=document.getElementById('plan-add-'+type+'-inp').value.trim();if(!name)return;
+  const time=document.getElementById('plan-add-'+type+'-time').value.trim();
+  const date=document.getElementById('plan-add-'+type+'-date').value||'';
+  pTasks[type].push({id:Date.now(),name,time,date,done:false});
+  document.getElementById('plan-add-'+type+'-inp').value='';
+  renderPlanTasks(type);
+}
+
+function renderPlanTasks(type){
+  const el = document.getElementById('plan-'+type+'-tasks');
+  if(!pTasks[type].length){el.innerHTML='';return;}
+  let out = '';
+  pTasks[type].forEach(function(t) {
+    const timeHtml = t.time ? '<span class="task-time">'+t.time+'</span>' : '';
+    const dateHtml = t.date ? '<span class="task-date-tag">📅 '+t.date+'</span>' : '';
+    out += '<div class="task-item">'+
+      '<div class="cb"></div>'+
+      '<div style="flex:1">'+
+        '<div class="task-name">'+t.name+'</div>'+
+        '<div style="margin-top:2px">'+timeHtml+' '+dateHtml+'</div>'+
+      '</div>'+
+      '<button class="task-del" onclick="planDel(\''+type+'\',\''+t.id+'\')">×</button>'+
+    '</div>';
+  });
+  el.innerHTML = out;
+}
+
+function planDel(type,id){pTasks[type]=pTasks[type].filter(t=>t.id!=id);renderPlanTasks(type);}
+
+function selDur(d){pDur=d;document.getElementById('dur-7').classList.toggle('selected',d===7);document.getElementById('dur-21').classList.toggle('selected',d===21);}
+
+function selStruct(n){pStruct=n;for(let i=1;i<=5;i++)document.getElementById('struct-'+i).classList.toggle('selected',i===n);}
+
+function saveReflection(){
+  const sp=activeSp();if(!sp){toast('Нет активного спринта');return;}
+  const wk=sp.currentWeek;
+  const e={weekNum:wk,fDone:document.getElementById('ref-f-done').value,dDone:document.getElementById('ref-d-done').value,kDone:document.getElementById('ref-k-done').value,fNot:document.getElementById('ref-f-not').value,dNot:document.getElementById('ref-d-not').value,kNot:document.getElementById('ref-k-not').value,adjust:document.getElementById('ref-adjust').value,savedAt:new Date().toISOString()};
+  sp.weeks=sp.weeks.filter(w=>w.weekNum!==wk);sp.weeks.push(e);persist();
+  toast(`Итоги недели ${wk} сохранены ✓`);
+}
+
+function goNextWeek(){
+  saveReflection();const sp=activeSp();if(!sp)return;
+  if(sp.currentWeek<3){
+    sp.currentWeek++;persist();
+    ['ref-f-done','ref-d-done','ref-k-done','ref-f-not','ref-d-not','ref-k-not','ref-adjust'].forEach(id=>document.getElementById(id).value='');
+    wkOffset=0;renderWeekly(sp.currentWeek);
+    go('weekly',document.querySelector('.nav-item[onclick*=weekly]'));
+    toast(`Переход к неделе ${sp.currentWeek}`);
+  } else {
+    toast('Все 3 недели пройдены! Переходите к Интеграции.');
+    go('transform',document.querySelector('.nav-item[onclick*=transform]'));
+  }
+}
+
+function saveTransform(){
+  const sp=activeSp();if(!sp){toast('Нет активного спринта');return;}
+  sp.transform={change:document.getElementById('tr-change').value,actions:document.getElementById('tr-actions').value,belief:document.getElementById('tr-belief').value,opportunity:document.getElementById('tr-opportunity').value,savedAt:new Date().toISOString()};
+  persist();toast('Интеграция сохранена ✓');
+}
+
+function startNewCycle(){
+  saveTransform();const sp=activeSp();if(sp)sp.completedAt=new Date().toISOString();
+  ['plan-f-name','plan-d-name','plan-k-name','plan-f-desc','plan-d-desc','plan-k-desc','tr-change','tr-actions','tr-belief','tr-opportunity'].forEach(id=>document.getElementById(id).value='');
+  pTasks={f:[],d:[],k:[]};['plan-f-tasks','plan-d-tasks','plan-k-tasks'].forEach(id=>document.getElementById(id).innerHTML='');
+  pDur=7;pStruct=1;selDur(7);selStruct(1);
+  toast('Спринт завершён! Заполните план нового цикла.');
+  go('plan',document.querySelector('.nav-item[onclick*=plan]'));
+}
+
+function renderDiary(){
+  const el=document.getElementById('diary-list');
+  if(!DB.diary.length){el.innerHTML='<div class="card"><div class="empty">Пока нет записей</div></div>';return;}
+  el.innerHTML=[...DB.diary].reverse().map(m=>`<div class="history-item"><button class="history-del" onclick="delDiary(${m.id})">×</button><div class="history-date">${fmtDT(m.date)}</div><div class="history-text">${m.text}</div></div>`).join('');
+}
+
+function delDiary(id){DB.diary=DB.diary.filter(m=>m.id!==id);persist();renderDiary();}
+
+function renderHistory(){
+  const el=document.getElementById('history-list');
+  if(!DB.sprints.length){el.innerHTML='<div class="card"><div class="empty">История пуста</div></div>';return;}
+  let out='';
+  [...DB.sprints].reverse().forEach(function(sp){
+    const idx=DB.sprints.indexOf(sp),isActive=DB.activeSprint===idx;
+    const start=new Date(sp.startDate);
+    const ds=start.getDate()+'.'+String(start.getMonth()+1).padStart(2,'0')+'.'+start.getFullYear();
+    const borderColor=isActive?'rgba(126,207,179,.4)':'var(--border2)';
+    let weeksH='';
+    sp.weeks.forEach(function(w){
+      const doneText=(w.fdone||w.ddone||w.kdone)?('<div style="font-size:11px;margin-bottom:3px"><span style="color:var(--mint);font-weight:700">✓ </span>'+[w.fdone,w.ddone,w.kdone].filter(Boolean).join(' · ')+'</div>'):'';
+      const notText=(w.fnot||w.dnot||w.knot)?('<div style="font-size:11px;margin-bottom:3px"><span style="color:var(--rose);font-weight:700">✗ </span>'+[w.fnot,w.dnot,w.knot].filter(Boolean).join(' · ')+'</div>'):'';
+      const adjText=w.adjust?('<div style="font-size:11px"><span style="color:var(--mint);font-weight:700">→ </span>'+w.adjust+'</div>'):'';
+      weeksH+='<div style="margin-top:10px;padding:9px 12px;background:var(--bg3);border-radius:9px;border:1px solid var(--border2)">'+
+        '<div style="font-size:9px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;font-family:JetBrains Mono,monospace">Неделя '+w.weekNum+'</div>'+
+        doneText+notText+adjText+
+      '</div>';
+    });
+    let trH='';
+    if(sp.transform){
+      trH='<div style="margin-top:10px;padding:9px 12px;background:var(--mint-dim);border-radius:9px;border:1px solid rgba(126,207,179,.2)">'+
+        '<div style="font-size:9px;font-weight:700;color:var(--mint);margin-bottom:5px;font-family:JetBrains Mono,monospace">✦ ИНТЕГРАЦИЯ</div>'+
+        (sp.transform.change?('<div style="font-size:11px;margin-bottom:3px"><strong style="color:var(--text2)">Изменение:</strong> '+sp.transform.change+'</div>'):'') +
+        (sp.transform.opportunity?('<div style="font-size:11px"><strong style="color:var(--text2)">Возможности:</strong> '+sp.transform.opportunity+'</div>'):'') +
+      '</div>';
+    }
+    const activeBadge=isActive?'<span class="chip chip-f">Активный</span>':'<span class="chip chip-r">Завершён</span>';
+    const fChip=sp.projects.f.name?('<span class="chip chip-f">🌱 '+sp.projects.f.name+'</span> '):'';
+    const dChip=sp.projects.d.name?('<span class="chip chip-d">🚀 '+sp.projects.d.name+'</span> '):'';
+    const kChip=sp.projects.k.name?('<span class="chip chip-k">💫 '+sp.projects.k.name+'</span>'):'';
+    out+='<div class="card" style="border-left:2px solid '+borderColor+'">'+
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">'+
+        '<div>'+
+          '<div style="font-size:16px;font-weight:700;font-family:Bebas Neue,sans-serif;letter-spacing:.06em">Спринт #'+sp.num+'</div>'+
+          '<div style="font-size:10px;color:var(--text3);margin-top:2px;font-family:JetBrains Mono,monospace">'+ds+' · '+sp.duration+' ДНЕЙ</div>'+
+        '</div>'+activeBadge+
+      '</div>'+
+      '<div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap">'+fChip+dChip+kChip+'</div>'+
+      weeksH+trH+
+    '</div>';
+  });
+  el.innerHTML=out;
+}
+
+function addWeeklyTask() {
+  const sp = activeSp();
+  if(!sp) { toast('Сначала запустите спринт'); return; }
+  const type = document.getElementById('wk-task-type').value;
+  const name = document.getElementById('wk-task-name').value.trim();
+  if(!name) { toast('Введите название задачи'); return; }
+  const time = document.getElementById('wk-task-time').value.trim();
+  const date = document.getElementById('wk-task-date').value || '';
+  sp.projects[type].tasks.push({id:Date.now(), name:name, time:time, date:date, done:false});
+  persist();
+  document.getElementById('wk-task-name').value = '';
+  document.getElementById('wk-task-time').value = '';
+  renderWeekly();
+  renderSprint();
+  renderTodayTasks();
+  toast('Задача добавлена в спринт ✓');
+}
+
+function renderWeekly(wkNum){
+  const sp=activeSp();const wk=wkNum||(sp?sp.currentWeek:1);
+  if(!sp){
+    document.getElementById('weekly-title').textContent='Недельный план';
+    document.getElementById('weekly-sub').textContent='Нет активного спринта';
+    document.getElementById('weekly-content').innerHTML='<div class="empty">Запустите спринт</div>';
+    return;
+  }
+  document.getElementById('weekly-title').textContent='Спринт #'+sp.num+' Неделя '+wk;
+  document.getElementById('weekly-sub').textContent=sp.duration+'-дневный спринт';
+  if(document.getElementById('weekly-week-num')) document.getElementById('weekly-week-num').textContent='Смещение: '+(wkOff>0?'+':'')+wkOff+' нед.';
+  const start=new Date(sp.startDate);start.setDate(start.getDate()+(wk-1)*7+wkOff*7);
+  if(document.getElementById('weekly-range-label')) document.getElementById('weekly-range-label').textContent=fmtWkRange(start);
+  const DNS=['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
+  let rows='';
+  for(let i=0;i<7;i++){
+    const d=new Date(start);d.setDate(start.getDate()+i);
+    const dISO=isoDate(d),isToday=d.toDateString()===new Date().toDateString();
+    const dow=(d.getDay()+6)%7;
+    const fT=sp.projects.f.tasks.filter(function(t){return t.date===dISO;});
+    const dT=sp.projects.d.tasks.filter(function(t){return t.date===dISO;});
+    const kT=sp.projects.k.tasks.filter(function(t){return t.date===dISO;});
+    const fC=fT.map(function(t){return '<span class="cell-task ct-f '+(t.done?"done":"")+'" onclick="toggleWeeklyTask(\'f\',\''+t.id+'\')">'+t.name+(t.time?" · "+t.time:"")+'</span>';}).join("")||'<span style="color:#555;font-size:10px">—</span>';
+    const dC=dT.map(function(t){return '<span class="cell-task ct-d '+(t.done?"done":"")+'" onclick="toggleWeeklyTask(\'d\',\''+t.id+'\')">'+t.name+(t.time?" · "+t.time:"")+'</span>';}).join("")||'<span style="color:#555;font-size:10px">—</span>';
+    const kC=kT.map(function(t){return '<span class="cell-task ct-k '+(t.done?"done":"")+'" onclick="toggleWeeklyTask(\'k\',\''+t.id+'\')">'+t.name+(t.time?" · "+t.time:"")+'</span>';}).join("")||'<span style="color:#555;font-size:10px">—</span>';
+    rows+='<tr'+(isToday?' class="today-row"':'')+'>'+
+      '<td>'+DNS[dow]+'<br><span style="font-size:10px;color:#666">'+d.getDate()+'.'+String(d.getMonth()+1).padStart(2,'0')+'</span></td>'+
+      '<td>'+fC+'</td><td>'+dC+'</td><td>'+kC+'</td></tr>';
+  }
+  document.getElementById('weekly-content').innerHTML=
+    '<table class="week-table"><thead><tr><th>День</th>'+
+    '<th><span class="chip chip-f">Фундамент</span></th>'+
+    '<th><span class="chip chip-d">Драйв</span></th>'+
+    '<th><span class="chip chip-k">Кайф</span></th>'+
+    '</tr></thead><tbody>'+rows+'</tbody></table>'+
+    '<p style="font-size:10px;color:#666;margin-top:9px;font-family:JetBrains Mono,monospace">Нажмите на задачу чтобы отметить выполнение</p>';
+}
+function toggleWeeklyTask(type,id){
+  const sp=activeSp();if(!sp)return;
+  const t=sp.projects[type].tasks.find(function(x){return x.id==id;});
+  if(t){t.done=!t.done;persist();renderWeekly();renderSprint();updateTodayStats();}
+}
+function fmtWkRange(s){
+  const e=new Date(s);e.setDate(s.getDate()+6);
+  const M=['янв','фев','мар','апр','мая','июн','июл','авг','сен','окт','ноя','дек'];
+  return s.getDate()+' '+M[s.getMonth()]+' — '+e.getDate()+' '+M[e.getMonth()];
+}
+function shiftWk(dir){wkOff+=dir;renderWeekly();}
+function resetWkOff(){wkOff=0;renderWeekly();}
+
+
+
 
 
 // ════ TODAY RENDER (dark theme) ════
@@ -1555,7 +1775,7 @@ function renderHabits() {
     const opacity=isFuture?0.05:done?Math.min(1,0.28+localStreak*0.036):0.08;
     const bg=hexToRgba(h.color,opacity);
     const ring=isToday?'box-shadow:0 0 0 2px '+h.color+';':'';
-    dotHtml+='<div class="habit-dot'+(isToday?' today-dot':'')+'" style="background:'+bg+';'+ring+'" onclick="toggleHabitDay('+h.id+',''+ds+'')">'+day+'</div>';
+    dotHtml+='<div class="habit-dot'+(isToday?' today-dot':'')+'" style="background:'+bg+';'+ring+'" onclick="toggleHabitDay('+h.id+',\''+ds+'\')">'+day+'</div>';
   });
 
   // Legend
@@ -1616,4 +1836,6 @@ function hexToRgbParts(hex) {
   const b=parseInt(hex.slice(5,7),16);
   return r+','+g+','+b;
 }
-
+</script>
+</body>
+</html>
