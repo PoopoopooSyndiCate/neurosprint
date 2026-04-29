@@ -923,8 +923,8 @@ hr{border:none;border-top:1px solid var(--border);margin:14px 0}
 //  SUPABASE + SYNC
 //  Замените значения на ваши из: Supabase → Settings → API
 // ═══════════════════════════════════════════
-const SUPABASE_URL = https://zvqsatfvtrjirnaiaufm.supabase.co';   // https://xxxxx.supabase.co
-const SUPABASE_KEY = 'sb_publishable_MWyULLh2mX-9R7bw_gaeEA_zEHV1fIM';   // anon public key
+const SUPABASE_URL = 'https://zvqsatfvtrjirnaiaufm.supabase.co';   // https://xxxxx.supabase.co
+const SUPABASE_KEY = ' sb_publishable_MWyULLh2mX-9R7bw_gaeEA_zEHV1fIM';   // anon public key
 
 let SB = null, useCloud = false;
 
@@ -987,6 +987,7 @@ function toggleSidebar(){
 </script>
 
 <script>
+
 
 
 // ════ GLOBAL VARIABLES ════
@@ -1931,31 +1932,39 @@ function hexToRgbParts(hex) {
 
 
 // ════ INIT ════
-(async function(){
-  // Ensure habits array exists
+function _appInit() {
   if(!DB.habits) DB.habits = [];
-
-  // Pre-fill today's date in plan inputs
   ['f','d','k'].forEach(function(t){
     var el=document.getElementById('plan-add-'+t+'-date');
     if(el) el.value=todayISO();
-    var el2=document.getElementById('wk-task-date');
-    if(el2) el2.value=todayISO();
   });
-
-  // Init Supabase
-  await initSupabase();
-  if(typeof cloudLoad === 'function' && useCloud) await cloudLoad();
-
-  // Ensure habits still exists after cloud load
-  if(!DB.habits) DB.habits = [];
-
-  // Update sidebar
+  var wkEl=document.getElementById('wk-task-date');
+  if(wkEl) wkEl.value=todayISO();
   updateSB();
-
-  // Render initial screen
   renderToday();
-})();
+}
+
+function _appInitWithCloud() {
+  if(!DB.habits) DB.habits = [];
+  initSupabase().then(function(){
+    if(useCloud) {
+      cloudLoad().then(function(){
+        if(!DB.habits) DB.habits = [];
+        updateSB();
+        renderToday();
+      }).catch(function(){ updateSB(); renderToday(); });
+    } else {
+      updateSB();
+      renderToday();
+    }
+  }).catch(function(){ _appInit(); });
+}
+
+if(document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', _appInitWithCloud);
+} else {
+  _appInitWithCloud();
+}
 </script>
 </body>
 </html>
