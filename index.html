@@ -132,7 +132,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 
 /* ═══ MAIN CONTENT ═══ */
 .main-content{padding:24px 28px;flex:1}
-.screen{display:none}.screen.active{display:block}
+.screen{display:none}.screen.active{display:block;padding:24px 28px}
 
 /* ═══ DASH HEADER ═══ */
 .dash-header{margin-bottom:22px}
@@ -710,8 +710,6 @@ hr{border:none;border-top:1px solid var(--border);margin:14px 0}
       <div id="mood-log-list" style="max-height:160px;overflow-y:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:0"></div>
     </div>
 
-  </div>
-</div>
 
 <!-- ═══════════════ SPRINT ═══════════════ -->
 <div class="screen" id="s-sprint">
@@ -848,6 +846,7 @@ hr{border:none;border-top:1px solid var(--border);margin:14px 0}
 
   <!-- Weekly calendar table -->
   <div class="card"><div class="week-table-wrap"><div id="weekly-content"></div></div></div>
+</div>
 
 <!-- ═══════════════ REFLECTION ═══════════════ -->
 <div class="screen" id="s-reflection">
@@ -899,6 +898,7 @@ hr{border:none;border-top:1px solid var(--border);margin:14px 0}
 
   <!-- Active habit view -->
   <div id="habit-active-view"></div>
+</div>
 
 <!-- ═══════════════ DIARY ═══════════════ -->
 <div class="screen" id="s-diary">
@@ -911,7 +911,6 @@ hr{border:none;border-top:1px solid var(--border);margin:14px 0}
   <div class="page-header"><div class="page-title">История спринтов</div><div class="page-sub">Итоги всех спринтов</div></div>
   <div id="history-list"></div>
 </div>
-
   </div>
 </main>
 </div>
@@ -924,7 +923,7 @@ hr{border:none;border-top:1px solid var(--border);margin:14px 0}
 //  Замените значения на ваши из: Supabase → Settings → API
 // ═══════════════════════════════════════════
 const SUPABASE_URL = 'https://zvqsatfvtrjirnaiaufm.supabase.co';   // https://xxxxx.supabase.co
-const SUPABASE_KEY = ' sb_publishable_MWyULLh2mX-9R7bw_gaeEA_zEHV1fIM';   // anon public key
+const SUPABASE_KEY = 'sb_publishable_MWyULLh2mX-9R7bw_gaeEA_zEHV1fIM';   // anon public key
 
 let SB = null, useCloud = false;
 
