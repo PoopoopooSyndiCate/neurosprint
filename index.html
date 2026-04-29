@@ -988,6 +988,24 @@ function toggleSidebar(){
 
 <script>
 
+function toggleHabitDay(habitId, dateStr) {
+  if(!DB.habits) return;
+  const h = DB.habits.find(function(x){return x.id==habitId;});
+  if(!h) return;
+  const idx = h.logs.findIndex(function(l){return l.date===dateStr;});
+  if(idx>=0) h.logs.splice(idx,1);
+  else h.logs.push({date:dateStr});
+  persist();
+  renderHabits();
+  renderTodayHabitsCol();
+}
+
+function updateTodayStats(){
+  renderToday();
+}
+
+
+
 // ════ MISSING GLOBALS ════
 let habitMonthOffset = 0;
 
