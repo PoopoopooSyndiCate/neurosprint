@@ -923,7 +923,7 @@ hr{border:none;border-top:1px solid var(--border);margin:14px 0}
 //  SUPABASE + SYNC
 //  Замените значения на ваши из: Supabase → Settings → API
 // ═══════════════════════════════════════════
-const SUPABASE_URL = 'https://zvqsatfvtrjirnaiaufm.supabase.co';   // https://xxxxx.supabase.co
+const SUPABASE_URL = https://zvqsatfvtrjirnaiaufm.supabase.co';   // https://xxxxx.supabase.co
 const SUPABASE_KEY = 'sb_publishable_MWyULLh2mX-9R7bw_gaeEA_zEHV1fIM';   // anon public key
 
 let SB = null, useCloud = false;
@@ -987,6 +987,12 @@ function toggleSidebar(){
 </script>
 
 <script>
+
+
+// ════ GLOBAL VARIABLES ════
+let pDur = 7, pStruct = 1, pTasks = {f:[], d:[], k:[]};
+
+
 
 function toggleHabitDay(habitId, dateStr) {
   if(!DB.habits) return;
@@ -1922,6 +1928,34 @@ function hexToRgbParts(hex) {
   const b=parseInt(hex.slice(5,7),16);
   return r+','+g+','+b;
 }
+
+
+// ════ INIT ════
+(async function(){
+  // Ensure habits array exists
+  if(!DB.habits) DB.habits = [];
+
+  // Pre-fill today's date in plan inputs
+  ['f','d','k'].forEach(function(t){
+    var el=document.getElementById('plan-add-'+t+'-date');
+    if(el) el.value=todayISO();
+    var el2=document.getElementById('wk-task-date');
+    if(el2) el2.value=todayISO();
+  });
+
+  // Init Supabase
+  await initSupabase();
+  if(typeof cloudLoad === 'function' && useCloud) await cloudLoad();
+
+  // Ensure habits still exists after cloud load
+  if(!DB.habits) DB.habits = [];
+
+  // Update sidebar
+  updateSB();
+
+  // Render initial screen
+  renderToday();
+})();
 </script>
 </body>
 </html>
