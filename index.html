@@ -123,6 +123,7 @@
 <script>
 
 
+
     const SUPABASE_URL = 'https://zvqsatfvtrjirnaiaufm.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_MWyULLh2mX-9R7bw_gaeEA_zEHV1fIM';
     let SB = null, useCloud = false;
@@ -136,13 +137,14 @@
 
     const SK='agile_life_v1';
     let DB=JSON.parse(localStorage.getItem(SK)||'null')||{sprints:[],activeSprint:null,diary:[],moodLog:[],habits:[]};
-    let wkOff=0, sf='all', sfDate=todayISO(), moodScore=0, habitMonthOffset=0, pDur=7, pStruct=1, pTasks={f:[],d:[],k:[]};
+    let wkOff=0, sf='all', sfDate='', moodScore=0, habitMonthOffset=0, pDur=7, pStruct=1, pTasks={f:[],d:[],k:[]};
     const persistLocal=()=>localStorage.setItem(SK,JSON.stringify(DB));
     async function persist(){normalizeDB();persistLocal();await cloudSave(DB)}
     function normalizeDB(){DB.sprints=Array.isArray(DB.sprints)?DB.sprints:[];DB.diary=Array.isArray(DB.diary)?DB.diary:[];DB.moodLog=Array.isArray(DB.moodLog)?DB.moodLog:[];DB.habits=Array.isArray(DB.habits)?DB.habits:[];if(DB.activeSprint!==null&&(DB.activeSprint<0||DB.activeSprint>=DB.sprints.length))DB.activeSprint=null;DB.sprints.forEach(sp=>{sp.projects=sp.projects||{};['f','d','k'].forEach(t=>{sp.projects[t]=sp.projects[t]||{name:'',desc:'',tasks:[]};sp.projects[t].tasks=Array.isArray(sp.projects[t].tasks)?sp.projects[t].tasks:[]});sp.weeks=Array.isArray(sp.weeks)?sp.weeks:[];sp.currentWeek=sp.currentWeek||1;sp.duration=sp.duration||7;sp.structure=sp.structure||1})}
     const activeSp=()=>DB.activeSprint!==null?DB.sprints[DB.activeSprint]||null:null;
     const isoDate=d=>{const x=new Date(d);x.setMinutes(x.getMinutes()-x.getTimezoneOffset());return x.toISOString().slice(0,10)};
     const todayISO=()=>isoDate(new Date());
+    sfDate=todayISO();
     const fmtD=iso=>{const d=new Date(iso);return `${d.getDate()}.${String(d.getMonth()+1).padStart(2,'0')}`};
     const fmtDT=iso=>{const d=new Date(iso);return `${fmtD(iso)}.${d.getFullYear()} · ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`};
     function dayOfSp(sp){return Math.min(Math.max(Math.floor((new Date()-new Date(sp.startDate))/86400000)+1,1),sp.duration)}
